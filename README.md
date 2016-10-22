@@ -1,7 +1,7 @@
 # Dealerdirect: PHP_CodeSniffer Standards Composer Installer Plugin
 
 [![Travis](https://img.shields.io/travis/DealerDirect/phpcodesniffer-composer-installer.svg?style=flat-square)](https://travis-ci.org/DealerDirect/phpcodesniffer-composer-installer)
-[![Dependency Status](https://www.versioneye.com/user/projects/580939a4d65a77002f5eab70/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/580939a4d65a77002f5eab70)
+[![Dependency Status](https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790)
 [![Packagist](https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg?style=flat-square)](https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer)
 ![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?style=flat-square)
 ![Awesome](https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg?style=flat-square)
@@ -37,7 +37,7 @@ Add the following lines to your `composer.json` file:
 ```
 ## Mapping Coding Standards
 
-In case a coding standard does not provide it's PHP_CodeSniffer standard name, this plugin
+In case a coding standard does not provide its PHP_CodeSniffer standard name, this plugin
 will create a name for it. Like in the example above, the `wimg/php-compatibility` package
 provides a coding standard called 'PHPCompatibility', nevertheless, the package does not
 provide this name.
