@@ -121,5 +121,7 @@ class Installer extends LibraryInstaller
 
         $standardName = ucwords($standardName);
         $standardDir  = str_replace(' ', '', $standardName);
+
+        return $standardDir;
     }
 }
