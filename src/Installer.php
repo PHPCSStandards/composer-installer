@@ -27,11 +27,21 @@ class Installer extends LibraryInstaller
     {
         $this->initializeVendorDir();
 
-        $rootPackageExtra = $this->composer->getPackage()->getExtra();
-        $packageExtra     = $package->getExtra();
+        $packages   = $this->composer->getRepositoryManager()->getLocalRepository()->getPackages();
+        $packages[] = $this->composer->getPackage();
 
-        if (isset($rootPackageExtra['phpcodesniffer-mapping'][$package->getPrettyName()]) === true) {
-            $standardDir = $rootPackageExtra['phpcodesniffer-mapping'][$package->getPrettyName()];
+        $mapping = [];
+        foreach($packages as $localPackage) {
+          $extra = $localPackage->getExtra();
+          if (isset($extra['phpcodesniffer-mapping']) === true) {
+            $mapping = array_merge($mapping, $extra['phpcodesniffer-mapping']);
+          }
+        }
+
+        $packageExtra = $package->getExtra();
+
+        if (isset($mapping[$package->getPrettyName()]) === true) {
+            $standardDir = $mapping[$package->getPrettyName()];
         } elseif (isset($packageExtra['phpcodesniffer-standard']) === true) {
             $standardDir = $packageExtra['phpcodesniffer-standard'];
         } else {
