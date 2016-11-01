@@ -27,6 +27,9 @@
     "composer-plugin-api": "^1.0",
     "squizlabs/php_codesniffer": "*"
   },
+  "require-dev": {
+    "composer/composer": "*"
+  },
   "suggest": {
     "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
   },

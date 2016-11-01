@@ -27,38 +27,9 @@ Add the following lines to your `composer.json` file:
 "require-dev": {
    "squizlabs/php_codesniffer": "^2.0.0",
    "dealerdirect/phpcodesniffer-composer-installer" : "*",
-   "wimg/php-compatibility": "*"
-},
-"extra": {
-    "phpcodesniffer-mapping": {
-        "wimg/php-compatibility": "PHPCompatibility"
-    }
+   "frenck/php-compatibility": "*"
 }
 ```
-## Mapping Coding Standards
-
-In case a coding standard does not provide its PHP_CodeSniffer standard name, this plugin
-will create a name for it. Like in the example above, the `wimg/php-compatibility` package
-provides a coding standard called 'PHPCompatibility', nevertheless, the package does not
-provide this name.
-
-The `phpcodesniffer-mapping` parameter in the `extra` section of your `composer.json` allows
-you to provide a name yourself.
-
-The following example will install the same repository as above, but will name the standard
-`PHPCompat` instead of `PHPCompatibility` as show in the first version.
-
-```json
-"extra": {
-    "phpcodesniffer-mapping": {
-        "wimg/php-compatibility": "PHPCompat"
-    }
-}
-```
-
-The above mapping can also be used to override the coding standard name, if the package
-provided one. This may be useful to avoid collisions between different coding standards
-using the same name.
 
 ## Developing Coding Standards
 
@@ -74,20 +45,15 @@ Create a composer package of your coding standard by adding a `composer.json` fi
     "php" : ">=5.4.0,<8.0.0-dev",
     "squizlabs/php_codesniffer" : "^2.0"
   },
-  "type" : "phpcodesniffer-standard",
-  "extra": {
-    "phpcodesniffer-standard": "ACME"
-  }
+  "type" : "phpcodesniffer-standard"
 }
 ```
 
 Requirements:
-* Only one (1) standard per repository is allowed. If you'll need to bundle multiple standards, please consider separate packages bundled using a Composer [metapackage].
+* The repository may contain one or more standards. Each in their separate directory in the root of your repository.
 * The package `type` must be `phpcodesniffer-standard`. Without this, the plugin will not trigger.
-* Please provide a standard name by specifing the `phpcodesniffer-standard` option in the `extra` section of your `composer.json` With this name, the coding standard will be visible in [PHP_CodeSniffer].
 
 [this]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
-[metapackage]: https://getcomposer.org/doc/04-schema.md#type
 
 ## Contributing
 
