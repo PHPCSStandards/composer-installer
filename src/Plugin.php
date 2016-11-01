@@ -96,7 +96,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function onDependenciesChangedEvent()
     {
-        if ($this->isPHPCodeSnifferInstalled() === true ) {
+        if ($this->isPHPCodeSnifferInstalled() === true) {
             $installPathCleaned = $this->cleanInstalledPaths();
             $installPathUpdated = $this->updateInstalledPaths();
 
