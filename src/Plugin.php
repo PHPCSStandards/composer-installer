@@ -20,7 +20,7 @@ use Composer\Script\ScriptEvents;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * PHP_CodeSniffer standard installation manager.
@@ -35,12 +35,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * @var Composer
      */
-    protected $composer;
+    private $composer;
 
     /**
      * @var IOInterface
      */
-    protected $io;
+    private $io;
 
     /**
      * @var array
@@ -48,9 +48,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $installedPaths;
 
     /**
-     * @var string
+     * @var ProcessBuilder
      */
-    private $phpCodeSnifferBin;
+    private $processBuilder;
 
     /**
      * {@inheritDoc}
@@ -65,7 +65,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $this->composer = $composer;
         $this->io = $io;
         $this->installedPaths = [];
-        $this->phpCodeSnifferBin = $composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs';
+
+        $this->processBuilder = new ProcessBuilder();
+        $this->processBuilder->setPrefix($composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
 
         $this->loadInstalledPaths();
     }
@@ -77,10 +79,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         return [
             ScriptEvents::POST_INSTALL_CMD => [
-                ['onScriptPost', 0],
+                ['onDependenciesChangedEvent', 0],
             ],
             ScriptEvents::POST_UPDATE_CMD => [
-                ['onScriptPost', 0],
+                ['onDependenciesChangedEvent', 0],
             ],
         ];
     }
@@ -92,16 +94,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @throws LogicException
      * @throws ProcessFailedException
      */
-    public function onScriptPost()
+    public function onDependenciesChangedEvent()
     {
-        // Ensure PHP_CodeSniffer is installed
-        if ($this->isPHPCodeSnifferInstalled() === false) {
-            return;
-        }
+        if ($this->isPHPCodeSnifferInstalled() === true ) {
+            $installPathCleaned = $this->cleanInstalledPaths();
+            $installPathUpdated = $this->updateInstalledPaths();
 
-        // Clean and update. Trigger a save when something changed.
-        if ($this->cleanInstalledPaths() === true || $this->updateInstalledPaths() === true) {
-            $this->saveInstalledPaths();
+            if ($installPathCleaned === true || $installPathUpdated === true) {
+                $this->saveInstalledPaths();
+            }
         }
     }
 
@@ -114,10 +115,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function loadInstalledPaths()
     {
-        $phpcs = new Process($this->phpCodeSnifferBin . ' --config-show installed_paths');
-        $phpcs->mustRun();
 
-        $phpcsInstalledPaths = str_replace('installed_paths: ', '', $phpcs->getOutput());
+        $output = $this->processBuilder
+            ->setArguments(['--config-show', 'installed_paths'])
+            ->getProcess()
+            ->mustRun()
+            ->getOutput();
+
+        $phpcsInstalledPaths = str_replace('installed_paths: ', '', $output);
         $phpcsInstalledPaths = trim($phpcsInstalledPaths);
 
         if ($phpcsInstalledPaths !== '') {
@@ -134,19 +139,18 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function saveInstalledPaths()
     {
-        // In case we have no installed paths anymore, ensure the config key is deleted, else update it.
-        if (count($this->installedPaths) === 0) {
-            $phpcs = new Process(
-                $this->phpCodeSnifferBin . ' --config-delete installed_paths'
-            );
-        } else {
-            $phpcsInstalledPaths = implode(',', $this->installedPaths);
-            $phpcs = new Process(
-                $this->phpCodeSnifferBin . ' --config-set installed_paths "' . $phpcsInstalledPaths . '"'
-            );
+        // By default we delete the installed paths
+        $arguments = ['--config-delete', 'installed_paths'];
+
+        // This changes in case we do have installed_paths
+        if (count($this->installedPaths) !== 0) {
+            $arguments = ['--config-set', 'installed_paths', implode(',', $this->installedPaths)];
         }
 
-        $phpcs->run();
+        $this->processBuilder
+            ->setArguments($arguments)
+            ->getProcess()
+            ->mustRun();
     }
 
     /**
