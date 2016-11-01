@@ -115,7 +115,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function loadInstalledPaths()
     {
-        if ($this->isPHPCodeSnifferInstalled() === true ) {
+        if ($this->isPHPCodeSnifferInstalled() === true) {
             $output = $this->processBuilder
                 ->setArguments(['--config-show', 'installed_paths'])
                 ->getProcess()
