@@ -11,11 +11,13 @@
 namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer;
 
 use Composer\Composer;
+
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
@@ -55,6 +57,21 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private $processBuilder;
 
+    public function setComposer($composer)
+    {
+        $this->composer = $composer;
+    }
+
+    public static function run(Event $event)
+    {
+        $instance = new static();
+
+        $composer = $event->getComposer();
+        $instance->setComposer($composer);
+        $instance->init();
+        $instance->onDependenciesChangedEvent();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -67,10 +84,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->composer = $composer;
         $this->io = $io;
+
+        $this->init();
+    }
+
+    public function init()
+    {
         $this->installedPaths = [];
 
         $this->processBuilder = new ProcessBuilder();
-        $this->processBuilder->setPrefix($composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
+        $this->processBuilder->setPrefix($this->composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
 
         $this->loadInstalledPaths();
     }
