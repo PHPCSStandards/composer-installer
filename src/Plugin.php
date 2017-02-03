@@ -17,6 +17,7 @@ use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\ScriptEvents;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
@@ -185,9 +186,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         foreach ($codingStandardPackages as $package) {
             $packageInstallPath = $this->composer->getInstallationManager()->getInstallPath($package);
-            if (in_array($packageInstallPath, $this->installedPaths, true) === false) {
-                $this->installedPaths[] = $packageInstallPath;
-                $changes = true;
+            $finder = new Finder();
+            $finder->files()
+              ->ignoreVCS(true)
+              ->in($packageInstallPath)
+              ->depth('> 1')
+              ->depth('< 4')
+              ->name('ruleset.xml');
+            foreach ($finder as $ruleset) {
+                $standardsPath = dirname(dirname($ruleset));
+                if (in_array($standardsPath, $this->installedPaths, true) === false) {
+                    $this->installedPaths[] = $standardsPath;
+                    $changes = true;
+                }
             }
         }
 
