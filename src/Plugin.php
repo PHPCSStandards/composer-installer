@@ -89,7 +89,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Entry point for post install and post update events
+     * Entry point for post install and post update events.
      *
      * @throws RuntimeException
      * @throws LogicException
@@ -108,7 +108,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Load all paths from PHP_CodeSniffer into an array
+     * Load all paths from PHP_CodeSniffer into an array.
      *
      * @throws RuntimeException
      * @throws LogicException
@@ -158,7 +158,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Iterate trough all known paths and check if they are still valid.
      *
-     * If path does not exists, is not an directory or isn't readble, the path is removed from the list.
+     * If path does not exists, is not an directory or isn't readable, the path
+     * is removed from the list.
      *
      * @return bool True if changes where made, false otherwise
      */
@@ -175,7 +176,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Check all installed packages against the installed paths from PHP_CodeSniffer and add the missing ones.
+     * Check all installed packages against the installed paths from
+     * PHP_CodeSniffer and add the missing ones.
      *
      * @return bool True if changes where made, false otherwise
      */
@@ -206,7 +208,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Iterates trough Composers' local repository looking for valid Coding Standard packages
+     * Iterates through Composers' local repository looking for valid Coding
+     * Standard packages.
      *
      * @return array Composer packages containing coding standard(s)
      */
