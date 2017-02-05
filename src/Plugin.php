@@ -96,7 +96,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function onDependenciesChangedEvent()
     {
-        if ($this->isPHPCodeSnifferInstalled() === true ) {
+        if ($this->isPHPCodeSnifferInstalled() === true) {
             $installPathCleaned = $this->cleanInstalledPaths();
             $installPathUpdated = $this->updateInstalledPaths();
 
@@ -115,18 +115,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function loadInstalledPaths()
     {
+        if ($this->isPHPCodeSnifferInstalled() === true) {
+            $output = $this->processBuilder
+                ->setArguments(['--config-show', 'installed_paths'])
+                ->getProcess()
+                ->mustRun()
+                ->getOutput();
 
-        $output = $this->processBuilder
-            ->setArguments(['--config-show', 'installed_paths'])
-            ->getProcess()
-            ->mustRun()
-            ->getOutput();
+            $phpcsInstalledPaths = str_replace('installed_paths: ', '', $output);
+            $phpcsInstalledPaths = trim($phpcsInstalledPaths);
 
-        $phpcsInstalledPaths = str_replace('installed_paths: ', '', $output);
-        $phpcsInstalledPaths = trim($phpcsInstalledPaths);
-
-        if ($phpcsInstalledPaths !== '') {
-            $this->installedPaths = explode(',', $phpcsInstalledPaths);
+            if ($phpcsInstalledPaths !== '') {
+                $this->installedPaths = explode(',', $phpcsInstalledPaths);
+            }
         }
     }
 
