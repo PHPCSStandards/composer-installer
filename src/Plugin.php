@@ -33,6 +33,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
+    const PHPCS_CONFIG_KEY = 'installed_paths';
+
     /**
      * @var Composer
      */
@@ -118,12 +120,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $output = $this->processBuilder
-                ->setArguments(['--config-show', 'installed_paths'])
+                ->setArguments(['--config-show', self::PHPCS_CONFIG_KEY])
                 ->getProcess()
                 ->mustRun()
                 ->getOutput();
 
-            $phpcsInstalledPaths = str_replace('installed_paths: ', '', $output);
+            $phpcsInstalledPaths = str_replace(self::PHPCS_CONFIG_KEY . ': ', '', $output);
             $phpcsInstalledPaths = trim($phpcsInstalledPaths);
 
             if ($phpcsInstalledPaths !== '') {
@@ -141,17 +143,22 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function saveInstalledPaths()
     {
-        $configKey = 'installed_paths';
-
-        // Check if we found installed_paths to set.
+        // Check if we found installed paths to set.
         if (count($this->installedPaths) !== 0) {
             $paths = implode(',', $this->installedPaths);
-            $arguments = ['--config-set', $configKey, $paths];
-            $configMessage = sprintf('PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>', $configKey, $paths);
+            $arguments = ['--config-set', self::PHPCS_CONFIG_KEY, $paths];
+            $configMessage = sprintf(
+                'PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>',
+                self::PHPCS_CONFIG_KEY,
+                $paths
+            );
         } else {
-            // Delete the installed_paths if none were found.
-            $arguments = ['--config-delete', $configKey];
-            $configMessage = sprintf('PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>', $configKey);
+            // Delete the installed paths if none were found.
+            $arguments = ['--config-delete', self::PHPCS_CONFIG_KEY];
+            $configMessage = sprintf(
+                'PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>',
+                self::PHPCS_CONFIG_KEY
+            );
         }
 
         $this->io->write($configMessage);
