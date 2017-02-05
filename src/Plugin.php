@@ -140,18 +140,29 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function saveInstalledPaths()
     {
-        // By default we delete the installed paths
-        $arguments = ['--config-delete', 'installed_paths'];
+        $configKey = 'installed_paths';
 
-        // This changes in case we do have installed_paths
+        // Check if we found installed_paths to set.
         if (count($this->installedPaths) !== 0) {
-            $arguments = ['--config-set', 'installed_paths', implode(',', $this->installedPaths)];
+            $paths = implode(',', $this->installedPaths);
+            $arguments = ['--config-set', $configKey, $paths];
+            $this->io->write(sprintf('PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>', $configKey, $paths));
+        }
+        else {
+            // Delete the installed_paths if none were found.
+            $arguments = ['--config-delete', $configKey];
+            $this->io->write(sprintf('PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>', $configKey));
         }
 
-        $this->processBuilder
+        $output = $this->processBuilder
             ->setArguments($arguments)
             ->getProcess()
-            ->mustRun();
+            ->mustRun()
+            ->getOutput()
+        ;
+        if ($this->io->isVerbose() && !empty($output)) {
+            $this->io->write(sprintf('<info>%s</info>', $output));
+        }
     }
 
     /**
