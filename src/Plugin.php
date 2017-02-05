@@ -147,22 +147,23 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if (count($this->installedPaths) !== 0) {
             $paths = implode(',', $this->installedPaths);
             $arguments = ['--config-set', $configKey, $paths];
-            $this->io->write(sprintf('PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>', $configKey, $paths));
-        }
-        else {
+            $configMessage = sprintf('PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>', $configKey, $paths);
+        } else {
             // Delete the installed_paths if none were found.
             $arguments = ['--config-delete', $configKey];
-            $this->io->write(sprintf('PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>', $configKey));
+            $configMessage = sprintf('PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>', $configKey);
         }
 
-        $output = $this->processBuilder
+        $this->io->write($configMessage);
+
+        $configResult = $this->processBuilder
             ->setArguments($arguments)
             ->getProcess()
             ->mustRun()
             ->getOutput()
         ;
-        if ($this->io->isVerbose() && !empty($output)) {
-            $this->io->write(sprintf('<info>%s</info>', $output));
+        if ($this->io->isVerbose() && !empty($configResult)) {
+            $this->io->write(sprintf('<info>%s</info>', $configResult));
         }
     }
 
