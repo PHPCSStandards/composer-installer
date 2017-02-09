@@ -31,6 +31,9 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
+    const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
+    const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
+    const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
 
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
@@ -119,13 +122,24 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function onDependenciesChangedEvent()
     {
+        $io = $this->io;
+        $isVerbose = $io->isVerbose();
+
+        if ($isVerbose) {
+            $io->write(sprintf('<info>%s</info>', self::MESSAGE_RUNNING_INSTALLER));
+        }
+
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $installPathCleaned = $this->cleanInstalledPaths();
             $installPathUpdated = $this->updateInstalledPaths();
 
             if ($installPathCleaned === true || $installPathUpdated === true) {
                 $this->saveInstalledPaths();
+            } elseif ($isVerbose) {
+                $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
+        } elseif ($isVerbose) {
+            $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
         }
     }
 
