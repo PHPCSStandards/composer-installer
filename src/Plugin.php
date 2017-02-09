@@ -35,6 +35,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
     const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
 
+    const PACKAGE_NAME = 'squizlabs/php_codesniffer';
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
     const PHPCS_CONFIG_KEY = 'installed_paths';
@@ -288,17 +289,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Simple check if PHP_CodeSniffer is installed.
      *
-     * @return bool PHP_CodeSniffer is installed
+     * @return bool Whether PHP_CodeSniffer is installed
      */
     private function isPHPCodeSnifferInstalled()
     {
-        // Check if PHP_CodeSniffer is actually installed
-        return (count(
-            $this
-                ->composer
-                ->getRepositoryManager()
-                ->getLocalRepository()
-                    ->findPackages('squizlabs/php_codesniffer')
-        ) !== 0);
+        $packages = $this
+            ->composer
+            ->getRepositoryManager()
+            ->getLocalRepository()
+            ->findPackages(self::PACKAGE_NAME)
+        ;
+
+        $packageCount = count($packages);
+
+        return ($packageCount !== 0);
     }
 }
