@@ -11,7 +11,6 @@
 namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer;
 
 use Composer\Composer;
-
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
@@ -57,17 +56,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private $processBuilder;
 
-    public function setComposer($composer)
-    {
-        $this->composer = $composer;
-    }
-
     public static function run(Event $event)
     {
         $instance = new static();
 
         $composer = $event->getComposer();
-        $instance->setComposer($composer);
+        $instance->composer = $composer;
         $instance->init();
         $instance->onDependenciesChangedEvent();
     }
