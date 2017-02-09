@@ -58,9 +58,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     public static function run(Event $event)
     {
+        $io = $event->getIO();
+        $composer = $event->getComposer();
+
         $instance = new static();
 
-        $composer = $event->getComposer();
+        $instance->io = $io;
         $instance->composer = $composer;
         $instance->init();
         $instance->onDependenciesChangedEvent();
