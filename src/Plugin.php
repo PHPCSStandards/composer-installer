@@ -82,7 +82,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $this->init();
     }
 
-    public function init()
+    private function init()
     {
         $this->installedPaths = [];
 
