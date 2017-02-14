@@ -60,6 +60,18 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private $processBuilder;
 
+    /**
+     * Triggers the plugin's main functionality.
+     *
+     * Makes it possible to run the plugin as a custom command.
+     *
+     * @param Event $event
+     *
+     * @throws \InvalidArgumentException
+     * @throws LogicException
+     * @throws ProcessFailedException
+     * @throws RuntimeException
+     */
     public static function run(Event $event)
     {
         $io = $event->getIO();
@@ -89,6 +101,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $this->init();
     }
 
+    /**
+     * Prepares the plugin so it's main functionality can be run.
+     *
+     * @throws \RuntimeException
+     * @throws LogicException
+     * @throws ProcessFailedException
+     * @throws RuntimeException
+     */
     private function init()
     {
         $this->installedPaths = [];
@@ -117,6 +137,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Entry point for post install and post update events.
      *
+     * @throws \InvalidArgumentException
      * @throws RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
@@ -234,6 +255,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * PHP_CodeSniffer and add the missing ones.
      *
      * @return bool True if changes where made, false otherwise
+     *
+     * @throws \InvalidArgumentException
      */
     private function updateInstalledPaths()
     {
