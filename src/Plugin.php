@@ -16,6 +16,7 @@ use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
@@ -30,7 +31,11 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
+    const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
+    const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
+    const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
 
+    const PACKAGE_NAME = 'squizlabs/php_codesniffer';
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
     const PHPCS_CONFIG_KEY = 'installed_paths';
@@ -56,6 +61,31 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $processBuilder;
 
     /**
+     * Triggers the plugin's main functionality.
+     *
+     * Makes it possible to run the plugin as a custom command.
+     *
+     * @param Event $event
+     *
+     * @throws \InvalidArgumentException
+     * @throws LogicException
+     * @throws ProcessFailedException
+     * @throws RuntimeException
+     */
+    public static function run(Event $event)
+    {
+        $io = $event->getIO();
+        $composer = $event->getComposer();
+
+        $instance = new static();
+
+        $instance->io = $io;
+        $instance->composer = $composer;
+        $instance->init();
+        $instance->onDependenciesChangedEvent();
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws \RuntimeException
@@ -67,10 +97,24 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->composer = $composer;
         $this->io = $io;
+
+        $this->init();
+    }
+
+    /**
+     * Prepares the plugin so it's main functionality can be run.
+     *
+     * @throws \RuntimeException
+     * @throws LogicException
+     * @throws ProcessFailedException
+     * @throws RuntimeException
+     */
+    private function init()
+    {
         $this->installedPaths = [];
 
         $this->processBuilder = new ProcessBuilder();
-        $this->processBuilder->setPrefix($composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
+        $this->processBuilder->setPrefix($this->composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
 
         $this->loadInstalledPaths();
     }
@@ -93,19 +137,31 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Entry point for post install and post update events.
      *
+     * @throws \InvalidArgumentException
      * @throws RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
      */
     public function onDependenciesChangedEvent()
     {
+        $io = $this->io;
+        $isVerbose = $io->isVerbose();
+
+        if ($isVerbose) {
+            $io->write(sprintf('<info>%s</info>', self::MESSAGE_RUNNING_INSTALLER));
+        }
+
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $installPathCleaned = $this->cleanInstalledPaths();
             $installPathUpdated = $this->updateInstalledPaths();
 
             if ($installPathCleaned === true || $installPathUpdated === true) {
                 $this->saveInstalledPaths();
+            } elseif ($isVerbose) {
+                $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
+        } elseif ($isVerbose) {
+            $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
         }
     }
 
@@ -199,6 +255,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * PHP_CodeSniffer and add the missing ones.
      *
      * @return bool True if changes where made, false otherwise
+     *
+     * @throws \InvalidArgumentException
      */
     private function updateInstalledPaths()
     {
@@ -254,17 +312,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Simple check if PHP_CodeSniffer is installed.
      *
-     * @return bool PHP_CodeSniffer is installed
+     * @return bool Whether PHP_CodeSniffer is installed
      */
     private function isPHPCodeSnifferInstalled()
     {
-        // Check if PHP_CodeSniffer is actually installed
-        return (count(
-            $this
-                ->composer
-                ->getRepositoryManager()
-                ->getLocalRepository()
-                    ->findPackages('squizlabs/php_codesniffer')
-        ) !== 0);
+        $packages = $this
+            ->composer
+            ->getRepositoryManager()
+            ->getLocalRepository()
+            ->findPackages(self::PACKAGE_NAME)
+        ;
+
+        $packageCount = count($packages);
+
+        return ($packageCount !== 0);
     }
 }
