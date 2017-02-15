@@ -1,31 +1,33 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+When contributing to this repository, please first discuss the change you wish
+to make via issue, email, or any other method with the owners of this repository
+before making a change.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+Please note we have a code of conduct, please follow it in all your interactions
+with the project.
 
-## Found an issue? Want a Feature?
+## Issues and feature requests
 
-You've found a bug in the source code, a mistake in the documentation or maybe you'd like a new feature? You can help us by submitting an issue to our [GitHub Repository]. Before you create an issue, make sure you search the archive, maybe your question was already answered.
-
+You've found a bug in the source code, a mistake in the documentation or maybe
+you'd like a new feature? You can help us by submitting an issue to our
+[GitHub Repository][github]. Before you create an issue, make sure you search
+the archive, maybe your question was already answered.
 
 Even better: You could submit a pull request with a fix / new feature!
 
-[GitHub Repository]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues
+## Pull request process
 
-## Pull Request Process
+1. Search our repository for open or closed [pull requests][prs] that relates
+   to your submission. You don't want to duplicate effort.
 
-1. Search our repository for open or closed [Pull Requests] that relates to your submission.
-You don't want to duplicate effort.
-4. You may merge the Pull Request in once you have the sign-off of two other developers, or if you
-   do not have permission to do that, you may request the second reviewer to merge it for you.
+2. You may merge the pull request in once you have the sign-off of two other
+   developers, or if you do not have permission to do that, you may request
+   the second reviewer to merge it for you.
 
-[Pull Requests]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/pulls
+## Code of conduct
 
-## Code of Conduct
-
-### Our Pledge
+### Our pledge
 
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
@@ -34,29 +36,26 @@ size, disability, ethnicity, gender identity and expression, level of experience
 nationality, personal appearance, race, religion, or sexual identity and
 orientation.
 
-### Our Standards
+### Our standards
 
 Examples of behavior that contributes to creating a positive environment
 include:
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints and experiences
+- Gracefully accepting constructive criticism
+- Focusing on what is best for the community
+- Showing empathy towards other community members
 
 Examples of unacceptable behavior by participants include:
 
-* The use of sexualized language or imagery and unwelcome sexual attention or
-advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic
-  address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+- The use of sexualized language or imagery and unwelcome sexual attention or advances
+- Trolling, insulting/derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others' private information, such as a physical or electronic address, without explicit permission
+- Other conduct which could reasonably be considered inappropriate in a professional setting
 
-### Our Responsibilities
+### Our responsibilities
 
 Project maintainers are responsible for clarifying the standards of acceptable
 behavior and are expected to take appropriate and fair corrective action in
@@ -92,8 +91,10 @@ members of the project's leadership.
 
 ### Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at [http://contributor-covenant.org/version/1/4][version]
+This Code of Conduct is adapted from the [Contributor Covenant][homepage],
+version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 
 [homepage]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
+[github]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues
+[prs]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/pulls
