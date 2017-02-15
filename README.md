@@ -31,7 +31,7 @@ Add the following lines to your `composer.json` file:
 
 ## Developing Coding Standards
 
-Coding standard can be developed in the way [PHP_CodeSniffer][codesniffer] documents [this][tutorial].
+Coding standard can be developed normally, as documented by [PHP_CodeSniffer][codesniffer], in the [Coding Standard Tutorial][tutorial].
 
 Create a composer package of your coding standard by adding a `composer.json` file.
 
@@ -65,7 +65,7 @@ Thank you for being involved! :heart_eyes:
 
 The original idea and setup of this repository is by [Franck Nijhof][frenck], employee @ Dealerdirect.
 
-For a full list off all author and/or contributors, please check [this page][contributors].
+For a full list off all author and/or contributors, check [the contributors page][contributors].
 
 ## Working @ Dealerdirect
 
