@@ -269,7 +269,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $finder->files()
               ->ignoreVCS(true)
               ->in($packageInstallPath)
-              ->depth('> 1')
+              ->depth('>= 1')
               ->depth('< 4')
               ->name('ruleset.xml');
             foreach ($finder as $ruleset) {
