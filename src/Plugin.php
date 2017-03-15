@@ -290,7 +290,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * 
      * If the package is the RootPackage (the one the plugin is installed into), 
      * the package is ignored for now since it needs a different install path logic.
-     
+     *
      * @return array Composer packages containing coding standard(s)
      */
     private function getPHPCodingStandardPackages()
