@@ -302,7 +302,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         );
 
-        if ($this->composer->getPackage()->getType() === self::PACKAGE_TYPE) {
+        if (!$this->composer->getPackage() instanceof \Composer\Package\RootpackageInterface && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE) {
             $codingStandardPackages[] = $this->composer->getPackage();
         }
 
