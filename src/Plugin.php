@@ -287,6 +287,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
+     * 
+     * If the package is the RootPackage (the one the plugin is installed into), 
+     * the package is ignored for now since it needs a different install path logic.
      *
      * @return array Composer packages containing coding standard(s)
      */
@@ -302,7 +305,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         );
 
-        if ($this->composer->getPackage()->getType() === self::PACKAGE_TYPE) {
+        if (!$this->composer->getPackage() instanceof \Composer\Package\RootpackageInterface && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE) {
             $codingStandardPackages[] = $this->composer->getPackage();
         }
 
