@@ -19,15 +19,18 @@ _Note: This plugin is compatible with both version 2.x and 3.x of_ [PHP_CodeSnif
 
 ## Usage
 
-Add the following lines to your `composer.json` file:
+Installation can be done with [composer], by requiring this package as a development dependency:
 
-```json
-"require-dev": {
-   "squizlabs/php_codesniffer": "^2.0.0",
-   "dealerdirect/phpcodesniffer-composer-installer" : "*",
-   "frenck/php-compatibility": "*"
-}
+```bash
+composer require --dev dealerdirect/phpcodesniffer-composer-installer frenck/php-compatibility
 ```
+
+### Caveats
+
+When this plugin is installed globally, composer will load the _global_ plugin rather 
+than the one from the local repository. Despite [this behaviour being documented 
+in the composer manual][using-composer-plugins], it could potentially cause confusion
+as an version of the plugin could be run other than the version specified by the project.
 
 ## Developing Coding Standards
 
@@ -103,23 +106,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-[project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2017.svg
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
+[composer]: https://getcomposer.org/
+[codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[contributing-guidelines]: CONTRIBUTING.md
+[contributors]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
+[frenck]: https://github.com/frenck
+[get-in-touch]: http://workingatdealerdirect.eu/open-sollicitatie/
 [license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
-[scrutinizer-shield]: https://img.shields.io/scrutinizer/g/DealerDirect/phpcodesniffer-composer-installer.svg
-[scrutinizer]: https://scrutinizer-ci.com/g/DealerDirect/phpcodesniffer-composer-installer/
-[versioneye-shield]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg
-[versioneye]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2017.svg
 [packagist-shield]: https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg
-[packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist-version-shield]: https://img.shields.io/packagist/v/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
-[contribution-guidelines]: CONTRIBUTING.md
-[frenck]: https://github.com/frenck
-[contributors]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
-[vacancies]: http://workingatdealerdirect.eu/?post_type=vacancy&s=&department=99
-[get-in-touch]: http://workingatdealerdirect.eu/open-sollicitatie/
-[workingatdealerdirecteu]: http://www.workingatdealerdirect.eu
+[packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
+[project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
+[scrutinizer-shield]: https://img.shields.io/scrutinizer/g/DealerDirect/phpcodesniffer-composer-installer.svg
+[scrutinizer]: https://scrutinizer-ci.com/g/DealerDirect/phpcodesniffer-composer-installer/
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
-[codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
+[vacancies]: http://workingatdealerdirect.eu/?post_type=vacancy&s=&department=99
+[versioneye-shield]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg
+[versioneye]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790
+[workingatdealerdirecteu]: http://www.workingatdealerdirect.eu
+
