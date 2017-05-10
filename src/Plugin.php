@@ -244,7 +244,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
         foreach ($this->installedPaths as $key => $path) {
-            // This might be an relative path as well
+            // This might be a relative path as well
             $alternativePath = realpath($this->getPHPCodeSnifferInstallPath() . DIRECTORY_SEPARATOR . $path);
 
             if ((is_dir($path) === false || is_readable($path) === false) &&
@@ -394,7 +394,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         // Some compatibility fixes for Windows paths
         $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
-        $to = is_dir($to)   ? rtrim($to, '\/') . '/'   : $to;
+        $to = is_dir($to) ? rtrim($to, '\/') . '/' : $to;
         $from = str_replace('\\', '/', $from);
         $to = str_replace('\\', '/', $to);
 
