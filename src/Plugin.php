@@ -68,6 +68,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @param Event $event
      *
      * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
      * @throws RuntimeException
@@ -225,6 +226,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             ->mustRun()
             ->getOutput()
         ;
+
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
         }
@@ -242,7 +244,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
         foreach ($this->installedPaths as $key => $path) {
-            if (file_exists($path) === false || is_dir($path) === false || is_readable($path) === false) {
+            // This might be an relative path as well
+            $alternativePath = realpath($this->getPHPCodeSnifferInstallPath() . DIRECTORY_SEPARATOR . $path);
+
+            if ((is_dir($path) === false || is_readable($path) === false) &&
+                (is_dir($alternativePath) === false || is_readable($alternativePath) === false)
+            ) {
                 unset($this->installedPaths[$key]);
                 $changes = true;
             }
@@ -257,6 +264,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @return bool True if changes where made, false otherwise
      *
      * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     private function updateInstalledPaths()
     {
@@ -270,6 +278,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $finder = new Finder();
         $finder->files()
+            ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
             ->depth('>= 1')
             ->depth('< 4')
@@ -277,7 +286,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             ->in($searchPaths);
 
         foreach ($finder as $ruleset) {
-            $standardsPath = dirname(dirname($ruleset));
+            $standardsPath = dirname($ruleset->getPath());
+
+            // Use relative paths for local project repositories
+            if ($this->isRunningGlobally() === false) {
+                $standardsPath = $this->getRelativePath($standardsPath);
+            }
+
             if (in_array($standardsPath, $this->installedPaths, true) === false) {
                 $this->installedPaths[] = $standardsPath;
                 $changes = true;
@@ -318,21 +333,93 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * Searches for the installed PHP_CodeSniffer Composer package
+     *
+     * @return PackageInterface|null
+     */
+    private function getPHPCodeSnifferPackage()
+    {
+        $packages = $this
+            ->composer
+            ->getRepositoryManager()
+            ->getLocalRepository()
+            ->findPackages(self::PACKAGE_NAME);
+
+        return array_shift($packages);
+    }
+
+    /**
+     * Returns the path to the PHP_CodeSniffer package installation location
+     *
+     * @return string
+     */
+    private function getPHPCodeSnifferInstallPath()
+    {
+        return $this->composer->getInstallationManager()->getInstallPath($this->getPHPCodeSnifferPackage());
+    }
+
+    /**
      * Simple check if PHP_CodeSniffer is installed.
      *
      * @return bool Whether PHP_CodeSniffer is installed
      */
     private function isPHPCodeSnifferInstalled()
     {
-        $packages = $this
-            ->composer
-            ->getRepositoryManager()
-            ->getLocalRepository()
-            ->findPackages(self::PACKAGE_NAME)
-        ;
+        return ($this->getPHPCodeSnifferPackage() !== null);
+    }
 
-        $packageCount = count($packages);
+    /**
+     * Test if composer is running "global"
+     * This check kinda dirty, but it is the "Composer Way"
+     *
+     * @return bool Whether Composer is running "globally"
+     *
+     * @throws \RuntimeException
+     */
+    private function isRunningGlobally()
+    {
+        return ($this->composer->getConfig()->get('home') === getcwd());
+    }
 
-        return ($packageCount !== 0);
+    /**
+     * Returns the relative path to PHP_CodeSniffer from any other absolute path
+     *
+     * @param string $to Absolute path
+     *
+     * @return string Relative path
+     */
+    private function getRelativePath($to)
+    {
+        $from = $this->getPHPCodeSnifferInstallPath();
+
+        // Some compatibility fixes for Windows paths
+        $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
+        $to = is_dir($to)   ? rtrim($to, '\/') . '/'   : $to;
+        $from = str_replace('\\', '/', $from);
+        $to = str_replace('\\', '/', $to);
+
+        $from = explode('/', $from);
+        $to = explode('/', $to);
+        $relPath = $to;
+
+        foreach ($from as $depth => $dir) {
+            // Find first non-matching dir
+            if ($dir === $to[$depth]) {
+                // Ignore this directory
+                array_shift($relPath);
+            } else {
+                // Get number of remaining dirs to $from
+                $remaining = count($from) - $depth;
+                if ($remaining > 1) {
+                    // Add traversals up to first matching dir
+                    $padLength = (count($relPath) + $remaining - 1) * -1;
+                    $relPath = array_pad($relPath, $padLength, '..');
+                    break;
+                } else {
+                    $relPath[0] = './' . $relPath[0];
+                }
+            }
+        }
+        return implode('/', $relPath);
     }
 }
