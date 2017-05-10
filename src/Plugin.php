@@ -251,8 +251,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Check all installed packages against the installed paths from
-     * PHP_CodeSniffer and add the missing ones.
+     * Check all installed packages (including the root package) against
+     * the installed paths from PHP_CodeSniffer and add the missing ones.
      *
      * @return bool True if changes where made, false otherwise
      *
@@ -261,23 +261,26 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function updateInstalledPaths()
     {
         $changes = false;
-        $codingStandardPackages = $this->getPHPCodingStandardPackages();
 
+        $searchPaths = [getcwd()];
+        $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
-            $packageInstallPath = $this->composer->getInstallationManager()->getInstallPath($package);
-            $finder = new Finder();
-            $finder->files()
-              ->ignoreVCS(true)
-              ->in($packageInstallPath)
-              ->depth('>= 1')
-              ->depth('< 4')
-              ->name('ruleset.xml');
-            foreach ($finder as $ruleset) {
-                $standardsPath = dirname(dirname($ruleset));
-                if (in_array($standardsPath, $this->installedPaths, true) === false) {
-                    $this->installedPaths[] = $standardsPath;
-                    $changes = true;
-                }
+            $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
+        }
+
+        $finder = new Finder();
+        $finder->files()
+            ->ignoreVCS(true)
+            ->depth('>= 1')
+            ->depth('< 4')
+            ->name('ruleset.xml')
+            ->in($searchPaths);
+
+        foreach ($finder as $ruleset) {
+            $standardsPath = dirname(dirname($ruleset));
+            if (in_array($standardsPath, $this->installedPaths, true) === false) {
+                $this->installedPaths[] = $standardsPath;
+                $changes = true;
             }
         }
 
@@ -287,8 +290,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
-     * 
-     * If the package is the RootPackage (the one the plugin is installed into), 
+     *
+     * If the package is the RootPackage (the one the plugin is installed into),
      * the package is ignored for now since it needs a different install path logic.
      *
      * @return array Composer packages containing coding standard(s)
