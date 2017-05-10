@@ -14,20 +14,27 @@ php:
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+# Make sure a `bin` directory is present and does not contain PHAR files more
+# than 4 weeks old
+before_cache:
+  - mkdir -p "${HOME}/bin"
+  - find "${HOME}/bin/" -type f -name '*.phar' -mtime +28 -delete
+
 cache:
   directories:
     - "${HOME}/.composer/cache"
-
+    - "${HOME}/.npm/"
+    - "${HOME}/bin/"
 env:
   global:
     - PATH="${HOME}/bin:${PATH}"
 
 matrix:
   allow_failures:
-  - php: hhvm
-  - php: 5.5
-  - php: 5.4
-  - php: 5.3
+    - php: hhvm
+    - php: 5.5
+    - php: 5.4
+    - php: 5.3
   fast_finish: true
 
 before_install:
@@ -35,14 +42,14 @@ before_install:
   - npm set progress false
 
 install:
-  - composer global require "dealerdirect/qa-tools:*"
+  - '[[ -f "${HOME}/bin/phpcs.phar" ]] || curl -L -o "${HOME}/bin/phpcs.phar" https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar'
+  - '[[ -f "${HOME}/bin/security-checker.phar" ]] || curl -L -o "${HOME}/bin/security-checker.phar" http://get.sensiolabs.org/security-checker.phar'
   - npm install -g jsonlint
 
 script:
   - find . -type f -name "*.json" -print0 | xargs -0 -n1 jsonlint -q
+  - find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
+  - php "${HOME}/bin/phpcs.phar" --standard=psr2 src/
   - composer validate
   - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
-  - ~/.composer/vendor/bin/parallel-lint ./src
-  - ~/.composer/vendor/bin/security-checker -n security:check --end-point=http://security.sensiolabs.org/check_lock
-  - ~/.composer/vendor/bin/phpcs --standard=psr2 src/
-
+  - php "${HOME}/bin/security-checker.phar" -n security:check --end-point=http://security.sensiolabs.org/check_lock
