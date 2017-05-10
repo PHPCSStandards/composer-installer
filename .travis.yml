@@ -25,6 +25,7 @@ env:
 matrix:
   allow_failures:
   - php: hhvm
+  - php: 5.5
   - php: 5.4
   - php: 5.3
   fast_finish: true
