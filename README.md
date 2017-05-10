@@ -25,6 +25,48 @@ Installation can be done with [composer], by requiring this package as a develop
 composer require --dev dealerdirect/phpcodesniffer-composer-installer frenck/php-compatibility
 ```
 
+### Calling the plugin directly 
+
+In some circumstances it is desirable to call this plugin's functionality 
+directly. For instance, during development or in [CI][definition-ci] environments.
+
+As the plugin requires Composer to work, direct calls need to be wired through a
+project's `composer.json`.
+
+This is done by adding a call to the `Plugin::run` function in the `script` 
+section of the `composer.json`:
+
+```json
+{
+    "scripts": {
+        "install-codesniffs": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ]
+    }
+}
+
+```
+
+The command can then be called using `composer run-script install-codesniffs` or 
+referenced from other script configurations, as follows:
+
+```json
+{
+    "scripts": {
+        "install-codesniffs": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ],
+        "post-install-cmd": [
+            "@install-codesniff"
+        ]
+    }
+}
+
+```
+
+For more details about Composer scripts, please refer to [the section on scripts 
+in the Composer manual][composer-manual-scripts].
+
 ### Caveats
 
 When this plugin is installed globally, composer will load the _global_ plugin rather 
@@ -108,9 +150,11 @@ THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
 [composer]: https://getcomposer.org/
+[composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
 [contributing-guidelines]: CONTRIBUTING.md
 [contributors]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
+[definition-ci]: https://en.wikipedia.org/wiki/Continuous_integration
 [frenck]: https://github.com/frenck
 [get-in-touch]: http://workingatdealerdirect.eu/open-sollicitatie/
 [license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
