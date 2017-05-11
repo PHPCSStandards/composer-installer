@@ -4,7 +4,7 @@
  * This file is part of the Dealerdirect PHP_CodeSniffer Standards
  * Composer Installer Plugin package.
  *
- * @copyright 2016 Dealerdirect B.V.
+ * @copyright 2016-2017 Dealerdirect B.V.
  * @license MIT
  */
 
@@ -15,6 +15,7 @@ use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
+use Composer\Package\RootpackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
@@ -280,13 +281,23 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $finder->files()
             ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
-            ->depth('>= 1')
             ->depth('< 4')
             ->name('ruleset.xml')
             ->in($searchPaths);
 
+        // Only version 3.x and higher has support for having coding standard in the root of the directory.
+        $allowCodingStandardsInRoot = $this->isPHPCodeSnifferInstalled('>= 3.0.0');
+
+        if ($allowCodingStandardsInRoot !== true) {
+            $finder->depth('>= 1');
+        }
+
         foreach ($finder as $ruleset) {
-            $standardsPath = dirname($ruleset->getPath());
+            $standardsPath = $ruleset->getPath();
+
+            if ($allowCodingStandardsInRoot === false) {
+                $standardsPath = dirname($standardsPath);
+            }
 
             // Use relative paths for local project repositories
             if ($this->isRunningGlobally() === false) {
@@ -323,7 +334,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         );
 
-        if (! $this->composer->getPackage() instanceof \Composer\Package\RootpackageInterface
+        if (! $this->composer->getPackage() instanceof RootpackageInterface
             && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE
         ) {
             $codingStandardPackages[] = $this->composer->getPackage();
@@ -335,15 +346,17 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Searches for the installed PHP_CodeSniffer Composer package
      *
+     * @param null|string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
+     *
      * @return PackageInterface|null
      */
-    private function getPHPCodeSnifferPackage()
+    private function getPHPCodeSnifferPackage($versionConstraint = null)
     {
         $packages = $this
             ->composer
             ->getRepositoryManager()
             ->getLocalRepository()
-            ->findPackages(self::PACKAGE_NAME);
+            ->findPackages(self::PACKAGE_NAME, $versionConstraint);
 
         return array_shift($packages);
     }
@@ -361,11 +374,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Simple check if PHP_CodeSniffer is installed.
      *
+     * @param null|string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
+     *
      * @return bool Whether PHP_CodeSniffer is installed
      */
-    private function isPHPCodeSnifferInstalled()
+    private function isPHPCodeSnifferInstalled($versionConstraint = null)
     {
-        return ($this->getPHPCodeSnifferPackage() !== null);
+        return ($this->getPHPCodeSnifferPackage($versionConstraint) !== null);
     }
 
     /**
