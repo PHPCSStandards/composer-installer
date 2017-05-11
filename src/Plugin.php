@@ -4,7 +4,7 @@
  * This file is part of the Dealerdirect PHP_CodeSniffer Standards
  * Composer Installer Plugin package.
  *
- * @copyright 2016 Dealerdirect B.V.
+ * @copyright 2016-2017 Dealerdirect B.V.
  * @license MIT
  */
 
@@ -346,7 +346,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Searches for the installed PHP_CodeSniffer Composer package
      *
-     * @param string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
+     * @param null|string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
      *
      * @return PackageInterface|null
      */
@@ -374,7 +374,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Simple check if PHP_CodeSniffer is installed.
      *
-     * @param string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
+     * @param null|string|\Composer\Semver\Constraint\ConstraintInterface $versionConstraint to match against
      *
      * @return bool Whether PHP_CodeSniffer is installed
      */
