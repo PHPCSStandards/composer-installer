@@ -1,10 +1,11 @@
-# Dealerdirect: PHP_CodeSniffer Standards Composer Installer Plugin
+# PHP_CodeSniffer Standards Composer Installer Plugin
 
 ![Project Stage][project-stage-shield]
 ![Maintenance][maintenance-shield]
 ![Awesome][awesome-shield]
 [![License][license-shield]](LICENSE.md)
 
+[![Travis][travis-shield]][travis]
 [![Scrutinizer][scrutinizer-shield]][scrutinizer]
 [![Dependency Status][versioneye-shield]][versioneye]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
@@ -24,6 +25,16 @@ Installation can be done with [composer], by requiring this package as a develop
 ```bash
 composer require --dev dealerdirect/phpcodesniffer-composer-installer frenck/php-compatibility
 ```
+
+That's it.
+
+### How it works
+
+Basically this plugin executes the following steps:
+
+- This plugin search for `phpcodesniffer-standard` packages in all of your currently installed Composer packages.
+- Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
+- The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
 ### Calling the plugin directly 
 
@@ -97,6 +108,11 @@ Requirements:
 * Each standard can have a separate directory no deeper than 3 levels from the repository root.
 * The package `type` must be `phpcodesniffer-standard`. Without this, the plugin will not trigger.
 
+## Changelog
+
+This repository does not contain a `CHANGELOG.md` file, however, we do publish a changelog on each release
+using the [GitHub releases](changelog) functionality.
+
 ## Contributing
 
 This is an active open-source project. We are always open to people who want to
@@ -149,6 +165,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
+[changelog]: https://github.com/DealerDirect/phpcodesniffer-composer-installer/releases
 [composer]: https://getcomposer.org/
 [composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
@@ -166,6 +183,8 @@ THE SOFTWARE.
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/DealerDirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/DealerDirect/phpcodesniffer-composer-installer/
+[travis-shield]: https://img.shields.io/travis/DealerDirect/phpcodesniffer-composer-installer.svg
+[travis]: https://travis-ci.org/DealerDirect/phpcodesniffer-composer-installer
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [vacancies]: http://workingatdealerdirect.eu/?post_type=vacancy&s=&department=99
