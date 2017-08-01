@@ -286,24 +286,25 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             ->in($searchPaths);
 
         // Only version 3.x and higher has support for having coding standard in the root of the directory.
-        $allowCodingStandardsInRoot = $this->isPHPCodeSnifferInstalled('>= 3.0.0');
-
-        if ($allowCodingStandardsInRoot !== true) {
+        if ($this->isPHPCodeSnifferInstalled('>= 3.0.0') !== true) {
             $finder->depth('>= 1');
         }
 
+        // Process each found possible ruleset.
         foreach ($finder as $ruleset) {
             $standardsPath = $ruleset->getPath();
 
-            if ($allowCodingStandardsInRoot === false) {
+            // Pick the directory above the directory containing the standard, unless this is the project root.
+            if ($standardsPath !== getcwd()) {
                 $standardsPath = dirname($standardsPath);
             }
 
-            // Use relative paths for local project repositories
+            // Use relative paths for local project repositories.
             if ($this->isRunningGlobally() === false) {
                 $standardsPath = $this->getRelativePath($standardsPath);
             }
 
+            // De-duplicate and add when directory is not configured.
             if (in_array($standardsPath, $this->installedPaths, true) === false) {
                 $this->installedPaths[] = $standardsPath;
                 $changes = true;
