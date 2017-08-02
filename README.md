@@ -50,7 +50,7 @@ section of the `composer.json`:
 ```json
 {
     "scripts": {
-        "install-codesniffs": [
+        "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ]
     }
@@ -58,17 +58,17 @@ section of the `composer.json`:
 
 ```
 
-The command can then be called using `composer run-script install-codesniffs` or 
+The command can then be called using `composer run-script install-codestandards` or 
 referenced from other script configurations, as follows:
 
 ```json
 {
     "scripts": {
-        "install-codesniffs": [
+        "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
         "post-install-cmd": [
-            "@install-codesniff"
+            "@install-codestandards"
         ]
     }
 }
