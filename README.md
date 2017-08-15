@@ -23,7 +23,7 @@ _Note: This plugin is compatible with both version 2.x and 3.x of_ [PHP_CodeSnif
 Installation can be done with [composer], by requiring this package as a development dependency:
 
 ```bash
-composer require --dev dealerdirect/phpcodesniffer-composer-installer frenck/php-compatibility
+composer require --dev dealerdirect/phpcodesniffer-composer-installer
 ```
 
 That's it.
