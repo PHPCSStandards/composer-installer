@@ -49,9 +49,9 @@ multiple `phpcodesniffer-standard` packages.
     "require": {},
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "object-calisthenics/phpcs-calisthenics-rules": "*",
         "wimg/php-compatibility": "*",
-        "wp-coding-standards/wpcs": "*",
-        "object-calisthenics/phpcs-calisthenics-rules": "*"
+        "wp-coding-standards/wpcs": "*"
     }
 }
 ```
