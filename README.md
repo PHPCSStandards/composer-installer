@@ -36,15 +36,15 @@ Basically this plugin executes the following steps:
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
-### Calling the plugin directly 
+### Calling the plugin directly
 
-In some circumstances it is desirable to call this plugin's functionality 
+In some circumstances it is desirable to call this plugin's functionality
 directly. For instance, during development or in [CI][definition-ci] environments.
 
 As the plugin requires Composer to work, direct calls need to be wired through a
 project's `composer.json`.
 
-This is done by adding a call to the `Plugin::run` function in the `script` 
+This is done by adding a call to the `Plugin::run` function in the `script`
 section of the `composer.json`:
 
 ```json
@@ -58,7 +58,7 @@ section of the `composer.json`:
 
 ```
 
-The command can then be called using `composer run-script install-codestandards` or 
+The command can then be called using `composer run-script install-codestandards` or
 referenced from other script configurations, as follows:
 
 ```json
@@ -75,13 +75,13 @@ referenced from other script configurations, as follows:
 
 ```
 
-For more details about Composer scripts, please refer to [the section on scripts 
+For more details about Composer scripts, please refer to [the section on scripts
 in the Composer manual][composer-manual-scripts].
 
 ### Caveats
 
-When this plugin is installed globally, composer will load the _global_ plugin rather 
-than the one from the local repository. Despite [this behaviour being documented 
+When this plugin is installed globally, composer will load the _global_ plugin rather
+than the one from the local repository. Despite [this behaviour being documented
 in the composer manual][using-composer-plugins], it could potentially cause confusion
 as an version of the plugin could be run other than the version specified by the project.
 
@@ -138,7 +138,7 @@ Then please be sure to check out [our vacancies][vacancies].
 
 Did not find a matching vacancy? Just [get in touch][get-in-touch]!
 
-[workingatdealerdirect.eu][workingatdealerdirecteu]
+[dealerdirect.com][dealerdirectcom]
 
 ## License
 
@@ -166,14 +166,15 @@ THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
 [changelog]: https://github.com/DealerDirect/phpcodesniffer-composer-installer/releases
-[composer]: https://getcomposer.org/
-[composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
+[composer]: https://getcomposer.org/
 [contributing-guidelines]: CONTRIBUTING.md
 [contributors]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
+[dealerdirectcom]: http://www.dealerdirect.com/en
 [definition-ci]: https://en.wikipedia.org/wiki/Continuous_integration
 [frenck]: https://github.com/frenck
-[get-in-touch]: http://workingatdealerdirect.eu/open-sollicitatie/
+[get-in-touch]: https://www.dealerdirect.com/en/contact
 [license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2017.svg
 [packagist-shield]: https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg
@@ -187,8 +188,6 @@ THE SOFTWARE.
 [travis]: https://travis-ci.org/DealerDirect/phpcodesniffer-composer-installer
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
-[vacancies]: http://workingatdealerdirect.eu/?post_type=vacancy&s=&department=99
+[vacancies]: https://www.dealerdirect.com/en/vacancies
 [versioneye-shield]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg
 [versioneye]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790
-[workingatdealerdirecteu]: http://www.workingatdealerdirect.eu
-
