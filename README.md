@@ -36,6 +36,34 @@ Basically this plugin executes the following steps:
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
+### Example project
+
+The following is an example Composer project and has included
+multiple `phpcodesniffer-standard` packages.
+
+```json
+{
+    "name": "dealerdirect/example-project",
+    "description": "Just an example project",
+    "type": "project",
+    "require": {},
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "wimg/php-compatibility": "*",
+        "wp-coding-standards/wpcs": "*",
+        "object-calisthenics/phpcs-calisthenics-rules": "*"
+    }
+}
+```
+
+After running `composer install` PHP_CodeSniffer just works:
+
+```bash
+$ ./vendor/bin/phpcs -i
+The installed coding standards are MySource, PEAR, PSR1, PSR2, Squiz, Zend, PHPCompatibility, WordPress,
+WordPress-Core, WordPress-Docs, WordPress-Extra and WordPress-VIP
+```
+
 ### Calling the plugin directly
 
 In some circumstances it is desirable to call this plugin's functionality
