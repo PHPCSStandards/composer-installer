@@ -13,7 +13,7 @@
 
 This composer installer plugin allows for easy installation of [PHP_CodeSniffer][codesniffer] coding standards (rulesets).
 
-No more symbolic linking of directories, checking out repositories on specific locations and/or changing
+No more symbolic linking of directories, checking out repositories on specific locations or changing
 the `phpcs` configuration.
 
 _Note: This plugin is compatible with both version 2.x and 3.x of_ [PHP_CodeSniffer][codesniffer]
@@ -30,7 +30,7 @@ That's it.
 
 ### How it works
 
-Basically this plugin executes the following steps:
+Basically, this plugin executes the following steps:
 
 - This plugin search for `phpcodesniffer-standard` packages in all of your currently installed Composer packages.
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
@@ -66,7 +66,7 @@ WordPress-Core, WordPress-Docs, WordPress-Extra and WordPress-VIP
 
 ### Calling the plugin directly
 
-In some circumstances it is desirable to call this plugin's functionality
+In some circumstances, it is desirable to call this plugin's functionality
 directly. For instance, during development or in [CI][definition-ci] environments.
 
 As the plugin requires Composer to work, direct calls need to be wired through a
@@ -109,9 +109,9 @@ in the Composer manual][composer-manual-scripts].
 ### Caveats
 
 When this plugin is installed globally, composer will load the _global_ plugin rather
-than the one from the local repository. Despite [this behaviour being documented
-in the composer manual][using-composer-plugins], it could potentially cause confusion
-as an version of the plugin could be run other than the version specified by the project.
+than the one from the local repository. Despite [this behavior being documented
+in the composer manual][using-composer-plugins], it could potentially confuse
+as an other version of the plugin could be run and not the one specified by the project.
 
 ## Developing Coding Standards
 
