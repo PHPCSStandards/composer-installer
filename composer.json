@@ -24,6 +24,7 @@
     "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
   },
   "require": {
+    "php": "^5.3|^7",
     "composer-plugin-api": "^1.0",
     "squizlabs/php_codesniffer": "*"
   },

@@ -113,7 +113,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function init()
     {
-        $this->installedPaths = [];
+        $this->installedPaths = array();
 
         $this->processBuilder = new ProcessBuilder();
         $this->processBuilder->setPrefix($this->composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
@@ -126,14 +126,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [
-            ScriptEvents::POST_INSTALL_CMD => [
-                ['onDependenciesChangedEvent', 0],
-            ],
-            ScriptEvents::POST_UPDATE_CMD => [
-                ['onDependenciesChangedEvent', 0],
-            ],
-        ];
+        return array(
+            ScriptEvents::POST_INSTALL_CMD => array(
+                array('onDependenciesChangedEvent', 0),
+            ),
+            ScriptEvents::POST_UPDATE_CMD => array(
+                array('onDependenciesChangedEvent', 0),
+            ),
+        );
     }
 
     /**
@@ -178,7 +178,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $output = $this->processBuilder
-                ->setArguments(['--config-show', self::PHPCS_CONFIG_KEY])
+                ->setArguments(array('--config-show', self::PHPCS_CONFIG_KEY))
                 ->getProcess()
                 ->mustRun()
                 ->getOutput();
@@ -204,7 +204,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         // Check if we found installed paths to set.
         if (count($this->installedPaths) !== 0) {
             $paths = implode(',', $this->installedPaths);
-            $arguments = ['--config-set', self::PHPCS_CONFIG_KEY, $paths];
+            $arguments = array('--config-set', self::PHPCS_CONFIG_KEY, $paths);
             $configMessage = sprintf(
                 'PHP CodeSniffer Config <info>%s</info> <comment>set to</comment> <info>%s</info>',
                 self::PHPCS_CONFIG_KEY,
@@ -212,7 +212,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             );
         } else {
             // Delete the installed paths if none were found.
-            $arguments = ['--config-delete', self::PHPCS_CONFIG_KEY];
+            $arguments = array('--config-delete', self::PHPCS_CONFIG_KEY);
             $configMessage = sprintf(
                 'PHP CodeSniffer Config <info>%s</info> <comment>delete</comment>',
                 self::PHPCS_CONFIG_KEY
@@ -271,7 +271,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
 
-        $searchPaths = [getcwd()];
+        $searchPaths = array(getcwd());
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
             $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
