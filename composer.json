@@ -29,7 +29,8 @@
     "squizlabs/php_codesniffer": "*"
   },
   "require-dev": {
-    "composer/composer": "*"
+    "composer/composer": "*",
+    "wimg/php-compatibility": "^8.0"
   },
   "suggest": {
     "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
@@ -41,5 +42,10 @@
   },
   "extra": {
     "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+  },
+  "scripts": {
+    "install-codestandards": [
+      "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+    ]
   }
 }
