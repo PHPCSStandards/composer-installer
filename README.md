@@ -212,8 +212,8 @@ THE SOFTWARE.
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/DealerDirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/DealerDirect/phpcodesniffer-composer-installer/
-[travis-shield]: https://img.shields.io/travis/DealerDirect/phpcodesniffer-composer-installer.svg
-[travis]: https://travis-ci.org/DealerDirect/phpcodesniffer-composer-installer
+[travis-shield]: https://api.travis-ci.org/Dealerdirect/phpcodesniffer-composer-installer.svg?branch=master
+[travis]: https://travis-ci.org/Dealerdirect/phpcodesniffer-composer-installer
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [vacancies]: https://www.dealerdirect.com/en/vacancies
