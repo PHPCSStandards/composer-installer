@@ -3,6 +3,7 @@ language: php
 
 php:
   - hhvm
+  - 7.2
   - 7.1
   - 7.0
   - 5.6
@@ -40,6 +41,7 @@ matrix:
 before_install:
   - npm set loglevel error
   - npm set progress false
+  - composer global require "dealerdirect/phpcodesniffer-composer-installer:^4.3"
 
 install:
   - '[[ -f "${HOME}/bin/phpcs.phar" ]] || curl -L -o "${HOME}/bin/phpcs.phar" https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar'
