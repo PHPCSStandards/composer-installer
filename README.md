@@ -193,12 +193,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
-[changelog]: https://github.com/DealerDirect/phpcodesniffer-composer-installer/releases
+[changelog]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
 [composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
 [composer]: https://getcomposer.org/
 [contributing-guidelines]: CONTRIBUTING.md
-[contributors]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
+[contributors]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
 [dealerdirectcom]: http://www.dealerdirect.com/en
 [definition-ci]: https://en.wikipedia.org/wiki/Continuous_integration
 [frenck]: https://github.com/frenck
@@ -210,10 +210,10 @@ THE SOFTWARE.
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
-[scrutinizer-shield]: https://img.shields.io/scrutinizer/g/DealerDirect/phpcodesniffer-composer-installer.svg
-[scrutinizer]: https://scrutinizer-ci.com/g/DealerDirect/phpcodesniffer-composer-installer/
-[travis-shield]: https://img.shields.io/travis/DealerDirect/phpcodesniffer-composer-installer.svg
-[travis]: https://travis-ci.org/DealerDirect/phpcodesniffer-composer-installer
+[scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
+[scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
+[travis-shield]: https://img.shields.io/travis/Dealerdirect/phpcodesniffer-composer-installer.svg
+[travis]: https://travis-ci.org/Dealerdirect/phpcodesniffer-composer-installer
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [vacancies]: https://www.dealerdirect.com/en/vacancies
