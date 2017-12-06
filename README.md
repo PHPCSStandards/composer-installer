@@ -139,7 +139,7 @@ Requirements:
 ## Changelog
 
 This repository does not contain a `CHANGELOG.md` file, however, we do publish a changelog on each release
-using the [GitHub releases](changelog) functionality.
+using the [GitHub releases][changelog] functionality.
 
 ## Contributing
 
