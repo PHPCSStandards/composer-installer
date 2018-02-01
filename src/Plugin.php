@@ -32,6 +32,11 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
+    const ERROR_WRONG_MAX_DEPTH =
+        'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
+
+    const KEY_MAX_DEPTH = 'phpcodesniffer-max-depth';
+
     const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
     const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
     const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
@@ -276,17 +281,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
         }
 
+        $maxDepth = $this->getMaxDepth();
+        $minDepth = $this->getMinDepth();
+
         $finder = new Finder();
         $finder->files()
             ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
-            ->depth('< 4')
+            ->depth('< ' . $maxDepth)
             ->name('ruleset.xml')
             ->in($searchPaths);
 
-        // Only version 3.x and higher has support for having coding standard in the root of the directory.
-        if ($this->isPHPCodeSnifferInstalled('>= 3.0.0') !== true) {
-            $finder->depth('>= 1');
+        if ($minDepth !== 0) {
+            $finder->depth('>= ' . $minDepth);
         }
 
         // Process each found possible ruleset.
@@ -436,5 +443,54 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         }
         return implode('/', $relPath);
+    }
+
+    /**
+     * @return string
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function getMaxDepth()
+    {
+        $maxDepth = '4';
+
+        $extra = $this->composer->getPackage()->getExtra();
+
+        if (array_key_exists(self::KEY_MAX_DEPTH, $extra)) {
+            $maxDepth = $extra[self::KEY_MAX_DEPTH];
+            $minDepth = $this->getMinDepth();
+
+            if (is_int($maxDepth) === false     /* Must be an integer */
+                || $maxDepth <= $minDepth       /* Larger than the minimum */
+                || is_float($maxDepth) === true /* Within the boundaries of integer */
+            ) {
+                $message = vsprintf(
+                    self::ERROR_WRONG_MAX_DEPTH,
+                    array(
+                        'key' => self::KEY_MAX_DEPTH,
+                        'min' => $minDepth,
+                        'given' => var_export($maxDepth, true),
+                    )
+                );
+
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
+        return $maxDepth;
+    }
+
+    /**
+     * @return int
+     */
+    private function getMinDepth()
+    {
+        $minDepth = 0;
+
+        if ($this->isPHPCodeSnifferInstalled('>= 3.0.0') !== true) {
+            $minDepth = 1;
+        }
+
+        return $minDepth;
     }
 }
