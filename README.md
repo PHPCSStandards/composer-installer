@@ -1,7 +1,7 @@
 # PHP_CodeSniffer Standards Composer Installer Plugin
 
 ![Project Stage][project-stage-shield]
-![Maintenance][maintenance-shield]
+![Last Commit][last-updated-shield]
 ![Awesome][awesome-shield]
 [![License][license-shield]](LICENSE.md)
 
@@ -204,7 +204,7 @@ THE SOFTWARE.
 [frenck]: https://github.com/frenck
 [get-in-touch]: https://www.dealerdirect.com/en/contact
 [license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2017.svg
+[last-updated-shield]: https://img.shields.io/github/last-commit/Dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-shield]: https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version-shield]: https://img.shields.io/packagist/v/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
