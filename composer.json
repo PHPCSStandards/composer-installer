@@ -30,7 +30,7 @@
   },
   "require-dev": {
     "composer/composer": "*",
-    "wimg/php-compatibility": "^8.0"
+    "phpcompatibility/php-compatibility": "^8.0"
   },
   "suggest": {
     "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
