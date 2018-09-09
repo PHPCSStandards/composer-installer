@@ -7,7 +7,6 @@
 
 [![Travis][travis-shield]][travis]
 [![Scrutinizer][scrutinizer-shield]][scrutinizer]
-[![Dependency Status][versioneye-shield]][versioneye]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
 [![Packagist][packagist-shield]][packagist]
 
@@ -217,5 +216,3 @@ THE SOFTWARE.
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [vacancies]: https://www.dealerdirect.com/en/vacancies
-[versioneye-shield]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg
-[versioneye]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790
