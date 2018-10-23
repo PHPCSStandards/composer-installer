@@ -19,6 +19,7 @@ use Composer\Package\RootpackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Composer\Util\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -271,10 +272,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
 
-        $searchPaths = array(getcwd());
+        $cwd = getcwd();
+
+        $fileSystem = new Filesystem();
+
+        $searchPaths = array($cwd);
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
-            $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
+          $installPath = $this->composer->getInstallationManager()->getInstallPath($package);
+          $searchPaths[] = $fileSystem->isAbsolutePath($installPath) ? $installPath : ($cwd . DIRECTORY_SEPARATOR . $installPath);
         }
 
         $finder = new Finder();
