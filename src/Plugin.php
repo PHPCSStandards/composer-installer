@@ -280,7 +280,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
             $installPath = $this->composer->getInstallationManager()->getInstallPath($package);
-            $searchPaths[] = $fileSystem->isAbsolutePath($installPath) ? $installPath : ($cwd . DIRECTORY_SEPARATOR . $installPath);
+            if (!$fileSystem->isAbsolutePath($installPath)) {
+                $installPath = $cwd . DIRECTORY_SEPARATOR . $installPath;
+            }
+            $searchPaths[] = $installPath;
         }
 
         $finder = new Finder();
