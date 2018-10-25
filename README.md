@@ -110,7 +110,7 @@ in the Composer manual][composer-manual-scripts].
 When this plugin is installed globally, composer will load the _global_ plugin rather
 than the one from the local repository. Despite [this behavior being documented
 in the composer manual][using-composer-plugins], it could potentially confuse
-as an other version of the plugin could be run and not the one specified by the project.
+as another version of the plugin could be run and not the one specified by the project.
 
 ## Developing Coding Standards
 
@@ -124,7 +124,7 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
     "php" : ">=5.4.0,<8.0.0-dev",
-    "squizlabs/php_codesniffer" : "^2.0"
+    "squizlabs/php_codesniffer" : "^3.0"
   },
   "type" : "phpcodesniffer-standard"
 }
@@ -153,19 +153,7 @@ Thank you for being involved! :heart_eyes:
 
 The original idea and setup of this repository is by [Franck Nijhof][frenck], employee @ Dealerdirect.
 
-For a full list off all author and/or contributors, check [the contributors page][contributors].
-
-## Working @ Dealerdirect
-
-Dealerdirect is always on the looking for energetic and hard working developers
-and devops engineers.
-
-Interested in working at Dealerdirect?
-Then please be sure to check out [our vacancies][vacancies].
-
-Did not find a matching vacancy? Just [get in touch][get-in-touch]!
-
-[dealerdirect.com][dealerdirectcom]
+For a full list of all author and/or contributors, check [the contributors page][contributors].
 
 ## License
 
