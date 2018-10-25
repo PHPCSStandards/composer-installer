@@ -281,20 +281,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
         }
 
-        $maxDepth = $this->getMaxDepth();
-        $minDepth = $this->getMinDepth();
-
         $finder = new Finder();
         $finder->files()
             ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
-            ->depth('< ' . $maxDepth)
+            ->depth('< ' . $this->getMaxDepth())
+            ->depth('>= ' . $this->getMinDepth())
             ->name('ruleset.xml')
             ->in($searchPaths);
-
-        if ($minDepth !== 0) {
-            $finder->depth('>= ' . $minDepth);
-        }
 
         // Process each found possible ruleset.
         foreach ($finder as $ruleset) {
