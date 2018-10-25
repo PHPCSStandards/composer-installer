@@ -30,7 +30,8 @@
   },
   "require-dev": {
     "composer/composer": "*",
-    "wimg/php-compatibility": "^8.0"
+    "sensiolabs/security-checker": "^4.1.0",
+    "phpcompatibility/php-compatibility": "^9.0"
   },
   "suggest": {
     "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
