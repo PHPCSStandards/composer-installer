@@ -28,7 +28,7 @@ use Symfony\Component\Process\ProcessBuilder;
 /**
  * PHP_CodeSniffer standard installation manager.
  *
- * @author Franck Nijhof <f.nijhof@dealerdirect.nl>
+ * @author Franck Nijhof <franck.nijhof@dealerdirect.com>
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
