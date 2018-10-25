@@ -446,6 +446,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * Determines the maximum search depth when searching for Coding Standards.
+     *
      * @return string
      *
      * @throws \InvalidArgumentException
@@ -481,6 +483,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * Returns the minimal search depth for Coding Standard packages.
+     *
+     * Usually this is 0, unless PHP_CodeSniffer >= 3 is used.
+     *
      * @return int
      */
     private function getMinDepth()
