@@ -114,7 +114,7 @@ you to customize the search depth setting if needed.
 ```json
 {
     "extra": {
-        "phpcodesniffer-max-depth": 5
+        "phpcodesniffer-search-depth": 5
     }
 }
 ```

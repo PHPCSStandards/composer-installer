@@ -33,7 +33,7 @@ use Symfony\Component\Process\ProcessBuilder;
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
 
-    const KEY_MAX_DEPTH = 'phpcodesniffer-max-depth';
+    const KEY_MAX_DEPTH = 'phpcodesniffer-search-depth';
 
     const MESSAGE_ERROR_WRONG_MAX_DEPTH =
         'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
