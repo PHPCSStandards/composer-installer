@@ -285,7 +285,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $finder->files()
             ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
-            ->depth('< ' . $this->getMaxDepth())
+            ->depth('<= ' . $this->getMaxDepth())
             ->depth('>= ' . $this->getMinDepth())
             ->name('ruleset.xml')
             ->in($searchPaths);
@@ -448,7 +448,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getMaxDepth()
     {
-        $maxDepth = '4';
+        $maxDepth = 3;
 
         $extra = $this->composer->getPackage()->getExtra();
 

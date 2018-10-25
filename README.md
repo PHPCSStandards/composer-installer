@@ -107,7 +107,7 @@ in the Composer manual][composer-manual-scripts].
 
 ### Changing the Coding Standards search depth
 
-By default, this plugin searches up for Coding Standards up to four directories
+By default, this plugin searches up for Coding Standards up to three directories
 deep. In most cases, this should be sufficient. However, this plugin allows
 you to customize the search depth setting if needed.
 
