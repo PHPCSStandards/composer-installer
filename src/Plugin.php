@@ -117,8 +117,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $this->processBuilder = new ProcessBuilder();
         $this->processBuilder->setPrefix($this->composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
-
-        $this->loadInstalledPaths();
     }
 
     /**
@@ -154,6 +152,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
 
         if ($this->isPHPCodeSnifferInstalled() === true) {
+            $this->loadInstalledPaths();
             $installPathCleaned = $this->cleanInstalledPaths();
             $installPathUpdated = $this->updateInstalledPaths();
 
