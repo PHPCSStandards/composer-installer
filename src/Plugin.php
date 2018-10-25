@@ -442,7 +442,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Determines the maximum search depth when searching for Coding Standards.
      *
-     * @return string
+     * @return int
      *
      * @throws \InvalidArgumentException
      */
