@@ -32,11 +32,11 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
-    const ERROR_WRONG_MAX_DEPTH =
-        'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
 
     const KEY_MAX_DEPTH = 'phpcodesniffer-max-depth';
 
+    const MESSAGE_ERROR_WRONG_MAX_DEPTH =
+        'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
     const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
     const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
     const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
@@ -461,7 +461,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 || is_float($maxDepth) === true /* Within the boundaries of integer */
             ) {
                 $message = vsprintf(
-                    self::ERROR_WRONG_MAX_DEPTH,
+                    self::MESSAGE_ERROR_WRONG_MAX_DEPTH,
                     array(
                         'key' => self::KEY_MAX_DEPTH,
                         'min' => $minDepth,
