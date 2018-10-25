@@ -105,6 +105,20 @@ referenced from other script configurations, as follows:
 For more details about Composer scripts, please refer to [the section on scripts
 in the Composer manual][composer-manual-scripts].
 
+### Changing the Coding Standards search depth
+
+By default, this plugin searches up for Coding Standards up to four directories
+deep. In most cases, this should be sufficient. However, this plugin allows
+you to customize the search depth setting if needed.
+
+```json
+{
+    "extra": {
+        "phpcodesniffer-max-depth": 5
+    }
+}
+```
+
 ### Caveats
 
 When this plugin is installed globally, composer will load the _global_ plugin rather
