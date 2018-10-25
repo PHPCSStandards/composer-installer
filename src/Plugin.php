@@ -491,12 +491,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getMinDepth()
     {
-        $minDepth = 0;
-
         if ($this->isPHPCodeSnifferInstalled('>= 3.0.0') !== true) {
-            $minDepth = 1;
+            return 1;
         }
-
-        return $minDepth;
+        return 0;
     }
 }
