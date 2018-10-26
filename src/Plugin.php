@@ -73,6 +73,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $filesystem;
 
     /**
+     * @var string
+     */
+    private $cwd;
+
+    /**
      * Triggers the plugin's main functionality.
      *
      * Makes it possible to run the plugin as a custom command.
@@ -127,6 +132,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $this->installedPaths = array();
         $this->processExecutor = new ProcessExecutor($this->io);
         $this->filesystem = new Filesystem($this->processExecutor);
+        $this->cwd = getcwd();
     }
 
     /**
@@ -285,10 +291,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
 
-        $searchPaths = array(getcwd());
+        $searchPaths = array($this->cwd);
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
-            $searchPaths[] = $this->composer->getInstallationManager()->getInstallPath($package);
+            $installPath = $this->composer->getInstallationManager()->getInstallPath($package);
+            if ($this->filesystem->isAbsolutePath($installPath) === false) {
+                $installPath = $this->filesystem->normalizePath(
+                    $this->cwd . DIRECTORY_SEPARATOR . $installPath
+                );
+            }
+            $searchPaths[] = $installPath;
         }
 
         $finder = new Finder();
@@ -408,7 +420,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function isRunningGlobally()
     {
-        return ($this->composer->getConfig()->get('home') === getcwd());
+        return ($this->composer->getConfig()->get('home') === $this->cwd);
     }
 
     /**
