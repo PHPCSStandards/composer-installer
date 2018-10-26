@@ -19,11 +19,11 @@ use Composer\Package\RootpackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Composer\Util\ProcessExecutor;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * PHP_CodeSniffer standard installation manager.
@@ -62,9 +62,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $installedPaths;
 
     /**
-     * @var ProcessBuilder
+     * @var ProcessExecutor
      */
-    private $processBuilder;
+    private $processExecutor;
 
     /**
      * Triggers the plugin's main functionality.
@@ -119,9 +119,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function init()
     {
         $this->installedPaths = array();
-
-        $this->processBuilder = new ProcessBuilder();
-        $this->processBuilder->setPrefix($this->composer->getConfig()->get('bin-dir') . DIRECTORY_SEPARATOR . 'phpcs');
+        $this->processExecutor = new ProcessExecutor($this->io);
     }
 
     /**
@@ -181,11 +179,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function loadInstalledPaths()
     {
         if ($this->isPHPCodeSnifferInstalled() === true) {
-            $output = $this->processBuilder
-                ->setArguments(array('--config-show', self::PHPCS_CONFIG_KEY))
-                ->getProcess()
-                ->mustRun()
-                ->getOutput();
+            $this->processExecutor->execute(
+                sprintf(
+                    'phpcs --config-show %s',
+                    self::PHPCS_CONFIG_KEY
+                ),
+                $output,
+                $this->composer->getConfig()->get('bin-dir')
+            );
 
             $phpcsInstalledPaths = str_replace(self::PHPCS_CONFIG_KEY . ': ', '', $output);
             $phpcsInstalledPaths = trim($phpcsInstalledPaths);
@@ -225,12 +226,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $this->io->write($configMessage);
 
-        $configResult = $this->processBuilder
-            ->setArguments($arguments)
-            ->getProcess()
-            ->mustRun()
-            ->getOutput()
-        ;
+        $this->processExecutor->execute(
+            sprintf(
+                'phpcs %s',
+                implode(' ', $arguments)
+            ),
+            $configResult,
+            $this->composer->getConfig()->get('bin-dir')
+        );
 
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
