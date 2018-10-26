@@ -20,6 +20,7 @@ use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use Composer\Util\ProcessExecutor;
+use Composer\Util\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -65,6 +66,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @var ProcessExecutor
      */
     private $processExecutor;
+
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
 
     /**
      * Triggers the plugin's main functionality.
@@ -120,6 +126,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $this->installedPaths = array();
         $this->processExecutor = new ProcessExecutor($this->io);
+        $this->filesystem = new Filesystem($this->processExecutor);
     }
 
     /**
@@ -304,7 +311,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
             // Use relative paths for local project repositories.
             if ($this->isRunningGlobally() === false) {
-                $standardsPath = $this->getRelativePath($standardsPath);
+                $standardsPath = $this->filesystem->findShortestPath(
+                    $this->getPHPCodeSnifferInstallPath(),
+                    $standardsPath,
+                    true
+                );
             }
 
             // De-duplicate and add when directory is not configured.
@@ -398,48 +409,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function isRunningGlobally()
     {
         return ($this->composer->getConfig()->get('home') === getcwd());
-    }
-
-    /**
-     * Returns the relative path to PHP_CodeSniffer from any other absolute path
-     *
-     * @param string $to Absolute path
-     *
-     * @return string Relative path
-     */
-    private function getRelativePath($to)
-    {
-        $from = $this->getPHPCodeSnifferInstallPath();
-
-        // Some compatibility fixes for Windows paths
-        $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
-        $to = is_dir($to) ? rtrim($to, '\/') . '/' : $to;
-        $from = str_replace('\\', '/', $from);
-        $to = str_replace('\\', '/', $to);
-
-        $from = explode('/', $from);
-        $to = explode('/', $to);
-        $relPath = $to;
-
-        foreach ($from as $depth => $dir) {
-            // Find first non-matching dir
-            if ($dir === $to[$depth]) {
-                // Ignore this directory
-                array_shift($relPath);
-            } else {
-                // Get number of remaining dirs to $from
-                $remaining = count($from) - $depth;
-                if ($remaining > 1) {
-                    // Add traversals up to first matching dir
-                    $padLength = (count($relPath) + $remaining - 1) * -1;
-                    $relPath = array_pad($relPath, $padLength, '..');
-                    break;
-                } else {
-                    $relPath[0] = './' . $relPath[0];
-                }
-            }
-        }
-        return implode('/', $relPath);
     }
 
     /**
