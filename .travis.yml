@@ -30,9 +30,6 @@ matrix:
       # As 'trusty' is not supporting PHP 5.2/5.3 anymore, we need to force using 'precise'.
       dist: precise
 
-  allow_failures:
-    - php: hhvm
-
   fast_finish: true
 
 before_install:
