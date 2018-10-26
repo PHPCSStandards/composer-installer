@@ -78,11 +78,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $processExecutor;
 
     /**
-     * @var string
-     */
-    private $cwd;
-
-    /**
      * Triggers the plugin's main functionality.
      *
      * Makes it possible to run the plugin as a custom command.
@@ -139,7 +134,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $this->processExecutor = new ProcessExecutor($this->io);
         $this->filesystem = new Filesystem($this->processExecutor);
-        $this->cwd = getcwd();
     }
 
     /**
@@ -324,7 +318,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $standardsPath = $ruleset->getPath();
 
             // Pick the directory above the directory containing the standard, unless this is the project root.
-            if ($standardsPath !== getcwd()) {
+            if ($standardsPath !== $this->cwd) {
                 $standardsPath = dirname($standardsPath);
             }
 
