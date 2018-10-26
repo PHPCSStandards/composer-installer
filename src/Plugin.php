@@ -19,8 +19,8 @@ use Composer\Package\RootpackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Composer\Util\ProcessExecutor;
 use Composer\Util\Filesystem;
+use Composer\Util\ProcessExecutor;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -38,9 +38,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     const MESSAGE_ERROR_WRONG_MAX_DEPTH =
         'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
-    const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
-    const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
     const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
+    const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
+    const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
 
     const PACKAGE_NAME = 'squizlabs/php_codesniffer';
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
@@ -53,9 +53,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $composer;
 
     /**
-     * @var IOInterface
+     * @var string
      */
-    private $io;
+    private $cwd;
+
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
 
     /**
      * @var array
@@ -63,14 +68,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $installedPaths;
 
     /**
+     * @var IOInterface
+     */
+    private $io;
+
+    /**
      * @var ProcessExecutor
      */
     private $processExecutor;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
 
     /**
      * @var string
@@ -108,8 +113,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @throws \RuntimeException
      * @throws LogicException
-     * @throws RuntimeException
      * @throws ProcessFailedException
+     * @throws RuntimeException
      */
     public function activate(Composer $composer, IOInterface $io)
     {
@@ -129,7 +134,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function init()
     {
+        $this->cwd = getcwd();
         $this->installedPaths = array();
+
         $this->processExecutor = new ProcessExecutor($this->io);
         $this->filesystem = new Filesystem($this->processExecutor);
         $this->cwd = getcwd();
@@ -154,9 +161,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Entry point for post install and post update events.
      *
      * @throws \InvalidArgumentException
-     * @throws RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
+     * @throws RuntimeException
      */
     public function onDependenciesChangedEvent()
     {
@@ -185,9 +192,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Load all paths from PHP_CodeSniffer into an array.
      *
-     * @throws RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
+     * @throws RuntimeException
      */
     private function loadInstalledPaths()
     {
@@ -213,9 +220,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Save all coding standard paths back into PHP_CodeSniffer
      *
-     * @throws RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
+     * @throws RuntimeException
      */
     private function saveInstalledPaths()
     {
@@ -305,12 +312,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $finder = new Finder();
         $finder->files()
-            ->ignoreUnreadableDirs()
-            ->ignoreVCS(true)
             ->depth('<= ' . $this->getMaxDepth())
             ->depth('>= ' . $this->getMinDepth())
-            ->name('ruleset.xml')
-            ->in($searchPaths);
+            ->ignoreUnreadableDirs()
+            ->ignoreVCS(true)
+            ->in($searchPaths)
+            ->name('ruleset.xml');
 
         // Process each found possible ruleset.
         foreach ($finder as $ruleset) {
