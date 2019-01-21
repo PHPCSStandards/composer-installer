@@ -25,6 +25,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * PHP_CodeSniffer standard installation manager.
@@ -240,11 +241,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $exitCode = $this->processExecutor->execute(
             sprintf(
-                'phpcs %s',
+                '%s ./bin/phpcs %s',
+                $this->getPhpExecCommand(),
                 implode(' ', $arguments)
             ),
             $configResult,
-            $this->composer->getConfig()->get('bin-dir')
+            $this->getPHPCodeSnifferInstallPath()
         );
 
         if ($exitCode === 0) {
@@ -260,6 +262,30 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
         }
+    }
+
+    /**
+     * Get the path to the current PHP version being used.
+     *
+     * Duplicate of the same in the EventDispatcher class in Composer itself.
+     */
+    protected function getPhpExecCommand()
+    {
+        $finder = new PhpExecutableFinder();
+        $phpPath = $finder->find(false);
+        if (!$phpPath) {
+            throw new \RuntimeException('Failed to locate PHP binary to execute ' . $phpPath);
+        }
+        $phpArgs = $finder->findArguments();
+        $phpArgs = $phpArgs ? ' ' . implode(' ', $phpArgs) : '';
+
+        $command  = ProcessExecutor::escape($phpPath);
+        $command .= $phpArgs;
+        $command .= ' -d allow_url_fopen=' . ProcessExecutor::escape(ini_get('allow_url_fopen'));
+        $command .= ' -d disable_functions=' . ProcessExecutor::escape(ini_get('disable_functions'));
+        $command .= ' -d memory_limit=' . ProcessExecutor::escape(ini_get('memory_limit'));
+
+        return $command;
     }
 
     /**
