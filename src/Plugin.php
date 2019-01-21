@@ -238,9 +238,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             );
         }
 
-        $this->io->write($configMessage);
-
-        $this->processExecutor->execute(
+        $exitCode = $this->processExecutor->execute(
             sprintf(
                 'phpcs %s',
                 implode(' ', $arguments)
@@ -248,6 +246,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $configResult,
             $this->composer->getConfig()->get('bin-dir')
         );
+
+        if ($exitCode === 0) {
+            $this->io->write($configMessage);
+        } else {
+            $failMessage = sprintf(
+                'Failed to set PHP CodeSniffer <info>%s</info> Config',
+                self::PHPCS_CONFIG_KEY
+            );
+            $this->io->write($failMessage);
+        }
 
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
