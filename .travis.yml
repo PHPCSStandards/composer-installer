@@ -45,4 +45,4 @@ script:
   - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
   - if [[ "$SNIFF" == "1" ]]; then composer install-codestandards; fi
   - if [[ "$SNIFF" == "1" ]]; then ./vendor/bin/phpcs; fi
-  - ./vendor/bin/security-checker -n security:check --end-point=http://security.sensiolabs.org/check_lock
+  - ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock
