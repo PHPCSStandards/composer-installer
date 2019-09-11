@@ -239,12 +239,20 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             );
         }
 
+        // Prepare message in case of failure
+        $failMessage = sprintf(
+            'Failed to set PHP CodeSniffer <info>%s</info> Config',
+            self::PHPCS_CONFIG_KEY
+        );
+
+        // Okay, lets rock! 🤘
+        $command = vsprintf('%s ./bin/phpcs %s', array(
+            'php executable' => $this->getPhpExecCommand(),
+            'arguments' => implode(' ', $arguments)
+        ));
+
         $exitCode = $this->processExecutor->execute(
-            sprintf(
-                '%s ./bin/phpcs %s',
-                $this->getPhpExecCommand(),
-                implode(' ', $arguments)
-            ),
+            $command,
             $configResult,
             $this->getPHPCodeSnifferInstallPath()
         );
@@ -252,10 +260,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if ($exitCode === 0) {
             $this->io->write($configMessage);
         } else {
-            $failMessage = sprintf(
-                'Failed to set PHP CodeSniffer <info>%s</info> Config',
-                self::PHPCS_CONFIG_KEY
-            );
             $this->io->write($failMessage);
         }
 
@@ -272,18 +276,25 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function getPhpExecCommand()
     {
         $finder = new PhpExecutableFinder();
+
         $phpPath = $finder->find(false);
-        if (!$phpPath) {
+
+        if ($phpPath === false) {
             throw new \RuntimeException('Failed to locate PHP binary to execute ' . $phpPath);
         }
-        $phpArgs = $finder->findArguments();
-        $phpArgs = $phpArgs ? ' ' . implode(' ', $phpArgs) : '';
 
-        $command  = ProcessExecutor::escape($phpPath);
-        $command .= $phpArgs;
-        $command .= ' -d allow_url_fopen=' . ProcessExecutor::escape(ini_get('allow_url_fopen'));
-        $command .= ' -d disable_functions=' . ProcessExecutor::escape(ini_get('disable_functions'));
-        $command .= ' -d memory_limit=' . ProcessExecutor::escape(ini_get('memory_limit'));
+        $phpArgs = $finder->findArguments();
+        $phpArgs = $phpArgs
+            ? ' ' . implode(' ', $phpArgs)
+            : ''
+        ;
+
+        $command  = ProcessExecutor::escape($phpPath) .
+            $phpArgs .
+            ' -d allow_url_fopen=' . ProcessExecutor::escape(ini_get('allow_url_fopen')) .
+            ' -d disable_functions=' . ProcessExecutor::escape(ini_get('disable_functions')) .
+            ' -d memory_limit=' . ProcessExecutor::escape(ini_get('memory_limit'))
+        ;
 
         return $command;
     }
