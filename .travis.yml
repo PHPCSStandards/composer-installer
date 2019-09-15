@@ -2,7 +2,7 @@
 language: php
 
 php:
-  - 7.3
+  - 7.2
   - 7.1
   - 7.0
   - 5.6
@@ -17,7 +17,7 @@ env:
 
 matrix:
   include:
-    - php: 7.2
+    - php: 7.3
       env: SNIFF=1
     - php: 5.5
       # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
@@ -39,10 +39,11 @@ install:
   - npm install -g jsonlint
 
 script:
-  - find . -type f -name "*.json" -print0 | xargs -0 -n1 jsonlint -q
-  - find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
-  - composer validate
+  - if [[ "$SNIFF" == "1" ]];then find . -type f -name "*.json" -print0 | xargs -0 -n1 jsonlint -q; fi
+  - if [[ "$SNIFF" == "1" ]];then find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l; fi
+  - if [[ "$SNIFF" == "1" ]];then composer validate; fi
   - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
-  - if [[ "$SNIFF" == "1" ]]; then composer install-codestandards; fi
-  - if [[ "$SNIFF" == "1" ]]; then ./vendor/bin/phpcs; fi
-  - ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock
+  - composer install-codestandards
+  - ./vendor/bin/phpcs -i
+  - ./vendor/bin/phpcs --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --exclude=PHPCompatibility.Upgrade.LowPHP ./src/
+  - if [[ "$SNIFF" == "1" ]];then ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock; fi
