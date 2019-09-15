@@ -6,12 +6,6 @@ php:
   - 7.1
   - 7.0
   - 5.6
-  - 5.5
-  - 5.4
-
-# This triggers builds to run on the new (faster) TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
 
 cache:
   directories:
@@ -25,8 +19,14 @@ matrix:
   include:
     - php: 7.2
       env: SNIFF=1
+    - php: 5.5
+      # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
+      dist: trusty
+    - php: 5.4
+      # As the latest Debian does not support PHP 5.4 anymore, we need to force using 'trusty'.
+      dist: trusty
     - php: 5.3
-      # As 'trusty' is not supporting PHP 5.2/5.3 anymore, we need to force using 'precise'.
+      # As the latest Debian does not support PHP 5.3 anymore, we need to force using 'precise'.
       dist: precise
 
   fast_finish: true
