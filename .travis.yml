@@ -17,6 +17,8 @@ env:
 
 matrix:
   include:
+    - php: 7.4snapshot
+      allow_failures: true
     - php: 7.3
       env: SNIFF=1
     - php: 5.5
