@@ -441,9 +441,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $maxDepth = $extra[self::KEY_MAX_DEPTH];
             $minDepth = $this->getMinDepth();
 
-            if (is_int($maxDepth) === false     /* Must be an integer */
-                || $maxDepth <= $minDepth       /* Larger than the minimum */
-                || is_float($maxDepth) === true /* Within the boundaries of integer */
+            if ((string) (int) $maxDepth !== (string) $maxDepth /* Must be an integer or cleanly castable to one */
+                || $maxDepth <= $minDepth                       /* Larger than the minimum */
+                || is_float($maxDepth) === true                 /* Within the boundaries of integer */
             ) {
                 $message = vsprintf(
                     self::MESSAGE_ERROR_WRONG_MAX_DEPTH,
@@ -458,7 +458,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         }
 
-        return $maxDepth;
+        return (int) $maxDepth;
     }
 
     /**
