@@ -15,5 +15,9 @@
     <rule ref="PHPCompatibility"/>
     <config name="testVersion" value="5.3-"/>
 
-    <rule ref="PSR12"/>
+    <rule ref="PSR12">
+        <!-- Constant visibility can not be declared (yet) as the minimum supported PHP version is 5.3
+             and constant visibility was only introduced in PHP 7.1. -->
+        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    </rule>
 </ruleset>

@@ -269,7 +269,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             // This might be a relative path as well
             $alternativePath = realpath($this->getPHPCodeSnifferInstallPath() . DIRECTORY_SEPARATOR . $path);
 
-            if ((is_dir($path) === false || is_readable($path) === false) &&
+            if (
+                (is_dir($path) === false || is_readable($path) === false) &&
                 (is_dir($alternativePath) === false || is_readable($alternativePath) === false)
             ) {
                 unset($this->installedPaths[$key]);
@@ -362,7 +363,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         );
 
-        if (! $this->composer->getPackage() instanceof RootpackageInterface
+        if (
+            ! $this->composer->getPackage() instanceof RootpackageInterface
             && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE
         ) {
             $codingStandardPackages[] = $this->composer->getPackage();
@@ -441,7 +443,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $maxDepth = $extra[self::KEY_MAX_DEPTH];
             $minDepth = $this->getMinDepth();
 
-            if ((string) (int) $maxDepth !== (string) $maxDepth /* Must be an integer or cleanly castable to one */
+            if (
+                (string) (int) $maxDepth !== (string) $maxDepth /* Must be an integer or cleanly castable to one */
                 || $maxDepth <= $minDepth                       /* Larger than the minimum */
                 || is_float($maxDepth) === true                 /* Within the boundaries of integer */
             ) {
