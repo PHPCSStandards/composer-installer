@@ -24,8 +24,7 @@ jobs:
         - composer validate
 
     - stage: test
-      php: 7.4snapshot
-      allow_failures: true
+      php: 7.4
     - php: 7.3
       env: SECURITY=1
     - php: 7.2
