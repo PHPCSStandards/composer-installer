@@ -245,17 +245,27 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             self::PHPCS_CONFIG_KEY
         );
 
-        // Okay, lets rock! 🤘
-        $command = vsprintf('%s ./bin/phpcs %s', array(
-            'php executable' => $this->getPhpExecCommand(),
-            'arguments' => implode(' ', $arguments)
-        ));
+        // Determine the path to the main PHPCS file.
+        $phpcsPath = $this->getPHPCodeSnifferInstallPath();
+        if (file_exists($phpcsPath . '/bin/phpcs') === true) {
+            // PHPCS 3.x.
+            $phpcsExecutable = './bin/phpcs';
+        } else {
+            // PHPCS 2.x.
+            $phpcsExecutable = './scripts/phpcs';
+        }
 
-        $exitCode = $this->processExecutor->execute(
-            $command,
-            $configResult,
-            $this->getPHPCodeSnifferInstallPath()
+        // Okay, lets rock!
+        $command = vsprintf(
+            '%s %s %s',
+            array(
+                'php executable'   => $this->getPhpExecCommand(),
+                'phpcs executable' => $phpcsExecutable,
+                'arguments'        => implode(' ', $arguments)
+            )
         );
+
+        $exitCode = $this->processExecutor->execute($command, $configResult, $phpcsPath);
 
         if ($exitCode === 0) {
             $this->io->write($configMessage);
