@@ -50,6 +50,10 @@ jobs:
 
   fast_finish: true
 
+before_install:
+  # Speed up build time by disabling Xdebug.
+  phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+
 script:
   - find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
   - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
