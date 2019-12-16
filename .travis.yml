@@ -5,6 +5,7 @@ cache:
   directories:
     - "${HOME}/.composer/cache"
     - "${HOME}/.npm/"
+
 env:
   global:
     - PATH="${HOME}/bin:${PATH}"
@@ -25,27 +26,56 @@ jobs:
 
     - stage: test
       php: 7.4
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 7.4
+      # Lowest PHPCS version on which PHP 7.4 is supported.
+      env: PHPCS_VERSION="3.5.0"
     - php: 7.3
-      env: SECURITY=1
+      env: SECURITY=1 PHPCS_VERSION="3.5.3" LINT=1 PHPCS=1
+    - php: 7.3
+      # Lowest PHPCS version on which PHP 7.3 is supported.
+      env: PHPCS_VERSION="3.3.1"
     - php: 7.2
+      env: PHPCS_VERSION="3.2.3" LINT=1
+    - php: 7.2
+      # Lowest PHPCS version on which PHP 7.2 is supported.
+      env: PHPCS_VERSION="2.9.2"
     - php: 7.1
+      env: PHPCS_VERSION="3.1.1" LINT=1
+    - php: 7.1
+      env: PHPCS_VERSION="2.0.0"
     - php: 7.0
+      env: PHPCS_VERSION="3.4.2" LINT=1
+    - php: 7.0
+      env: PHPCS_VERSION="2.2.0"
     - php: 5.6
+      env: PHPCS_VERSION="3.0.2" LINT=1
+    - php: 5.6
+      env: PHPCS_VERSION="2.4.0"
     - php: 5.5
       # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
       dist: trusty
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 5.5
+      # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
+      dist: trusty
+      env: PHPCS_VERSION="2.6.1"
     - php: 5.4
       # As the latest Debian does not support PHP 5.4 anymore, we need to force using 'trusty'.
       dist: trusty
+      env: PHPCS_VERSION="3.5.3" LINT=1
+    - php: 5.4
+      # As the latest Debian does not support PHP 5.4 anymore, we need to force using 'trusty'.
+      dist: trusty
+      env: PHPCS_VERSION="2.8.1"
     - php: 5.3
       # As the latest Debian does not support PHP 5.3 anymore, we need to force using 'precise'.
       dist: precise
-      script:
-        - find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
-        - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
-        - composer install-codestandards
-        - ./vendor/bin/phpcs -i
-        - ./vendor/bin/phpcs -s --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --exclude=PHPCompatibility.Upgrade.LowPHP ./src/
+      env: PHPCS_VERSION="2.9.2"
+    - php: 5.3
+      # As the latest Debian does not support PHP 5.3 anymore, we need to force using 'precise'.
+      dist: precise
+      env: PHPCS_VERSION="2.0.0"
 
   fast_finish: true
 
@@ -53,10 +83,36 @@ before_install:
   # Speed up build time by disabling Xdebug.
   phpenv config-rm xdebug.ini || echo 'No xdebug config.'
 
-script:
-  - find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
+install:
+  - composer require --no-update --no-suggest --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
+  - |
+    if [[ ${PHPCS_VERSION:0:3} < "2.2" ]]; then
+      # Install PHPCompatibility 7.x for PHPCS < 2.2.
+      composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility:"^7.0"
+    elif [[ ${PHPCS_VERSION:0:3} < "2.3" ]]; then
+      # Install PHPCompatibility 8.x for PHPCS 2.2 < 2.3.
+      composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility:"^8.0"
+    fi
   - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
+  - |
+    if [[ ${PHPCS_VERSION:0:3} < "2.2" ]]; then
+      # Rename the PHPCompatibility directory as PHPCompatibility 7.x wasn't fully compatible with Composer yet.
+      mv ./vendor/phpcompatibility/php-compatibility ./vendor/phpcompatibility/PHPCompatibility
+    fi
+
+script:
+  - if [[ "$LINT" == "1" ]]; then if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi; fi
   - composer install-codestandards
   - ./vendor/bin/phpcs -i
-  - ./vendor/bin/phpcs -s --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --exclude=PHPCompatibility.Upgrade.LowPHP ./src/
+  - |
+    if [[ "$PHPCS" == "1" ]]; then
+      # Do the actual code style check for this repo.
+      ./vendor/bin/phpcs
+    elif [[ ${PHPCS_VERSION:0:3} < "2.3" ]]; then
+      # Test that an external standard has been registered correctly by running it against the codebase on PHPCS < 2.3.
+      ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.PHP.DeprecatedFunctions
+    else
+      # Test that an external standard has been registered correctly by running it against the codebase.
+      ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions
+    fi
   - if [[ "$SECURITY" == "1" ]];then ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock; fi
