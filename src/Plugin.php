@@ -25,6 +25,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * PHP_CodeSniffer standard installation manager.
@@ -238,20 +239,74 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             );
         }
 
-        $this->io->write($configMessage);
-
-        $this->processExecutor->execute(
-            sprintf(
-                'phpcs %s',
-                implode(' ', $arguments)
-            ),
-            $configResult,
-            $this->composer->getConfig()->get('bin-dir')
+        // Prepare message in case of failure
+        $failMessage = sprintf(
+            'Failed to set PHP CodeSniffer <info>%s</info> Config',
+            self::PHPCS_CONFIG_KEY
         );
+
+        // Determine the path to the main PHPCS file.
+        $phpcsPath = $this->getPHPCodeSnifferInstallPath();
+        if (file_exists($phpcsPath . '/bin/phpcs') === true) {
+            // PHPCS 3.x.
+            $phpcsExecutable = './bin/phpcs';
+        } else {
+            // PHPCS 2.x.
+            $phpcsExecutable = './scripts/phpcs';
+        }
+
+        // Okay, lets rock!
+        $command = vsprintf(
+            '%s %s %s',
+            array(
+                'php executable'   => $this->getPhpExecCommand(),
+                'phpcs executable' => $phpcsExecutable,
+                'arguments'        => implode(' ', $arguments)
+            )
+        );
+
+        $exitCode = $this->processExecutor->execute($command, $configResult, $phpcsPath);
+
+        if ($exitCode === 0) {
+            $this->io->write($configMessage);
+        } else {
+            $this->io->write($failMessage);
+        }
 
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
         }
+    }
+
+    /**
+     * Get the path to the current PHP version being used.
+     *
+     * Duplicate of the same in the EventDispatcher class in Composer itself.
+     */
+    protected function getPhpExecCommand()
+    {
+        $finder = new PhpExecutableFinder();
+
+        $phpPath = $finder->find(false);
+
+        if ($phpPath === false) {
+            throw new \RuntimeException('Failed to locate PHP binary to execute ' . $phpPath);
+        }
+
+        $phpArgs = $finder->findArguments();
+        $phpArgs = $phpArgs
+            ? ' ' . implode(' ', $phpArgs)
+            : ''
+        ;
+
+        $command  = ProcessExecutor::escape($phpPath) .
+            $phpArgs .
+            ' -d allow_url_fopen=' . ProcessExecutor::escape(ini_get('allow_url_fopen')) .
+            ' -d disable_functions=' . ProcessExecutor::escape(ini_get('disable_functions')) .
+            ' -d memory_limit=' . ProcessExecutor::escape(ini_get('memory_limit'))
+        ;
+
+        return $command;
     }
 
     /**
