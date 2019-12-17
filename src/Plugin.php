@@ -164,6 +164,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $io = $this->io;
         $isVerbose = $io->isVerbose();
+        $exitCode = 0;
 
         if ($isVerbose) {
             $io->write(sprintf('<info>%s</info>', self::MESSAGE_RUNNING_INSTALLER));
@@ -175,13 +176,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $installPathUpdated = $this->updateInstalledPaths();
 
             if ($installPathCleaned === true || $installPathUpdated === true) {
-                $this->saveInstalledPaths();
+                $exitCode = $this->saveInstalledPaths();
             } elseif ($isVerbose) {
                 $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
         } elseif ($isVerbose) {
             $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
+            $exitCode = 1;
         }
+
+        exit($exitCode);
     }
 
     /**
@@ -218,6 +222,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @throws LogicException
      * @throws ProcessFailedException
      * @throws RuntimeException
+     *
+     * @return int Exit code. 0 for success, 1 or higher for failure.
      */
     private function saveInstalledPaths()
     {
@@ -276,6 +282,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
         }
+
+        return $exitCode;
     }
 
     /**
