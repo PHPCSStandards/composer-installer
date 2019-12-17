@@ -31,7 +31,7 @@ That's it.
 
 Basically, this plugin executes the following steps:
 
-- This plugin search for `phpcodesniffer-standard` packages in all of your currently installed Composer packages.
+- This plugin searches for `phpcodesniffer-standard` packages in all of your currently installed Composer packages.
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
@@ -148,6 +148,36 @@ Requirements:
 * The repository may contain one or more standards.
 * Each standard can have a separate directory no deeper than 3 levels from the repository root.
 * The package `type` must be `phpcodesniffer-standard`. Without this, the plugin will not trigger.
+
+### Requiring the plugin from within your coding standard
+
+If your coding standard itself depends on additional external PHPCS standards, this plugin can
+make life easier on your end-users by taking care of the installation of all standards - yours
+and your dependencies - for them.
+
+This can help reduce the number of support questions about setting the `installed_paths`, as well
+as simplify your standard's installation instructions.
+
+For this to work, make sure your external standard adds this plugin to the `composer.json` config
+via `require`, **not** `require-dev`.
+
+> :warning: Your end-user may already `require-dev` this plugin and/or other external standards used
+> by your end-users may require this plugin as well.
+>
+> To prevent your end-users getting into "_dependency hell_", make sure to make the version requirement
+> for this plugin flexible.
+>
+> As, for now, this plugin is still regarded as "unstable" (version < 1.0), remember that Composer
+> treats unstable minors as majors and will not be able to resolve one config requiring this plugin
+> at version `^0.4`, while another requires it at version `^0.5`.
+> Either allow multiple minors or use `*` as the version requirement.
+>
+> Some examples of flexible requirements which can be used:
+> ```bash
+> composer require dealerdirect/phpcodesniffer-composer-installer:"*"
+> composer require dealerdirect/phpcodesniffer-composer-installer:"0.*"
+> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4 || ^0.5"
+> ```
 
 ## Changelog
 
