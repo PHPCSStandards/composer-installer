@@ -180,9 +180,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             } elseif ($isVerbose) {
                 $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
-        } elseif ($isVerbose) {
-            $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
+        } else {
             $exitCode = 1;
+            if ($isVerbose) {
+                $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
+            }
         }
 
         exit($exitCode);
