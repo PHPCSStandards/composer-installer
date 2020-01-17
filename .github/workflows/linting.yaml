@@ -42,10 +42,3 @@ jobs:
       - uses: actions/checkout@v1
       - name: Check markdown
         uses: pipeline-components/remark-lint@master
-
-  php-security-checker:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
-      - name: Check php composer for security issues
-        uses: pipeline-components/php-security-checker@master
