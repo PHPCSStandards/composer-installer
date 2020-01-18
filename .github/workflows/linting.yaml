@@ -1,0 +1,56 @@
+---
+name: Linting jobs
+
+# yamllint disable-line rule:truthy
+on:
+  - push
+  - pull_request
+
+jobs:
+  validate-composer:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Validate composer.json and composer.lock
+        uses: "docker://composer"
+        with:
+          args: "composer validate --no-check-lock"
+
+  lint-json:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Lint php
+        uses: "docker://pipelinecomponents/jsonlint:latest"
+        with:
+          args: "find . -not -path './.git/*' -name '*.json' -type f -exec jsonlint --quiet {} ;"
+
+  yamllint:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check yaml for issues
+        uses: pipeline-components/yamllint@master
+
+  php-codesniffer:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check php composer for security issues
+        uses: pipeline-components/php-codesniffer@master
+
+  lint-remark:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check markdown
+        uses: pipeline-components/remark-lint@master
+
+  php-compitibility:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check php compatibility
+        uses: pipeline-components/php-codesniffer@master
+        with:
+          options: "-s -p --colors --extensions=php --standard=PHPCompatibility --runtime-set testVersion 5.3-7.4"
