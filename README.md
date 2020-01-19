@@ -169,14 +169,14 @@ via `require`, **not** `require-dev`.
 >
 > As, for now, this plugin is still regarded as "unstable" (version < 1.0), remember that Composer
 > treats unstable minors as majors and will not be able to resolve one config requiring this plugin
-> at version `^0.4`, while another requires it at version `^0.5`.
+> at version `^0.5`, while another requires it at version `^0.6`.
 > Either allow multiple minors or use `*` as the version requirement.
 >
 > Some examples of flexible requirements which can be used:
 > ```bash
 > composer require dealerdirect/phpcodesniffer-composer-installer:"*"
 > composer require dealerdirect/phpcodesniffer-composer-installer:"0.*"
-> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4 || ^0.5"
+> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4 || ^0.5 || ^0.6"
 > ```
 
 ## Changelog
