@@ -214,7 +214,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             if (preg_match($regex, $output, $match) === 1) {
                 $phpcsInstalledPaths = str_replace(self::PHPCS_CONFIG_KEY . ': ', '', $match[0]);
                 $phpcsInstalledPaths = trim($phpcsInstalledPaths);
-    
+
                 if ($phpcsInstalledPaths !== '') {
                     $this->installedPaths = explode(',', $phpcsInstalledPaths);
                 }
@@ -278,6 +278,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         );
 
         $exitCode = $this->processExecutor->execute($command, $configResult, $phpcsPath);
+        if ($exitCode === 0) {
+            $exitCode = $this->verifySaveSuccess();
+        }
 
         if ($exitCode === 0) {
             $this->io->write($configMessage);
@@ -287,6 +290,40 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         if ($this->io->isVerbose() && !empty($configResult)) {
             $this->io->write(sprintf('<info>%s</info>', $configResult));
+        }
+
+        return $exitCode;
+    }
+
+    /**
+     * Verify that the paths which were expected to be saved, have been.
+     *
+     * @return int Exit code. 0 for success, 1 for failure.
+     */
+    private function verifySaveSuccess()
+    {
+        $exitCode      = 1;
+        $expectedPaths = $this->installedPaths;
+
+        // Request the currently set installed paths after the save.
+        $this->loadInstalledPaths();
+
+        $registeredPaths = array_intersect($this->installedPaths, $expectedPaths);
+        $registeredCount = count($registeredPaths);
+        $expectedCount   = count($expectedPaths);
+
+        if ($expectedCount === $registeredCount) {
+            $exitCode = 0;
+        }
+
+        if ($exitCode === 1 && $this->io->isVerbose()) {
+            $verificationMessage = sprintf(
+                "Paths to external standards found by the plugin: <info>%s</info>\n"
+                . 'Actual paths registered with PHPCS: <info>%s</info>',
+                implode(', ', $expectedPaths),
+                implode(', ', $this->installedPaths)
+            );
+            $this->io->write($verificationMessage);
         }
 
         return $exitCode;
