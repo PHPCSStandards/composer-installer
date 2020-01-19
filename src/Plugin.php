@@ -46,6 +46,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     const PACKAGE_NAME = 'squizlabs/php_codesniffer';
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
+    const PHPCS_CONFIG_REGEX = '`%s:[^\r\n]+`';
     const PHPCS_CONFIG_KEY = 'installed_paths';
 
     /**
@@ -209,11 +210,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $this->composer->getConfig()->get('bin-dir')
             );
 
-            $phpcsInstalledPaths = str_replace(self::PHPCS_CONFIG_KEY . ': ', '', $output);
-            $phpcsInstalledPaths = trim($phpcsInstalledPaths);
-
-            if ($phpcsInstalledPaths !== '') {
-                $this->installedPaths = explode(',', $phpcsInstalledPaths);
+            $regex = sprintf(self::PHPCS_CONFIG_REGEX, self::PHPCS_CONFIG_KEY);
+            if (preg_match($regex, $output, $match) === 1) {
+                $phpcsInstalledPaths = str_replace(self::PHPCS_CONFIG_KEY . ': ', '', $match[0]);
+                $phpcsInstalledPaths = trim($phpcsInstalledPaths);
+    
+                if ($phpcsInstalledPaths !== '') {
+                    $this->installedPaths = explode(',', $phpcsInstalledPaths);
+                }
             }
         }
     }
