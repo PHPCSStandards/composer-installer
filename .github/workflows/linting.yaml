@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - name: Lint php
+      - name: Lint json
         uses: "docker://pipelinecomponents/jsonlint:latest"
         with:
           args: "find . -not -path './.git/*' -name '*.json' -type f -exec jsonlint --quiet {} ;"
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - name: Check php composer for security issues
+      - name: Check php for code style and php cross-version compatibility issues
         uses: pipeline-components/php-codesniffer@master
 
   lint-remark:
@@ -45,12 +45,3 @@ jobs:
       - uses: actions/checkout@v1
       - name: Check markdown
         uses: pipeline-components/remark-lint@master
-
-  php-compitibility:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
-      - name: Check php compatibility
-        uses: pipeline-components/php-codesniffer@master
-        with:
-          options: "-s -p --colors --extensions=php --standard=PHPCompatibility --runtime-set testVersion 5.3-7.4"
