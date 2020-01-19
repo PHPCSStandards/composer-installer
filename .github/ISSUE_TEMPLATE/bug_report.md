@@ -44,6 +44,10 @@ about: Create a report to help us improve
 | Dealerdirect PHPCS plugin version | x.y.z
 | Install type                      | e.g. Composer global, Composer project local, other (please expand)
 
+Output of `vendor/bin/phpcs --config-show`:
+```
+(Please paste the output you get here)
+```
 
 ## Tested against `master` branch?
 - [ ] I have verified the issue still exists in the `master` branch.
