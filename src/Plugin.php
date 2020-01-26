@@ -185,8 +185,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
         } else {
-            $isDev = array_key_exists(self::PLUGIN_NAME, $this->composer->getPackage()->getDevRequires());
-
             $pluginPackage = $this
                 ->composer
                 ->getRepositoryManager()
@@ -196,7 +194,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
             $isPluginUninstalled = count($pluginPackage) === 0;
 
-            if ($isDev && $isPluginUninstalled) {
+            if ($isPluginUninstalled) {
                 if ($isVerbose) {
                     $io->write(sprintf('<info>%s</info>', self::MESSAGE_PLUGIN_UNINSTALLED));
                 }
