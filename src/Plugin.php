@@ -41,6 +41,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
     const MESSAGE_NOT_INSTALLED = 'PHPCodeSniffer is not installed';
     const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
+    const MESSAGE_PLUGIN_UNINSTALLED = 'PHPCodeSniffer Composer Installer is uninstalled';
     const MESSAGE_RUNNING_INSTALLER = 'Running PHPCodeSniffer Composer Installer';
 
     const PACKAGE_NAME = 'squizlabs/php_codesniffer';
@@ -48,6 +49,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     const PHPCS_CONFIG_REGEX = '`%s:[^\r\n]+`';
     const PHPCS_CONFIG_KEY = 'installed_paths';
+
+    const PLUGIN_NAME = 'dealerdirect/phpcodesniffer-composer-installer';
 
     /**
      * @var Composer
@@ -182,9 +185,26 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOTHING_TO_INSTALL));
             }
         } else {
-            $exitCode = 1;
-            if ($isVerbose) {
-                $io->write(sprintf('<info>%s</info>', self::MESSAGE_NOT_INSTALLED));
+            $isDev = array_key_exists(self::PLUGIN_NAME, $this->composer->getPackage()->getDevRequires());
+
+            $pluginPackage = $this
+                ->composer
+                ->getRepositoryManager()
+                ->getLocalRepository()
+                ->findPackages(self::PLUGIN_NAME)
+            ;
+
+            $isPluginUninstalled = count($pluginPackage) === 0;
+
+            if ($isDev && $isPluginUninstalled) {
+                if ($isVerbose) {
+                    $io->write(sprintf('<info>%s</info>', self::MESSAGE_PLUGIN_UNINSTALLED));
+                }
+            } else {
+                $exitCode = 1;
+                if ($isVerbose) {
+                    $io->write(sprintf('<error>%s</error>', self::MESSAGE_NOT_INSTALLED));
+                }
             }
         }
 
