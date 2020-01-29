@@ -206,7 +206,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
         }
 
-        exit($exitCode);
+        return $exitCode;
     }
 
     /**
