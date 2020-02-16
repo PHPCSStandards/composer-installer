@@ -77,6 +77,13 @@ jobs:
       dist: precise
       env: PHPCS_VERSION="2.0.0"
 
+    - php: nightly
+      env: PHPCS_VERSION="dev-master" LINT=1
+
+  allow_failures:
+    # Allow failures for unstable builds.
+    - php: "nightly"
+
   fast_finish: true
 
 before_install:
@@ -93,7 +100,13 @@ install:
       # Install PHPCompatibility 8.x for PHPCS 2.2 < 2.3.
       composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility:"^8.0"
     fi
-  - travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
+  - |
+    if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
+      travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
+    else
+      composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility
+      travis_wait composer install --no-dev --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose --ignore-platform-reqs
+    fi
   - |
     if [[ ${PHPCS_VERSION:0:3} < "2.2" ]]; then
       # Rename the PHPCompatibility directory as PHPCompatibility 7.x wasn't fully compatible with Composer yet.
