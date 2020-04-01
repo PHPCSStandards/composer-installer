@@ -125,6 +125,20 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+    }
+
+    /**
      * Prepares the plugin so it's main functionality can be run.
      *
      * @throws \RuntimeException
