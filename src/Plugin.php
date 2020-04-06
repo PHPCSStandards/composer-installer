@@ -15,7 +15,7 @@ use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
-use Composer\Package\RootpackageInterface;
+use Composer\Package\RootPackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
@@ -488,7 +488,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         );
 
         if (
-            ! $this->composer->getPackage() instanceof RootpackageInterface
+            ! $this->composer->getPackage() instanceof RootPackageInterface
             && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE
         ) {
             $codingStandardPackages[] = $this->composer->getPackage();
