@@ -77,12 +77,16 @@ jobs:
       dist: precise
       env: PHPCS_VERSION="2.0.0"
 
+    - php: 7.4
+      env: PHPCS_VERSION="4.0.x-dev as 3.9.99"
+
     - php: nightly
       env: PHPCS_VERSION="dev-master" LINT=1
 
   allow_failures:
     # Allow failures for unstable builds.
     - php: "nightly"
+    - env: PHPCS_VERSION="4.0.x-dev as 3.9.99"
 
   fast_finish: true
 
@@ -91,7 +95,7 @@ before_install:
   phpenv config-rm xdebug.ini || echo 'No xdebug config.'
 
 install:
-  - composer require --no-update --no-suggest --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
+  - composer require --no-update --no-suggest --no-scripts squizlabs/php_codesniffer:"${PHPCS_VERSION}"
   - |
     if [[ ${PHPCS_VERSION:0:3} < "2.2" ]]; then
       # Install PHPCompatibility 7.x for PHPCS < 2.2.

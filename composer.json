@@ -25,13 +25,15 @@
   "require": {
     "php": ">=5.3",
     "composer-plugin-api": "^1.0",
-    "squizlabs/php_codesniffer": "^2 || ^3"
+    "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
   },
   "require-dev": {
     "composer/composer": "*",
     "sensiolabs/security-checker": "^4.1.0",
     "phpcompatibility/php-compatibility": "^9.0"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
