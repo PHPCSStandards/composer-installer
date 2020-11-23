@@ -27,13 +27,13 @@ Even better: You could submit a pull request with a fix / new feature!
 
 ## Release process
 
-To make it possible to automatically generate changelog, all tickets/issues must have a milestone and at least one label.
+To make it possible to automatically generate a changelog, all tickets/issues must have a milestone and at least one label.
 
-A changelog can be generated using [`github-changelog-generator`][github-changelog-generator].<sup>(1)</sup>
+A changelog can be generated using the [`github-changelog-generator`][github-changelog-generator].<sup>(1)</sup>
 
 Our release versions follow [Semantic Versioning][semver].
 
-New release (and any related tags) are always created from the `master` branch
+New releases (and any related tags) are always created from the `master` branch.
 
 To create a new release:
 
@@ -41,7 +41,7 @@ To create a new release:
 
 2. Make sure all closed tickets and MRs are added to the milestone that is to be released.
 
-3. Move any open tickets to the next milestone (create a new one if needed)
+3. Move any open tickets to the next milestone (create a new one if needed).
 
 4. Generate a changelog:<sup>(2)</sup>
    ```
@@ -51,7 +51,7 @@ To create a new release:
 
 5. Use GitHub "Draft a new release" functionality to draft a new release (this also creates a tag).
 
-6. Close the milestone for the version that was just released
+6. Close the milestone for the version that was just released.
 
 ## Code of conduct
 
@@ -129,9 +129,9 @@ version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 
 ## Footnotes
 
-1. All settings needed for the changelog-generator are set in `.github_changelog_generator`
+1. All settings needed for the changelog-generator are set in `.github_changelog_generator` file.
 
-2. A convenience script is present at `bin/generate-changelog.sh` that will install the changelog-generator if it is not present and run the appropriate `github_changelog_generator` command.
+2. A convenience script is present at `bin/generate-changelog.sh` that will install the changelog-generator, if it is not present, and run the appropriate `github_changelog_generator` command.
 
 [code-of-conduct]: CODE-OF-CONDUCT.md
 [github-changelog-generator]: https://github.com/github-changelog-generator/github-changelog-generator/
