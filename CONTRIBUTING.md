@@ -4,7 +4,7 @@ When contributing to this repository, please first discuss the change you wish
 to make via issue, email, or any other method with the owners of this repository
 before making a change.
 
-Please note we have [a code of conduct][code-of-conduct], please follow it in all your interactions
+Please note we have [a code of conduct](#code-of-conduct), please follow it in all your interactions
 with the project.
 
 ## Issues and feature requests
@@ -29,7 +29,7 @@ Even better: You could submit a pull request with a fix / new feature!
 
 To make it possible to automatically generate a changelog, all tickets/issues must have a milestone and at least one label.
 
-A changelog can be generated using the [`github-changelog-generator`][github-changelog-generator].<sup>(1)</sup>
+A changelog can be generated using the [`github-changelog-generator`][github-changelog-generator].[<sup>(1)</sup>](#footnotes)
 
 Our release versions follow [Semantic Versioning][semver].
 
@@ -43,7 +43,7 @@ To create a new release:
 
 3. Move any open tickets to the next milestone (create a new one if needed).
 
-4. Generate a changelog:<sup>(2)</sup>
+4. Generate a changelog by running `github_changelog_generator` in the project root:[<sup>(2)</sup>](#footnotes)
    ```
    github_changelog_generator --future-release "${sVersion}" --header --output --unreleased-only 2>/dev/null
    ```
@@ -132,7 +132,7 @@ version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 1. All settings needed for the changelog-generator are set in `.github_changelog_generator` file.
 
 2. A convenience script is present at `bin/generate-changelog.sh` that will install the changelog-generator, if it is not present, and run the appropriate `github_changelog_generator` command.
+   The script requires BASH to run. It should be run from the project root, similar to `github_changelog_generator`.
 
-[code-of-conduct]: CODE-OF-CONDUCT.md
 [github-changelog-generator]: https://github.com/github-changelog-generator/github-changelog-generator/
 [semver]: https://semver.org/
