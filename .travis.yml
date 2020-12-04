@@ -25,7 +25,12 @@ jobs:
         - composer validate
 
     - stage: test
-      php: 7.4
+      php: 8.0
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 8.0
+      # Lowest PHPCS version on which PHP 8.0 is supported.
+      env: PHPCS_VERSION="3.5.7"
+    - php: 7.4
       env: PHPCS_VERSION="dev-master" LINT=1
     - php: 7.4
       # Lowest PHPCS version on which PHP 7.4 is supported.
@@ -105,7 +110,7 @@ install:
       composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility:"^8.0"
     fi
   - |
-    if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
+    if [[ $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "8.0" ]]; then
       travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
     else
       composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility
