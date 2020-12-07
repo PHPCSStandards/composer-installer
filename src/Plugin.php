@@ -267,6 +267,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         // Check if we found installed paths to set.
         if (count($this->installedPaths) !== 0) {
+            sort($this->installedPaths);
             $paths = implode(',', $this->installedPaths);
             $arguments = array('--config-set', self::PHPCS_CONFIG_KEY, $paths);
             $configMessage = sprintf(
