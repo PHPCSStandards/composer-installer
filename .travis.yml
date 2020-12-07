@@ -123,7 +123,10 @@ install:
     fi
 
 script:
-  - if [[ "$LINT" == "1" ]]; then if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi; fi
+  - |
+    if [[ "$LINT" == "1" ]]; then
+      if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi;
+    fi
   - composer install-codestandards
   - ./vendor/bin/phpcs -i
   - |
@@ -137,4 +140,7 @@ script:
       # Test that an external standard has been registered correctly by running it against the codebase.
       ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions
     fi
-  - if [[ "$SECURITY" == "1" ]];then ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock; fi
+  - |
+    if [[ "$SECURITY" == "1" ]]; then
+      ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock
+    fi
