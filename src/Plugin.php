@@ -410,7 +410,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
             if (
                 (is_dir($path) === false || is_readable($path) === false) &&
-                (is_dir($alternativePath) === false || is_readable($alternativePath) === false)
+                (
+                    $alternativePath === false ||
+                    is_dir($alternativePath) === false ||
+                    is_readable($alternativePath) === false
+                )
             ) {
                 unset($this->installedPaths[$key]);
                 $changes = true;
