@@ -29,7 +29,7 @@
   },
   "require-dev": {
     "composer/composer": "*",
-    "sensiolabs/security-checker": "^4.1.0",
+    "enlightn/security-checker": "^1.2",
     "phpcompatibility/php-compatibility": "^9.0"
   },
   "minimum-stability": "dev",

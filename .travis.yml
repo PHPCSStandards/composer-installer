@@ -137,4 +137,4 @@ script:
       # Test that an external standard has been registered correctly by running it against the codebase.
       ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions
     fi
-  - if [[ "$SECURITY" == "1" ]];then ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock; fi
+  - if [[ "$SECURITY" == "1" ]];then ./vendor/bin/security-checker -n security:check; fi
