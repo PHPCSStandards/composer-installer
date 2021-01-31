@@ -111,19 +111,39 @@ install:
     fi
   - |
     if [[ $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "8.0" ]]; then
-      travis_wait composer install --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose
+      travis_wait composer install \
+        --no-interaction \
+        --no-progress \
+        --no-scripts \
+        --no-suggest \
+        --optimize-autoloader \
+        --prefer-dist --verbose
     else
       composer require --no-update --no-suggest --no-scripts phpcompatibility/php-compatibility
-      travis_wait composer install --no-dev --no-interaction --no-progress --no-scripts --no-suggest --optimize-autoloader --prefer-dist --verbose --ignore-platform-reqs
+      travis_wait composer install \
+        --ignore-platform-reqs \
+        --no-dev \
+        --no-interaction \
+        --no-progress \
+        --no-scripts \
+        --no-suggest \
+        --optimize-autoloader \
+        --prefer-dist \
+        --verbose
     fi
-  - |
+  - >
     if [[ ${PHPCS_VERSION:0:3} < "2.2" ]]; then
       # Rename the PHPCompatibility directory as PHPCompatibility 7.x wasn't fully compatible with Composer yet.
       mv ./vendor/phpcompatibility/php-compatibility ./vendor/phpcompatibility/PHPCompatibility
     fi
 
 script:
-  - if [[ "$LINT" == "1" ]]; then if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi; fi
+  - |
+    if [[ "$LINT" == "1" ]]; then
+      if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then
+        exit 1
+      fi
+    fi
   - composer install-codestandards
   - ./vendor/bin/phpcs -i
   - |
@@ -132,9 +152,18 @@ script:
       ./vendor/bin/phpcs
     elif [[ ${PHPCS_VERSION:0:3} < "2.3" ]]; then
       # Test that an external standard has been registered correctly by running it against the codebase on PHPCS < 2.3.
-      ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.PHP.DeprecatedFunctions
+      ./vendor/bin/phpcs -ps ./src/ \
+        --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" \
+        --sniffs=PHPCompatibility.PHP.DeprecatedFunctions \
+        --standard=PHPCompatibility
     else
       # Test that an external standard has been registered correctly by running it against the codebase.
-      ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions
+      ./vendor/bin/phpcs -ps ./src/ \
+        --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" \
+        --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions \
+        --standard=PHPCompatibility
     fi
-  - if [[ "$SECURITY" == "1" ]];then ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock; fi
+  - |
+    if [[ "$SECURITY" == "1" ]]; then
+      ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock
+    fi
