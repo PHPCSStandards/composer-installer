@@ -17,8 +17,6 @@ This composer installer plugin allows for easy installation of [PHP_CodeSniffer]
 No more symbolic linking of directories, checking out repositories on specific locations or changing
 the `phpcs` configuration.
 
-_Note: This plugin is compatible with both version 2.x and 3.x of_ [PHP_CodeSniffer][codesniffer]
-
 ## Usage
 
 Installation can be done with [Composer][composer], by requiring this package as a development dependency:
@@ -28,6 +26,14 @@ composer require --dev dealerdirect/phpcodesniffer-composer-installer
 ```
 
 That's it.
+
+### Compatibility
+
+This plugin is compatible with both version **1.x** and **2.x** of [Composer][composer], and both version **2.x** and **3.x** of [PHP_CodeSniffer][codesniffer].
+
+PHP **5.x**, **7.x**, and **8.x** are all supported.
+
+For PHP 8 version `0.7.x` (or higher) of this plugin must be _explicitly_ set as  version constraints, as Composer treats minors releases below 1.0 as major releases. In other words: using `^0.6` will not allow Composer to install v0.7 and thus _not_ support PHP8.
 
 ### How it works
 
