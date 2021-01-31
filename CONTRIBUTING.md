@@ -25,6 +25,44 @@ Even better: You could submit a pull request with a fix / new feature!
    developers, or if you do not have permission to do that, you may request
    the second reviewer to merge it for you.
 
+### (Code) Quality checks
+
+Every merge-request triggers a build process which runs various checks to help
+maintain a quality standard. All JSON, Markdown, PHP, and Yaml files are 
+expected to adhere to these quality standards.
+
+These tools fall into two categories: PHP and non-PHP.
+
+### PHP 
+
+The PHP specific tools used by this build are:
+
+- [php-codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- [php-compatibility](https://github.com/PHPCompatibility/PHPCompatibility) 
+- [php-security-checker](https://github.com/sensiolabs/security-checker)
+
+Most of these are run through [Travis CI](https://travis-ci.com/github/Dealerdirect/phpcodesniffer-composer-installer).
+
+As they are included as Composer `require-dev` packages, they can be run locally
+with PHP. Alternatively they can be run using `docker run`, through the docker
+images provided by [Pipeline-Component](https://pipeline-components.dev/).
+
+### Non-PHP
+
+The non-PHP specific tools used by this build are:
+
+- [jsonlint](https://www.npmjs.com/package/jsonlint)
+- [remark-lint](https://www.npmjs.com/package/remark-lint)
+- [yamllint](https://yamllint.readthedocs.io/en/stable/)
+
+These tools are run as [GitHub actions](https://docs.github.com/en/actions).
+All the checks can be run locally using [`act`](https://github.com/nektos/act)
+Alternatively they can be run using `docker run`, as all checks use docker 
+images provided by [Pipeline-Component](https://pipeline-components.dev/).
+
+Finally, they could be run locally using NodeJS, Ruby, PHP, or whatever the tool
+is written in. For details please consult the relevant tool's documentation.
+
 ## Release process
 
 To make it possible to automatically generate a changelog, all tickets/issues must have a milestone and at least one label.
