@@ -165,5 +165,5 @@ script:
     fi
   - |
     if [[ "$SECURITY" == "1" ]]; then
-      ./vendor/bin/security-checker -n security:check --end-point=http://security.symfony.com/check_lock
+      ./vendor/bin/security-checker -n security:check
     fi
