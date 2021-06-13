@@ -23,7 +23,7 @@ jobs:
       # Lowest PHPCS version on which PHP 7.4 is supported.
       env: PHPCS_VERSION="3.5.0"
     - php: 7.3
-      env: SECURITY=1 PHPCS_VERSION="3.5.3"
+      env: PHPCS_VERSION="3.5.3"
     - php: 7.3
       # Lowest PHPCS version on which PHP 7.3 is supported.
       env: PHPCS_VERSION="3.3.1"
@@ -140,8 +140,4 @@ script:
         --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" \
         --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions \
         --standard=PHPCompatibility
-    fi
-  - |
-    if [[ "$SECURITY" == "1" ]]; then
-      ./vendor/bin/security-checker -n security:check
     fi
