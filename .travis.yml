@@ -13,41 +13,41 @@ jobs:
   include:
     - stage: test
       php: 8.0
-      env: PHPCS_VERSION="dev-master" LINT=1
+      env: PHPCS_VERSION="dev-master"
     - php: 8.0
       # Lowest PHPCS version on which PHP 8.0 is supported.
       env: PHPCS_VERSION="3.5.7"
     - php: 7.4
-      env: PHPCS_VERSION="dev-master" LINT=1
+      env: PHPCS_VERSION="dev-master"
     - php: 7.4
       # Lowest PHPCS version on which PHP 7.4 is supported.
       env: PHPCS_VERSION="3.5.0"
     - php: 7.3
-      env: SECURITY=1 PHPCS_VERSION="3.5.3" LINT=1
+      env: SECURITY=1 PHPCS_VERSION="3.5.3"
     - php: 7.3
       # Lowest PHPCS version on which PHP 7.3 is supported.
       env: PHPCS_VERSION="3.3.1"
     - php: 7.2
-      env: PHPCS_VERSION="3.2.3" LINT=1
+      env: PHPCS_VERSION="3.2.3"
     - php: 7.2
       # Lowest PHPCS version on which PHP 7.2 is supported.
       env: PHPCS_VERSION="2.9.2"
     - php: 7.1
-      env: PHPCS_VERSION="3.1.1" LINT=1
+      env: PHPCS_VERSION="3.1.1"
     - php: 7.1
       env: PHPCS_VERSION="2.0.0"
     - php: 7.0
-      env: PHPCS_VERSION="3.4.2" LINT=1
+      env: PHPCS_VERSION="3.4.2"
     - php: 7.0
       env: PHPCS_VERSION="2.2.0"
     - php: 5.6
-      env: PHPCS_VERSION="3.0.2" LINT=1
+      env: PHPCS_VERSION="3.0.2"
     - php: 5.6
       env: PHPCS_VERSION="2.4.0"
     - php: 5.5
       # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
       dist: trusty
-      env: PHPCS_VERSION="dev-master" LINT=1
+      env: PHPCS_VERSION="dev-master"
     - php: 5.5
       # As the latest Debian does not support PHP 5.5 anymore, we need to force using 'trusty'.
       dist: trusty
@@ -55,7 +55,7 @@ jobs:
     - php: 5.4
       # As the latest Debian does not support PHP 5.4 anymore, we need to force using 'trusty'.
       dist: trusty
-      env: PHPCS_VERSION="3.5.3" LINT=1
+      env: PHPCS_VERSION="3.5.3"
     - php: 5.4
       # As the latest Debian does not support PHP 5.4 anymore, we need to force using 'trusty'.
       dist: trusty
@@ -73,7 +73,7 @@ jobs:
       env: PHPCS_VERSION="4.0.x-dev as 3.9.99"
 
     - php: nightly
-      env: PHPCS_VERSION="dev-master" LINT=1
+      env: PHPCS_VERSION="dev-master"
 
   allow_failures:
     # Allow failures for unstable builds.
@@ -125,12 +125,6 @@ install:
     fi
 
 script:
-  - |
-    if [[ "$LINT" == "1" ]]; then
-      if find . -path ./vendor -prune -o -name "*.php" -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then
-        exit 1
-      fi
-    fi
   - composer install-codestandards
   - ./vendor/bin/phpcs -i
   - |
