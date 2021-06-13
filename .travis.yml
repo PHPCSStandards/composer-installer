@@ -4,7 +4,6 @@ language: php
 cache:
   directories:
     - "${HOME}/.composer/cache"
-    - "${HOME}/.npm/"
 
 env:
   global:
@@ -12,18 +11,6 @@ env:
 
 jobs:
   include:
-    - php: 7.3
-      name: Linting
-      stage: lint
-      before_install:
-        - npm set loglevel error
-        - npm set progress false
-      install:
-        - npm install -g jsonlint
-      script:
-        - find . -type f -name "*.json" -print0 | xargs -0 -n1 jsonlint -q
-        - composer validate
-
     - stage: test
       php: 8.0
       env: PHPCS_VERSION="dev-master" LINT=1
@@ -36,7 +23,7 @@ jobs:
       # Lowest PHPCS version on which PHP 7.4 is supported.
       env: PHPCS_VERSION="3.5.0"
     - php: 7.3
-      env: SECURITY=1 PHPCS_VERSION="3.5.3" LINT=1 PHPCS=1
+      env: SECURITY=1 PHPCS_VERSION="3.5.3" LINT=1
     - php: 7.3
       # Lowest PHPCS version on which PHP 7.3 is supported.
       env: PHPCS_VERSION="3.3.1"
@@ -147,10 +134,7 @@ script:
   - composer install-codestandards
   - ./vendor/bin/phpcs -i
   - |
-    if [[ "$PHPCS" == "1" ]]; then
-      # Do the actual code style check for this repo.
-      ./vendor/bin/phpcs
-    elif [[ ${PHPCS_VERSION:0:3} < "2.3" ]]; then
+    if [[ ${PHPCS_VERSION:0:3} < "2.3" ]]; then
       # Test that an external standard has been registered correctly by running it against the codebase on PHPCS < 2.3.
       ./vendor/bin/phpcs -ps ./src/ \
         --runtime-set testVersion "${TRAVIS_PHP_VERSION:0:3}" \
