@@ -17,8 +17,6 @@ This composer installer plugin allows for easy installation of [PHP_CodeSniffer]
 No more symbolic linking of directories, checking out repositories on specific locations or changing
 the `phpcs` configuration.
 
-_Note: This plugin is compatible with both version 2.x and 3.x of_ [PHP_CodeSniffer][codesniffer]
-
 ## Usage
 
 Installation can be done with [Composer][composer], by requiring this package as a development dependency:
@@ -28,6 +26,17 @@ composer require --dev dealerdirect/phpcodesniffer-composer-installer
 ```
 
 That's it.
+
+### Compatibility
+
+This plugin is compatible with:
+
+- PHP **5.x**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
+- [Composer][composer] **1.x** and **2.x** (Support for Composer v2 is available since [`v0.7.0`][v0.7])
+- [PHP_CodeSniffer][codesniffer] **2.x** and **3.x** (Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4])
+
+
+> **ℹ️ Please Note:** [Composer treats _minor_ releases below 1.0.0 as _major_ releases][composer-manual-caret]. So version `0.7.x` (or higher) of this plugin must be _explicitly_ set as version constraint when using Composer 2.x or PHP 8.0. In other words: using `^0.6` will **not** work with Composer 2.x or PHP 8.0.
 
 ### How it works
 
@@ -205,7 +214,7 @@ For a full list of all author and/or contributors, check [the contributors page]
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Dealerdirect B.V.
+Copyright (c) 2016-2021 Dealerdirect B.V.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -231,6 +240,7 @@ THE SOFTWARE.
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
 [composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
+[composer-manual-caret]: https://getcomposer.org/doc/articles/versions.md#caret-version-range-
 [composer]: https://getcomposer.org/
 [contributing-guidelines]: CONTRIBUTING.md
 [contributors]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
@@ -249,3 +259,5 @@ THE SOFTWARE.
 [travis]: https://travis-ci.org/Dealerdirect/phpcodesniffer-composer-installer
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
+[v0.4]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases/tag/v0.4.0
+[v0.7]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases/tag/v0.7.0
