@@ -4,7 +4,7 @@
  * This file is part of the Dealerdirect PHP_CodeSniffer Standards
  * Composer Installer Plugin package.
  *
- * @copyright 2016-2020 Dealerdirect B.V.
+ * @copyright 2016-2021 Dealerdirect B.V.
  * @license MIT
  */
 
