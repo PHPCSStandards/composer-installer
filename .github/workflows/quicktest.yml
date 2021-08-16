@@ -1,0 +1,85 @@
+---
+name: Quicktest
+
+on:
+  # Run on pushes to feature branches.
+  push:
+    branches-ignore:
+      - master
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+jobs:
+  #### QUICK TEST STAGE ####
+  # This is a much quicker test which only runs the integration tests against a limited set of
+  # supported PHP/PHPCS combinations.
+  quicktest:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - php: 'latest'
+            phpcs_version: 'dev-master'
+            phpcompat: 'composer'
+          - php: '7.3'
+            phpcs_version: '2.9.2'
+            phpcompat: 'composer'
+          - php: '7.1'
+            phpcs_version: '3.3.1'
+            phpcompat: 'composer'
+          - php: '5.6'
+            phpcs_version: '2.6.0'
+            phpcompat: 'composer'
+          - php: '5.3'
+            phpcs_version: '2.0.0'
+            phpcompat: '^7.0'
+
+    name: "Quick test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: error_reporting=E_ALL, display_errors=On
+          coverage: none
+
+      - name: 'Composer: set PHPCS version for tests'
+        run: composer require --no-update --no-scripts squizlabs/php_codesniffer:"${{ matrix.phpcs_version }}"
+
+      # Install PHPCompatibility 7.x/8.x for PHPCS < 2.3.
+      - name: 'Composer: set PHPCompatibility version for tests (PHPCS < 2.3)'
+        if: ${{ matrix.phpcompat != 'composer' }}
+        run: composer require --dev --no-update --no-scripts phpcompatibility/php-compatibility:"${{ matrix.phpcompat }}"
+
+      # Install dependencies and handle caching in one go.
+      # @link https://github.com/marketplace/actions/install-composer-dependencies
+      - name: 'Install Composer dependencies'
+        uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: --no-scripts --optimize-autoloader
+
+      # Rename the PHPCompatibility directory as PHPCompatibility 7.x wasn't fully compatible with Composer yet.
+      - name: 'Rename the PHPCompatibility directory (PHPCS < 2.2)'
+        if: ${{ matrix.phpcompat == '^7.0' }}
+        run: mv ./vendor/phpcompatibility/php-compatibility ./vendor/phpcompatibility/PHPCompatibility
+
+      - name: 'Install standards'
+        run: composer install-codestandards
+
+      - name: 'Show installed standards'
+        run: vendor/bin/phpcs -i
+
+      # Test that an external standard has been registered correctly by running it against the codebase on PHPCS < 2.3.
+      - name: 'Test the PHPCompatibility standard was installed succesfully (PHPCS < 2.3)'
+        if: ${{ matrix.phpcompat != 'composer' }}
+        run: ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --sniffs=PHPCompatibility.PHP.DeprecatedFunctions --runtime-set testVersion ${{ matrix.php }}
+
+      # Test that an external standard has been registered correctly by running it against the codebase.
+      - name: 'Test the PHPCompatibility standard was installed succesfully (PHPCS >= 2.3)'
+        if: ${{ matrix.phpcompat == 'composer' }}
+        run: ./vendor/bin/phpcs -ps ./src/ --standard=PHPCompatibility --sniffs=PHPCompatibility.FunctionUse.RemovedFunctions --runtime-set testVersion ${{ matrix.php }}

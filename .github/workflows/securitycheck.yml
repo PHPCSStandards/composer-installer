@@ -1,0 +1,42 @@
+---
+name: Security check
+
+# yamllint disable-line rule:truthy
+on:
+  - push
+  - pull_request
+  # Allow manually triggering the workflow.
+  - workflow_dispatch
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    name: "Security check"
+
+    strategy:
+      matrix:
+        php: ['5.3', 'latest']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      # Install dependencies and handle caching in one go.
+      # @link https://github.com/marketplace/actions/install-composer-dependencies
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v1"
+
+      - name: Download security checker
+        run: wget -P . https://github.com/fabpot/local-php-security-checker/releases/download/v1.0.0/local-php-security-checker_1.0.0_linux_amd64
+
+      - name: Make security checker executable
+        run: chmod +x ./local-php-security-checker_1.0.0_linux_amd64
+
+      - name: Check against insecure dependencies
+        run: ./local-php-security-checker_1.0.0_linux_amd64 --path=composer.lock

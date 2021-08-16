@@ -5,7 +5,7 @@
 ![Awesome][awesome-shield]
 [![License][license-shield]](LICENSE.md)
 
-[![Travis][travis-shield]][travis]
+[![Tests][ghactionstest-shield]][ghactions]
 [![Scrutinizer][scrutinizer-shield]][scrutinizer]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
 [![Packagist][packagist-shield]][packagist]
@@ -255,8 +255,8 @@ THE SOFTWARE.
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
-[travis-shield]: https://img.shields.io/travis/Dealerdirect/phpcodesniffer-composer-installer.svg
-[travis]: https://travis-ci.org/Dealerdirect/phpcodesniffer-composer-installer
+[ghactionstest-shield]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml/badge.svg
+[ghactions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [v0.4]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases/tag/v0.4.0

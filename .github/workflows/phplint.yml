@@ -1,0 +1,38 @@
+---
+name: PHP Lint
+
+# yamllint disable-line rule:truthy
+on:
+  - push
+  - pull_request
+  # Allow manually triggering the workflow.
+  - workflow_dispatch
+
+jobs:
+  phplint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['5.3', '5.6', '7.2', 'latest']
+
+    name: "PHP Lint: PHP ${{ matrix.php }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: cs2pr
+
+      # Install dependencies and handle caching in one go.
+      # @link https://github.com/marketplace/actions/install-composer-dependencies
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v1"
+
+      - name: Lint against parse errors
+        run: composer lint -- --checkstyle | cs2pr
