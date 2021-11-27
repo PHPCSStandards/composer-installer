@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         phpcs_version: ['dev-master']
         phpcompat: ['composer']
         experimental: [false]
@@ -30,6 +30,11 @@ jobs:
 
           # Complement the matrix with build against the lowest supported PHPCS version
           # for each PHP version.
+          - php: '8.1'
+            # Lowest PHPCS version on which PHP 8.1 is supported.
+            phpcs_version: '3.6.1'
+            phpcompat: 'composer'
+            experimental: false
           - php: '8.0'
             # Lowest PHPCS version on which PHP 8.0 is supported.
             phpcs_version: '3.5.7'
@@ -118,12 +123,12 @@ jobs:
             experimental: false
 
           # Experimental builds. These are allowed to fail.
-          - php: '8.1'
+          - php: '8.2'
             phpcs_version: 'dev-master'
             phpcompat: 'composer'
             experimental: true
 
-          - php: '8.0'
+          - php: '8.1'
             phpcs_version: '4.0.x-dev as 3.9.99'
             phpcompat: 'composer'
             experimental: true
