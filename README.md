@@ -111,7 +111,6 @@ section of the `composer.json`:
         ]
     }
 }
-
 ```
 
 The command can then be called using `composer run-script install-codestandards` or
@@ -128,7 +127,6 @@ referenced from other script configurations, as follows:
         ]
     }
 }
-
 ```
 
 For more details about Composer scripts, please refer to [the section on scripts
@@ -166,8 +164,8 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "name" : "acme/phpcodesniffer-our-standards",
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
-    "php" : ">=5.4.0,<8.0.0-dev",
-    "squizlabs/php_codesniffer" : "^3.0"
+    "php" : ">=5.4.0",
+    "squizlabs/php_codesniffer" : "^3.6"
   },
   "type" : "phpcodesniffer-standard"
 }
