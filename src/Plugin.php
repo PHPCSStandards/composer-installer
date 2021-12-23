@@ -34,7 +34,6 @@ use Symfony\Component\Process\PhpExecutableFinder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
-
     const KEY_MAX_DEPTH = 'phpcodesniffer-search-depth';
 
     const MESSAGE_ERROR_WRONG_MAX_DEPTH =
