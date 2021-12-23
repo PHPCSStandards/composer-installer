@@ -151,7 +151,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          ini-values: error_reporting=E_ALL, display_errors=On
+          ini-values: error_reporting=-1, display_errors=On
           coverage: none
 
       - name: 'Composer: set PHPCS version for tests'
