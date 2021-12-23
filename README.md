@@ -25,6 +25,19 @@ Installation can be done with [Composer][composer], by requiring this package as
 composer require --dev dealerdirect/phpcodesniffer-composer-installer
 ```
 
+When using Composer 2.2 or higher, Composer will [ask for your permission](https://blog.packagist.com/composer-2-2/#more-secure-plugin-execution) to allow this plugin to execute code. For this plugin to be functional, permission needs to be granted.
+
+When permission has been granted, the following snippet will automatically be added to your `composer.json` file by Composer:
+```json
+{
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
+```
+
 That's it.
 
 ### Compatibility
@@ -62,6 +75,11 @@ multiple `phpcodesniffer-standard` packages.
         "object-calisthenics/phpcs-calisthenics-rules": "*",
         "phpcompatibility/php-compatibility": "*",
         "wp-coding-standards/wpcs": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
 ```
