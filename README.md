@@ -38,6 +38,11 @@ When permission has been granted, the following snippet will automatically be ad
 }
 ```
 
+When using Composer < 2.2, you can add the permission flag ahead of the upgrade to Composer 2.2, by running:
+```bash
+composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+```
+
 That's it.
 
 ### Compatibility
