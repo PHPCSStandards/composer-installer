@@ -25,6 +25,24 @@ Installation can be done with [Composer][composer], by requiring this package as
 composer require --dev dealerdirect/phpcodesniffer-composer-installer
 ```
 
+When using Composer 2.2 or higher, Composer will [ask for your permission](https://blog.packagist.com/composer-2-2/#more-secure-plugin-execution) to allow this plugin to execute code. For this plugin to be functional, permission needs to be granted.
+
+When permission has been granted, the following snippet will automatically be added to your `composer.json` file by Composer:
+```json
+{
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
+```
+
+When using Composer < 2.2, you can add the permission flag ahead of the upgrade to Composer 2.2, by running:
+```bash
+composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+```
+
 That's it.
 
 ### Compatibility
@@ -62,6 +80,11 @@ multiple `phpcodesniffer-standard` packages.
         "object-calisthenics/phpcs-calisthenics-rules": "*",
         "phpcompatibility/php-compatibility": "*",
         "wp-coding-standards/wpcs": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
 ```
@@ -93,7 +116,6 @@ section of the `composer.json`:
         ]
     }
 }
-
 ```
 
 The command can then be called using `composer run-script install-codestandards` or
@@ -110,7 +132,6 @@ referenced from other script configurations, as follows:
         ]
     }
 }
-
 ```
 
 For more details about Composer scripts, please refer to [the section on scripts
@@ -148,8 +169,8 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "name" : "acme/phpcodesniffer-our-standards",
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
-    "php" : ">=5.4.0,<8.0.0-dev",
-    "squizlabs/php_codesniffer" : "^3.0"
+    "php" : ">=5.4.0",
+    "squizlabs/php_codesniffer" : "^3.6"
   },
   "type" : "phpcodesniffer-standard"
 }
