@@ -9,6 +9,12 @@ on:
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   #### QUICK TEST STAGE ####
   # This is a much quicker test which only runs the integration tests against a limited set of
@@ -45,21 +51,21 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          ini-values: error_reporting=E_ALL, display_errors=On
+          ini-values: error_reporting=-1, display_errors=On
           coverage: none
 
       - name: 'Composer: set PHPCS version for tests'
-        run: composer require --no-update --no-scripts squizlabs/php_codesniffer:"${{ matrix.phpcs_version }}"
+        run: composer require --no-update --no-scripts squizlabs/php_codesniffer:"${{ matrix.phpcs_version }}" --no-interaction
 
       # Install PHPCompatibility 7.x/8.x for PHPCS < 2.3.
       - name: 'Composer: set PHPCompatibility version for tests (PHPCS < 2.3)'
         if: ${{ matrix.phpcompat != 'composer' }}
-        run: composer require --dev --no-update --no-scripts phpcompatibility/php-compatibility:"${{ matrix.phpcompat }}"
+        run: composer require --dev --no-update --no-scripts phpcompatibility/php-compatibility:"${{ matrix.phpcompat }}" --no-interaction
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: 'Install Composer dependencies'
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           composer-options: --no-scripts --optimize-autoloader
 
