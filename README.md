@@ -60,7 +60,7 @@ This plugin is compatible with:
 
 Basically, this plugin executes the following steps:
 
-- This plugin searches for `phpcodesniffer-standard` packages in all of your currently installed Composer packages.
+- This plugin searches for [`phpcodesniffer-standard` packages] in all of your currently installed Composer packages.
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
@@ -93,8 +93,8 @@ After running `composer install` PHP_CodeSniffer just works:
 
 ```bash
 $ ./vendor/bin/phpcs -i
-The installed coding standards are MySource, PEAR, PSR1, PSR2, Squiz, Zend, PHPCompatibility, WordPress,
-WordPress-Core, WordPress-Docs, WordPress-Extra and WordPress-VIP
+The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, ObjectCalisthenics,
+PHPCompatibility, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
 ```
 
 ### Calling the plugin directly
@@ -208,7 +208,7 @@ via `require`, **not** `require-dev`.
 > ```bash
 > composer require dealerdirect/phpcodesniffer-composer-installer:"*"
 > composer require dealerdirect/phpcodesniffer-composer-installer:"0.*"
-> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4 || ^0.5 || ^0.6"
+> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4.1 || ^0.5 || ^0.6 || ^0.7"
 > ```
 
 ## Changelog
@@ -273,6 +273,7 @@ THE SOFTWARE.
 [packagist-version-shield]: https://img.shields.io/packagist/v/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
+[`phpcodesniffer-standard` packages]: https://packagist.org/explore/?type=phpcodesniffer-standard
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
