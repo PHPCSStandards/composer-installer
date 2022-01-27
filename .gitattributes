@@ -7,3 +7,7 @@
 
 CONTRIBUTING.md           export-ignore
 phpcs.xml.dist            export-ignore
+phpunit.xml.dist          export-ignore
+
+# Ignore directories for distribution archives.
+/tests/                   export-ignore

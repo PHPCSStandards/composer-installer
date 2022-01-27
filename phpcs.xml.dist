@@ -9,7 +9,8 @@
     <arg name="basepath" value="."/>
 
     <file>.</file>
-    <exclude-pattern>*/.github/*</exclude-pattern>
+    <exclude-pattern>*/.git*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
 
     <rule ref="PHPCompatibility"/>
@@ -22,5 +23,14 @@
     </rule>
 
     <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/tests/bootstrap\.php$</exclude-pattern>
+    </rule>
+
+    <!-- Fixture method names in the test classes will be in snake_case because of the PHPUnit Polyfills. -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/tests/</exclude-pattern>
+    </rule>
 
 </ruleset>

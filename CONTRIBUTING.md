@@ -23,7 +23,9 @@ Even better: You could submit a pull request with a fix / new feature!
 1. Search our repository for open or closed [pull requests][prs] that relate
    to your submission. You don't want to duplicate effort.
 
-2. You may merge the pull request in once you have the sign-off of two other
+2. All pull requests are expected to be accompanied by tests which cover the change.
+
+3. You may merge the pull request in once you have the sign-off of two other
    developers, or if you do not have permission to do that, you may request
    the second reviewer to merge it for you.
 
@@ -39,6 +41,7 @@ These tools fall into two categories: PHP and non-PHP.
 
 The PHP specific tools used by this build are:
 
+- [PHPUnit][] and the [PHPUnit Polyfills][] for the integration tests.
 - [PHP_CodeSniffer][] to verify PHP code complies with the [PSR12][] standard.
 - [PHPCompatibility][] to verify that code is written in a PHP cross-version compatible manner.
 - [PHP-Parallel-Lint][] to check against parse errors in PHP files.
@@ -57,12 +60,47 @@ can be downloaded suitable for your operating system from their [releases page][
 Alternatively, these tools can be run using `docker run`, through the Docker
 images provided by [Pipeline-Component][].
 
+[PHPUnit]: https://phpunit.de/
+[PHPUnit Polyfills]: https://github.com/Yoast/PHPUnit-Polyfills/
 [PHP_CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
 [PHPCompatibility]: https://github.com/PHPCompatibility/PHPCompatibility
 [PHP-Parallel-Lint]: https://github.com/php-parallel-lint/PHP-Parallel-Lint
 [PHP-Security-Checker]: https://github.com/fabpot/local-php-security-checker
 [PSR12]: https://www.php-fig.org/psr/psr-12/
 [releases page]: https://github.com/fabpot/local-php-security-checker/releases/
+
+#### Automated testing
+
+This package includes a test setup for automated testing on all supported PHP versions
+using [PHPUnit][] with the [PHPUnit Polyfills][].
+This means that tests can be written for the latest version of PHPUnit
+(9.x at the time of writing) and still be run on all PHPUnit versions needed to test
+all supported PHP versions (PHPUnit 4.x - 9.x).
+
+The tests can be run both via a Composer installed version of PHPUnit, as well as using
+a PHPUnit PHAR file, however, whichever way you run the tests, you will always need to
+make sure that `composer install` has been run on the repository to make sure the
+PHPUnit Polyfills are available.
+
+**Note**: _as these tests run Composer and other CLI commands they will be slow to run._
+
+To run the tests locally:
+1. Run `composer install`
+2. Run the tests either using a PHPUnit PHAR file or by calling `composer test`.
+
+In case the test setup has trouble locating your `composer.phar` file:
+
+1. Copy the `phpunit.xml.dist` file to `phpunit.xml`.
+
+2. Edit the `phpunit.xml` file and add the following, replacing the value with the applicable path to Composer for your local machine:
+    ```xml
+    <php>
+        <env name="COMPOSER_PHAR" value="path/to/composer.phar"/>
+    </php>
+    ```
+    **Note**: this setting also allows for locally testing with different versions of Composer.
+    You could, for instance, have multiple Composer Phar files locally, `composer1.phar`, `composer2.1.phar`, `composer2.2.phar`.
+    By changing the path in the value of this `env` setting, you can switch which version will be used in the tests.
 
 ### Non-PHP
 
