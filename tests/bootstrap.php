@@ -10,6 +10,19 @@
 
 namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
+/*
+ * Make sure the tests always start with a clean slate.
+ */
+$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest';
+if (file_exists($tempDir) === true) {
+    if (strpos(strtoupper(\PHP_OS), 'WIN') === 0) {
+        // Windows.
+        shell_exec(sprintf('rd /s /q %s', escapeshellarg($tempDir)));
+    } else {
+        shell_exec(sprintf('rm -rf %s', escapeshellarg($tempDir)));
+    }
+}
+
 if (is_dir(dirname(__DIR__) . '/vendor') && file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     $vendorDir = dirname(__DIR__) . '/vendor';
 } else {
