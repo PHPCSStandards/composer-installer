@@ -473,4 +473,51 @@ abstract class TestCase extends PolyfillTestCase
 
         return $actual;
     }
+
+    /**
+     * Retrieve a list of the standards recognized by PHPCS based on the output of `phpcs -i`.
+     *
+     * @param string $phrase The output of `phpcs -i`.
+     *
+     * @return array Numerically indexed array of standards, natural sort applied.
+     *
+     * @throws RuntimeException When the passed argument is not a string.
+     * @throws RuntimeException When the output could not be parsed.
+     */
+    protected function standardsPhraseToArray($phrase)
+    {
+        if (is_string($phrase) === false) {
+            throw new RuntimeException('The input phrase must be a string.');
+        }
+
+        $phrase = trim($phrase);
+
+        if ($phrase === 'No coding standards are installed.') {
+            return array();
+        }
+
+        if (strpos($phrase, 'The only coding standard installed is ') === 0) {
+            $standard = str_replace('The only coding standard installed is ', '', $phrase);
+            return (array) trim($standard);
+        }
+
+        $phrase = str_replace('The installed coding standards are ', '', $phrase);
+        $parts  = explode(' and ', $phrase);
+
+        if (count($parts) !== 2) {
+            throw new RuntimeException(
+                'Looks like the output from PHPCS for phpcs -i has changed.'
+                . ' Please update the `TestCase::standardsPhraseToArray()` method.'
+                . ' Input phrase: ' . $phrase
+            );
+        }
+
+        $standards   = explode(', ', $parts[0]);
+        $standards[] = $parts[1];
+        $standards   = array_map('trim', $standards); // Trim off whitespace just to be on the safe side.
+
+        sort($standards, \SORT_NATURAL);
+
+        return $standards;
+    }
 }
