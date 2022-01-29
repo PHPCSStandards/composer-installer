@@ -37,31 +37,51 @@ These tools fall into two categories: PHP and non-PHP.
 
 The PHP specific tools used by this build are:
 
-- [php-codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-- [php-compatibility](https://github.com/PHPCompatibility/PHPCompatibility) 
-- [php-security-checker](https://github.com/sensiolabs/security-checker)
+- [PHP_CodeSniffer][] to verify PHP code complies with the [PSR12][] standard.
+- [PHPCompatibility][] to verify that code is written in a PHP cross-version compatible manner.
+- [PHP-Parallel-Lint][] to check against parse errors in PHP files.
+- [PHP-Security-Checker][] to prevent insecure dependencies being installed.
 
-Most of these are run through [Travis CI](https://travis-ci.com/github/Dealerdirect/phpcodesniffer-composer-installer).
+The automated checks with these tools are run via [GitHub Actions][].
 
-As they are included as Composer `require-dev` packages, they can be run locally
-with PHP. Alternatively they can be run using `docker run`, through the docker
-images provided by [Pipeline-Component](https://pipeline-components.dev/).
+As most of these tools are included as Composer `require-dev` packages, they can be
+run locally with PHP.
+
+For the Parallel Lint check, the `composer lint` script has been added for convenience.
+
+The Security Checker package is not included in the Composer configuration. An executable
+can be downloaded suitable for your operating system from their [releases page][].
+
+Alternatively, these tools can be run using `docker run`, through the Docker
+images provided by [Pipeline-Component][].
+
+[PHP_CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[PHPCompatibility]: https://github.com/PHPCompatibility/PHPCompatibility
+[PHP-Parallel-Lint]: https://github.com/php-parallel-lint/PHP-Parallel-Lint
+[PHP-Security-Checker]: https://github.com/fabpot/local-php-security-checker
+[PSR12]: https://www.php-fig.org/psr/psr-12/
+[releases page]: https://github.com/fabpot/local-php-security-checker/releases/
 
 ### Non-PHP
 
 The non-PHP specific tools used by this build are:
 
-- [jsonlint](https://www.npmjs.com/package/jsonlint)
-- [remark-lint](https://www.npmjs.com/package/remark-lint)
-- [yamllint](https://yamllint.readthedocs.io/en/stable/)
+- [jsonlint][] to verify that all JSON files use a consistent code style.
+- [remark-lint][] to verify that all markdown files use a consistent code style.
+- [yamllint][] to verify that all Yaml files use a consistent code style.
 
-These tools are run as [GitHub actions](https://docs.github.com/en/actions).
-All the checks can be run locally using [`act`](https://github.com/nektos/act)
-Alternatively they can be run using `docker run`, as all checks use docker 
-images provided by [Pipeline-Component](https://pipeline-components.dev/).
+These tools are also run as [GitHub actions][].
+All the checks can be run locally using [`act`][].
+Alternatively they can be run using `docker run`, as all checks use Docker 
+images provided by [Pipeline-Component][].
 
 Finally, they could be run locally using NodeJS, Ruby, PHP, or whatever the tool
 is written in. For details please consult the relevant tool's documentation.
+
+[jsonlint]: https://www.npmjs.com/package/jsonlint
+[remark-lint]: https://www.npmjs.com/package/remark-lint
+[yamllint]: https://yamllint.readthedocs.io/en/stable/
+[`act`]: https://github.com/nektos/act
 
 ## Release process
 
@@ -164,6 +184,8 @@ version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 [version]: http://contributor-covenant.org/version/1/4/
 [github]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues
 [prs]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/pulls
+[GitHub Actions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions
+[Pipeline-Component]: https://pipeline-components.dev/
 
 ## Footnotes
 
