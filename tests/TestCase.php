@@ -475,6 +475,46 @@ abstract class TestCase extends PolyfillTestCase
     }
 
     /**
+     * Helper function to create a file which can be used to run PHPCS against.
+     *
+     * @param string $path     The full path, including filename, to write the file to.
+     * @param string $contents Optional. The ccntents for the file.
+     *                         Defaults to a simple `echo 'Hello world';` PHP file.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When either passed argument is not a string.
+     * @throws RuntimeException When the file could not be created.
+     */
+    protected function createFile($path, $contents = '')
+    {
+        if (is_string($path) === false || $path === '') {
+            throw new RuntimeException('Path must be a non-empty string.');
+        }
+
+        if (is_string($contents) === false) {
+            throw new RuntimeException('Contents must be a string.');
+        }
+
+        if ($contents === '') {
+            $contents = <<<'PHP'
+<?php
+echo 'Hello world!';
+PHP;
+        }
+
+        if (file_exists($path) === true) {
+            unlink($path);
+        }
+
+        $written = file_put_contents($path, $contents);
+
+        if ($written === false) {
+            throw new RuntimeException('Failed to create the file.');
+        }
+    }
+
+    /**
      * Retrieve a list of the standards recognized by PHPCS based on the output of `phpcs -i`.
      *
      * @param string $phrase The output of `phpcs -i`.
