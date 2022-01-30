@@ -60,7 +60,7 @@ This plugin is compatible with:
 
 Basically, this plugin executes the following steps:
 
-- This plugin searches for [`phpcodesniffer-standard` packages] in all of your currently installed Composer packages.
+- This plugin searches for [`phpcodesniffer-standard` packages][] in all of your currently installed Composer packages.
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
