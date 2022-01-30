@@ -22,7 +22,7 @@ final class RegisterExternalStandardsTest extends TestCase
         'name'        => 'phpcs-composer-installer/register-external-stnds-one-stnd',
         'require-dev' => array(
             'squizlabs/php_codesniffer'                      => null,
-            'phpcompatibility/php-compatibility'             => null,
+            'phpcs-composer-installer/dummy-subdir'          => '*',
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
         ),
     );
@@ -48,19 +48,16 @@ final class RegisterExternalStandardsTest extends TestCase
      *
      * @dataProvider dataRegisterOneStandard
      *
-     * @param string $phpcsVersion     PHPCS version to use in this test.
-     *                                 This version is randomly selected from the PHPCS versions compatible
-     *                                 with the PHP version used in the test.
-     * @param string $phpcompatVersion PHPCompatibility version to use in this test.
-     * @param string $sniff            Name of the sniff to use for a PHPCS test run.
+     * @param string $phpcsVersion PHPCS version to use in this test.
+     *                             This version is randomly selected from the PHPCS versions compatible
+     *                             with the PHP version used in the test.
      *
      * @return void
      */
-    public function testRegisterOneStandardGlobal($phpcsVersion, $phpcompatVersion, $sniff)
+    public function testRegisterOneStandardGlobal($phpcsVersion)
     {
-        $config                                                      = $this->configOneStandard;
-        $config['require-dev']['squizlabs/php_codesniffer']          = $phpcsVersion;
-        $config['require-dev']['phpcompatibility/php-compatibility'] = $phpcompatVersion;
+        $config                                             = $this->configOneStandard;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
         $this->assertComposerValidates(static::$tempGlobalPath);
@@ -74,39 +71,12 @@ final class RegisterExternalStandardsTest extends TestCase
             'Failed to install dependencies.'
         );
 
-        /*
-         * In PHPCompatibility 7.x, the directory layout was not yet compatible with a Composer install,
-         * so we need to "move" the directory to make it compatible.
-         * Note: PHPCompatibility >= 8 has a conflict setting with PHPCS 2.6.2, which means that
-         * PHPCompatibility 7.x would be used in that case.
-         */
-        if ($phpcompatVersion === '^7.0' || $phpcsVersion === '2.6.2') {
-            $moveCommand = sprintf(
-                '%1$s %2$s/vendor/phpcompatibility/php-compatibility %2$s/vendor/phpcompatibility/PHPCompatibility',
-                (\DIRECTORY_SEPARATOR === '\\') ? 'move' : 'mv',
-                escapeshellarg(static::$tempGlobalPath)
-            );
-
-            $this->assertExecute(
-                $moveCommand,
-                0,    // Expected exit code.
-                null, // No stdout expectation.
-                '',   // Empty stderr expectation.
-                'Moving the PHPCompatibility directory failed.'
-            );
-        }
-
         // Verify that the standard registers correctly.
         $installResult = $this->executeCliCommand('composer global install-codestandards --no-ansi');
         $this->assertSame(0, $installResult['exitcode'], 'Exitcode for install-codestandards did not match 0');
 
-        $regex = sprintf(
-            '`^PHP CodeSniffer Config installed_paths set to '
-            . '[^\s]+/phpcompatibility%s$`',
-            ($phpcompatVersion === '^7.0' || $phpcsVersion === '2.6.2') ? '' : '/(?:php-|PHP)compatibility'
-        );
         $this->assertMatchesRegularExpression(
-            $regex,
+            '`^PHP CodeSniffer Config installed_paths set to [^\s]+/dummy-subdir$`',
             trim($installResult['stdout']),
             'Installing the standards failed.'
         );
@@ -119,9 +89,9 @@ final class RegisterExternalStandardsTest extends TestCase
         // Verify that PHPCS sees the external standard.
         $this->assertExecute(
             '"vendor/bin/phpcs" -i',
-            0,                      // Expected exit code.
-            'and PHPCompatibility', // Expected stdout.
-            '',                     // Empty stderr expectation.
+            0,                 // Expected exit code.
+            'and DummySubDir', // Expected stdout.
+            '',                // Empty stderr expectation.
             'Running phpcs -i failed.',
             static::$tempGlobalPath
         );
@@ -130,11 +100,7 @@ final class RegisterExternalStandardsTest extends TestCase
         $this->createFile(static::$tempGlobalPath . '/test.php');
 
         // Verify that PHPCS can run with the external standard.
-        $phpcsCommand = sprintf(
-            '"vendor/bin/phpcs" -psl . --standard=PHPCompatibility --sniffs=%s --runtime-set testVersion %s',
-            $sniff,
-            \CLI_PHP_MINOR
-        );
+        $phpcsCommand = '"vendor/bin/phpcs" -psl . --standard=DummySubDir';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempGlobalPath);
 
         $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS scan did not match 0');
@@ -152,19 +118,16 @@ final class RegisterExternalStandardsTest extends TestCase
      *
      * @dataProvider dataRegisterOneStandard
      *
-     * @param string $phpcsVersion     PHPCS version to use in this test.
-     *                                 This version is randomly selected from the PHPCS versions compatible
-     *                                 with the PHP version used in the test.
-     * @param string $phpcompatVersion PHPCompatibility version to use in this test.
-     * @param string $sniff            Name of the sniff to use for a PHPCS test run.
+     * @param string $phpcsVersion PHPCS version to use in this test.
+     *                             This version is randomly selected from the PHPCS versions compatible
+     *                             with the PHP version used in the test.
      *
      * @return void
      */
-    public function testRegisterOneStandardLocal($phpcsVersion, $phpcompatVersion, $sniff)
+    public function testRegisterOneStandardLocal($phpcsVersion)
     {
-        $config                                                      = $this->configOneStandard;
-        $config['require-dev']['squizlabs/php_codesniffer']          = $phpcsVersion;
-        $config['require-dev']['phpcompatibility/php-compatibility'] = $phpcompatVersion;
+        $config                                             = $this->configOneStandard;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
         $this->assertComposerValidates(static::$tempLocalPath);
@@ -178,28 +141,6 @@ final class RegisterExternalStandardsTest extends TestCase
             'Failed to install dependencies.'
         );
 
-        /*
-         * In PHPCompatibility 7.x, the directory layout was not yet compatible with a Composer install,
-         * so we need to "move" the directory to make it compatible.
-         * Note: PHPCompatibility >= 8 has a conflict setting with PHPCS 2.6.2, which means that
-         * PHPCompatibility 7.x would be used in that case.
-         */
-        if ($phpcompatVersion === '^7.0' || $phpcsVersion === '2.6.2') {
-            $moveCommand = sprintf(
-                '%1$s %2$s/vendor/phpcompatibility/php-compatibility %2$s/vendor/phpcompatibility/PHPCompatibility',
-                (\DIRECTORY_SEPARATOR === '\\') ? 'move' : 'mv',
-                escapeshellarg(static::$tempLocalPath)
-            );
-
-            $this->assertExecute(
-                $moveCommand,
-                0,    // Expected exit code.
-                null, // No stdout expectation.
-                '',   // Empty stderr expectation.
-                'Moving the PHPCompatibility directory failed.'
-            );
-        }
-
         // Verify that the standard registers correctly.
         $installCommand = sprintf(
             'composer install-codestandards --no-ansi --working-dir=%s',
@@ -208,13 +149,8 @@ final class RegisterExternalStandardsTest extends TestCase
         $installResult  = $this->executeCliCommand($installCommand);
         $this->assertSame(0, $installResult['exitcode'], 'Exitcode for install-codestandards did not match 0');
 
-        $regex = sprintf(
-            '`^PHP CodeSniffer Config installed_paths set to '
-            . '[^\s]+/phpcompatibility%s$`',
-            ($phpcompatVersion === '^7.0' || $phpcsVersion === '2.6.2') ? '' : '/(?:php-|PHP)compatibility'
-        );
         $this->assertMatchesRegularExpression(
-            $regex,
+            '`^PHP CodeSniffer Config installed_paths set to [^\s]+/dummy-subdir$`',
             trim($installResult['stdout']),
             'Installing the standards failed.'
         );
@@ -227,9 +163,9 @@ final class RegisterExternalStandardsTest extends TestCase
         // Verify that PHPCS sees the external standard.
         $this->assertExecute(
             '"vendor/bin/phpcs" -i',
-            0,                      // Expected exit code.
-            'and PHPCompatibility', // Expected stdout.
-            '',                     // Empty stderr expectation.
+            0,                 // Expected exit code.
+            'and DummySubDir', // Expected stdout.
+            '',                // Empty stderr expectation.
             'Running phpcs -i failed.',
             static::$tempLocalPath
         );
@@ -238,11 +174,7 @@ final class RegisterExternalStandardsTest extends TestCase
         $this->createFile(static::$tempLocalPath . '/test.php');
 
         // Verify that PHPCS can run with the external standard.
-        $phpcsCommand = sprintf(
-            '"vendor/bin/phpcs" -psl . --standard=PHPCompatibility --sniffs=%s --runtime-set testVersion %s',
-            $sniff,
-            \CLI_PHP_MINOR
-        );
+        $phpcsCommand = '"vendor/bin/phpcs" -psl . --standard=DummySubDir';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempLocalPath);
 
         $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS scan did not match 0');
@@ -264,43 +196,6 @@ final class RegisterExternalStandardsTest extends TestCase
     {
         // Get two PHPCS versions suitable for this PHP version + `master` + PHPCS 4.x dev.
         $versions = PHPCSVersions::get(2, true, true);
-
-        $data = array();
-        foreach ($versions as $phpcs) {
-            switch (true) {
-                case $phpcs === PHPCSVersions::MASTER:
-                case $phpcs === PHPCSVersions::NEXT_MAJOR:
-                default:
-                    $phpcompat = '*';
-                    $sniff     = 'PHPCompatibility.FunctionUse.RemovedFunctions';
-                    break;
-
-                case version_compare($phpcs, '2.2.0', '<'):
-                    // PHPCompatibility 7.x is the last version supporting PHPCS < 2.2.0.
-                    $phpcompat = '^7.0';
-                    $sniff     = 'PHPCompatibility.PHP.DeprecatedFunctions';
-                    break;
-
-                case version_compare($phpcs, '2.3.0', '<'):
-                    // PHPCompatibility 8.x is the last version supporting PHPCS < 2.3.0.
-                    $phpcompat = '^8.0';
-                    $sniff     = 'PHPCompatibility.PHP.DeprecatedFunctions';
-                    break;
-
-                case (version_compare($phpcs, '2.6.0', '<')):
-                    // PHPCompatibility 9.x is the last version supporting PHPCS < 2.6.0.
-                    $phpcompat = '^9.0';
-                    $sniff     = 'PHPCompatibility.FunctionUse.RemovedFunctions';
-                    break;
-            }
-
-            $data["phpcs $phpcs - phpcompat $phpcompat"] = array(
-                'phpcsVersion'     => $phpcs,
-                'phpcompatVersion' => $phpcompat,
-                'sniff'            => $sniff,
-            );
-        }
-
-        return $data;
+        return PHPCSVersions::toDataprovider($versions);
     }
 }
