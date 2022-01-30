@@ -14,6 +14,7 @@ use DirectoryIterator;
 use RecursiveCallbackFilterIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use SplFileInfo;
 use ZipArchive;
 
@@ -131,6 +132,54 @@ class CreateComposerZipArtifacts
     {
         $fileName = "dealerdirect-phpcodesniffer-composer-installer-{$version}.zip";
         $this->createZipArtifact($source, \ZIP_ARTIFACT_DIR . $fileName, $version);
+    }
+
+    /**
+     * Create a zip package artifact for each test fixture.
+     *
+     * @param string $source The source directory where the fixtures can be found.
+     *                       Each subdirectory of this directory will be treated as a
+     *                       package to be zipped up.
+     *
+     * @return void
+     */
+    public function createFixtureArtifacts($source)
+    {
+        $di = new DirectoryIterator($source);
+        foreach ($di as $fileinfo) {
+            if ($fileinfo->isDot() || $fileinfo->isDir() === false) {
+                continue;
+            }
+
+            $sourcePath   = $fileinfo->getRealPath();
+            $composerFile = $sourcePath . '/composer.json';
+            if (file_exists($composerFile) === false) {
+                throw new RuntimeException(
+                    sprintf(
+                        'Each fixture MUST contain a composer.json file. File not found in %s',
+                        $composerFile
+                    )
+                );
+            }
+
+            $config = json_decode(file_get_contents($composerFile), true);
+            if (isset($config['name']) === false) {
+                throw new RuntimeException(
+                    sprintf('The fixture composer.json file is missing the "name" for the package in %s', $composerFile)
+                );
+            }
+
+            $targetVersion = self::FIXTURE_VERSION;
+            if (isset($config['version'])) {
+                $targetVersion = $config['version'];
+            }
+
+            $package    = $config['name'];
+            $targetFile = str_replace('/', '-', $package) . "-{$targetVersion}.zip";
+            $targetPath = $this->artifactDir . $targetFile;
+
+            $this->createZipArtifact($sourcePath, $targetPath, $targetVersion);
+        }
     }
 
     /**

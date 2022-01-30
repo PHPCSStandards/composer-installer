@@ -66,7 +66,7 @@ if (\defined('__PHPUNIT_PHAR__')) {
 }
 
 /*
- * Create Zip artifact of the plugin.
+ * Create Zip artifacts of the plugin itself as well as the test fixtures.
  */
 define('ZIP_ARTIFACT_DIR', __DIR__ . '/artifact/');
 
@@ -76,6 +76,7 @@ if (extension_loaded('zip') === true) {
     $zipCreator = new CreateComposerZipArtifacts(\ZIP_ARTIFACT_DIR);
     $zipCreator->clearOldArtifacts();
     $zipCreator->createPluginArtifact(dirname(__DIR__), \PLUGIN_ARTIFACT_VERSION);
+    $zipCreator->createFixtureArtifacts(__DIR__ . '/fixtures/');
     unset($zipCreator);
 } else {
     echo 'Please enable the zip extension before running the tests.';

@@ -230,7 +230,7 @@ abstract class TestCase extends PolyfillTestCase
             throw new RuntimeException('Directory must be a non-empty string.');
         }
 
-        // Inject artifact for this plugin.
+        // Inject artifact for this plugin and some dummy standards.
         if (isset($config['repositories']) === false) {
             $config['repositories'][] = array(
                 'type' => 'artifact',
