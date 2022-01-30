@@ -25,6 +25,64 @@ Even better: You could submit a pull request with a fix / new feature!
    developers, or if you do not have permission to do that, you may request
    the second reviewer to merge it for you.
 
+### (Code) Quality checks
+
+Every merge-request triggers a build process which runs various checks to help
+maintain a quality standard. All JSON, Markdown, PHP, and Yaml files are 
+expected to adhere to these quality standards.
+
+These tools fall into two categories: PHP and non-PHP.
+
+### PHP 
+
+The PHP specific tools used by this build are:
+
+- [PHP_CodeSniffer][] to verify PHP code complies with the [PSR12][] standard.
+- [PHPCompatibility][] to verify that code is written in a PHP cross-version compatible manner.
+- [PHP-Parallel-Lint][] to check against parse errors in PHP files.
+- [PHP-Security-Checker][] to prevent insecure dependencies being installed.
+
+The automated checks with these tools are run via [GitHub Actions][].
+
+As most of these tools are included as Composer `require-dev` packages, they can be
+run locally with PHP.
+
+For the Parallel Lint check, the `composer lint` script has been added for convenience.
+
+The Security Checker package is not included in the Composer configuration. An executable
+can be downloaded suitable for your operating system from their [releases page][].
+
+Alternatively, these tools can be run using `docker run`, through the Docker
+images provided by [Pipeline-Component][].
+
+[PHP_CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[PHPCompatibility]: https://github.com/PHPCompatibility/PHPCompatibility
+[PHP-Parallel-Lint]: https://github.com/php-parallel-lint/PHP-Parallel-Lint
+[PHP-Security-Checker]: https://github.com/fabpot/local-php-security-checker
+[PSR12]: https://www.php-fig.org/psr/psr-12/
+[releases page]: https://github.com/fabpot/local-php-security-checker/releases/
+
+### Non-PHP
+
+The non-PHP specific tools used by this build are:
+
+- [jsonlint][] to verify that all JSON files use a consistent code style.
+- [remark-lint][] to verify that all markdown files use a consistent code style.
+- [yamllint][] to verify that all Yaml files use a consistent code style.
+
+These tools are also run as [GitHub actions][].
+All the checks can be run locally using [`act`][].
+Alternatively they can be run using `docker run`, as all checks use Docker 
+images provided by [Pipeline-Component][].
+
+Finally, they could be run locally using NodeJS, Ruby, PHP, or whatever the tool
+is written in. For details please consult the relevant tool's documentation.
+
+[jsonlint]: https://www.npmjs.com/package/jsonlint
+[remark-lint]: https://www.npmjs.com/package/remark-lint
+[yamllint]: https://yamllint.readthedocs.io/en/stable/
+[`act`]: https://github.com/nektos/act
+
 ## Release process
 
 To make it possible to automatically generate a changelog, all tickets/issues must have a milestone and at least one label.
@@ -55,6 +113,8 @@ To create a new release:
 
 [github]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues
 [prs]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/pulls
+[GitHub Actions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions
+[Pipeline-Component]: https://pipeline-components.dev/
 
 ## Footnotes
 
