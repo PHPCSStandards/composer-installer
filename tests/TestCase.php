@@ -268,6 +268,14 @@ abstract class TestCase extends PolyfillTestCase
         if ($written === false) {
             throw new RuntimeException('Failed to create the composer.json file in the temp directory for the test');
         }
+
+        // Add debug information to the test listener which will be displayed in case the test fails.
+        DebugTestListener::debugLog(
+            '---------------------------------------' . \PHP_EOL
+            . 'composer.json: ' . \PHP_EOL
+            . $encoded . \PHP_EOL
+            . '---------------------------------------' . \PHP_EOL
+        );
     }
 
     /**
@@ -418,6 +426,14 @@ abstract class TestCase extends PolyfillTestCase
         fclose($pipes[2]);
 
         $result['exitcode'] = proc_close($process);
+
+        // Add debug information to the test listener which will be displayed in case the test fails.
+        DebugTestListener::debugLog(
+            '---------------------------------------' . \PHP_EOL
+            . 'Command: ' . $command . \PHP_EOL
+            . 'Output: ' . var_export($result, true) . \PHP_EOL
+            . '---------------------------------------' . \PHP_EOL
+        );
 
         return $result;
     }

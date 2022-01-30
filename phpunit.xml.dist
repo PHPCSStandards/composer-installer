@@ -17,6 +17,10 @@
         </testsuite>
     </testsuites>
 
+    <listeners>
+        <listener class="Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\DebugTestListener" />
+    </listeners>
+
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">./src/</directory>
