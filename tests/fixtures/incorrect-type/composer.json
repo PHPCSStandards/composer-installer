@@ -1,0 +1,16 @@
+{
+    "name" : "phpcs-composer-installer/incorrect-type",
+    "description" : "Dummy PHPCS standard with subdirectory ruleset for use in the tests.",
+    "type" : "coding-standard",
+    "license" : "MIT",
+    "require" : {
+        "php" : ">=5.4",
+        "squizlabs/php_codesniffer" : "*",
+        "dealerdirect/phpcodesniffer-composer-installer" : "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
