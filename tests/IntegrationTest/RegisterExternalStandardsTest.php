@@ -96,20 +96,15 @@ final class RegisterExternalStandardsTest extends TestCase
             static::$tempGlobalPath
         );
 
-        // Make sure there is a PHP file to scan.
-        $this->createFile(static::$tempGlobalPath . '/test.php');
-
-        // Verify that PHPCS can run with the external standard.
-        $phpcsCommand = '"vendor/bin/phpcs" -psl . --standard=DummySubDir';
+        // Verify that PHPCS can with the external standard set as the standard.
+        $phpcsCommand = '"vendor/bin/phpcs" --standard=DummySubDir -e';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempGlobalPath);
 
-        $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS scan did not match 0');
+        $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS explain did not match 0');
         $this->assertMatchesRegularExpression(
-            // PHPCS 3.x added the "1/1 (100%)" annotation, the new line (+timing) was added early in the 2.x cycle.
-            '`^\.(?: 1 / 1 \(100%\))?(?:' . \PHP_EOL . '|$)`',
-            // Progress reporting moved from stdout to stderr in PHPCS 4.x.
-            ($phpcsVersion[0] !== '4') ? trim($phpcsResult['stdout']) : trim($phpcsResult['stderr']),
-            'Scanning the directory with PHPCS failed.'
+            '`DummySubDir \(1 sniffs?\)\s+[-]+\s+DummySubDir\.Demo\.Demo(?:[\r\n]+|$)`',
+            $phpcsResult['stdout'],
+            'Output of the PHPCS explain command did not match the expectation.'
         );
     }
 
@@ -170,20 +165,15 @@ final class RegisterExternalStandardsTest extends TestCase
             static::$tempLocalPath
         );
 
-        // Make sure there is a PHP file to scan.
-        $this->createFile(static::$tempLocalPath . '/test.php');
-
-        // Verify that PHPCS can run with the external standard.
-        $phpcsCommand = '"vendor/bin/phpcs" -psl . --standard=DummySubDir';
+        // Verify that PHPCS can with the external standard set as the standard.
+        $phpcsCommand = '"vendor/bin/phpcs" --standard=DummySubDir -e';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempLocalPath);
 
-        $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS scan did not match 0');
+        $this->assertSame(0, $phpcsResult['exitcode'], 'Exitcode for PHPCS explain did not match 0');
         $this->assertMatchesRegularExpression(
-            // PHPCS 3.x added the "1/1 (100%)" annotation, the new line (+timing) was added early in the 2.x cycle.
-            '`^\.(?: 1 / 1 \(100%\))?(?:' . \PHP_EOL . '|$)`',
-            // Progress reporting moved from stdout to stderr in PHPCS 4.x.
-            ($phpcsVersion[0] !== '4') ? ltrim($phpcsResult['stdout']) : ltrim($phpcsResult['stderr']),
-            'Scanning the directory with PHPCS failed.'
+            '`DummySubDir \(1 sniffs?\)\s+[-]+\s+DummySubDir\.Demo\.Demo(?:[\r\n]+|$)`',
+            $phpcsResult['stdout'],
+            'Output of the PHPCS explain command did not match the expectation.'
         );
     }
 
