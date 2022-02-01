@@ -4,8 +4,8 @@ name: Integration Test
 on:
   # Run on pushes to `master` and on all pull requests.
   push:
-    branches:
-      - master
+#    branches:
+#      - master
   pull_request:
   # Allow manually triggering the workflow.
   workflow_dispatch:
@@ -21,6 +21,7 @@ jobs:
     runs-on: "${{ matrix.os }}"
 
     strategy:
+      fail-fast: false
       matrix:
         php:
           - '5.4'
