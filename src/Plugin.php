@@ -233,10 +233,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $this->processExecutor->execute(
-                sprintf(
-                    'phpcs --config-show %s',
-                    self::PHPCS_CONFIG_KEY
-                ),
+                'phpcs --config-show',
                 $output,
                 $this->composer->getConfig()->get('bin-dir')
             );
