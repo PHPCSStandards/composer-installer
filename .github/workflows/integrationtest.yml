@@ -41,9 +41,18 @@ jobs:
           - 'ubuntu-latest'
           - 'windows-latest'
 
+        include:
+          - php: 'latest'
+            composer: 'snapshot'
+            os: 'ubuntu-latest'
+
+          - php: 'latest'
+            composer: 'snapshot'
+            os: 'windows-latest'
+
     name: "Integration test"
 
-    continue-on-error: ${{ matrix.php == '8.2' }}
+    continue-on-error: ${{ matrix.php == '8.2' || matrix.composer == 'snapshot' }}
 
     steps:
       - name: Checkout code
