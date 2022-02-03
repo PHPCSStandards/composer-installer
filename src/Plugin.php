@@ -40,7 +40,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
 
     const MESSAGE_NOT_INSTALLED      = 'PHPCodeSniffer is not installed';
-    const MESSAGE_NOTHING_TO_INSTALL = 'Nothing to install or update';
+    const MESSAGE_NOTHING_TO_INSTALL = 'No PHPCS standards to install or update';
     const MESSAGE_PLUGIN_UNINSTALLED = 'PHPCodeSniffer Composer Installer is uninstalled';
     const MESSAGE_RUNNING_INSTALLER  = 'Running PHPCodeSniffer Composer Installer';
 
