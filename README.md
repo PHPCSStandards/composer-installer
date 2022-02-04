@@ -60,7 +60,7 @@ This plugin is compatible with:
 
 Basically, this plugin executes the following steps:
 
-- This plugin searches for [`phpcodesniffer-standard` packages] in all of your currently installed Composer packages.
+- This plugin searches for [`phpcodesniffer-standard` packages][] in all of your currently installed Composer packages.
 - Matching packages and the project itself are scanned for PHP_CodeSniffer rulesets.
 - The plugin will call PHP_CodeSniffer and configure the `installed_paths` option.
 
@@ -235,7 +235,7 @@ For a full list of all author and/or contributors, check [the contributors page]
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2021 Dealerdirect B.V.
+Copyright (c) 2016-2022 Dealerdirect B.V.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

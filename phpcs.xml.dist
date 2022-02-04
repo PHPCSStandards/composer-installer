@@ -20,4 +20,7 @@
              and constant visibility was only introduced in PHP 7.1. -->
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
     </rule>
+
+    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+
 </ruleset>

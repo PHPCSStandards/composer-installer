@@ -4,8 +4,10 @@ When contributing to this repository, please first discuss the change you wish
 to make via issue, email, or any other method with the owners of this repository
 before making a change.
 
-Please note we have [a code of conduct](#code-of-conduct), please follow it in all your interactions
+Please note we have [a code of conduct][], please follow it in all your interactions
 with the project.
+
+[a code of conduct]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/blob/master/CODE_OF_CONDUCT.md
 
 ## Issues and feature requests
 

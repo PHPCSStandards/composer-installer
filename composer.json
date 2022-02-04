@@ -4,7 +4,7 @@
   "type": "composer-plugin",
   "keywords": [
     "composer", "installer", "plugin",
-    "phpcs", "codesniffer", "phpcodesniffer", "php_codesniffer",
+    "phpcs", "phpcbf", "codesniffer", "phpcodesniffer", "php_codesniffer",
     "standard", "standards", "style guide", "stylecheck",
     "qa", "quality", "code quality", "tests"
   ],
@@ -16,6 +16,10 @@
       "email": "franck.nijhof@dealerdirect.com",
       "homepage": "http://www.frenck.nl",
       "role": "Developer / IT Manager"
+    },
+    {
+      "name" : "Contributors",
+      "homepage" : "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
     }
   ],
   "support": {
