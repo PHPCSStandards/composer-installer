@@ -440,6 +440,15 @@ abstract class TestCase extends PolyfillTestCase
             throw new RuntimeException('Could not obtain a resource with proc_open() to execute the command.');
         }
 
+        if (static::onWindows() === true) {
+            /*
+             * Set all pipes to non-blocking to prevent the tests hanging when an exception is thrown in the subprocess.
+             */
+            stream_set_blocking($pipes[0], 0);
+            stream_set_blocking($pipes[1], 0);
+            stream_set_blocking($pipes[2], 0);
+        }
+
         $result = array();
         fclose($pipes[0]);
 
