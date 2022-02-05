@@ -51,3 +51,14 @@ An external PHPCS standard with multiple rulesets, each in a subdirectory ("norm
 | **Includes sniff(s):**   | :x:                                                        |
 | **Requires the plugin:** | :heavy_checkmark:                                          |
 
+### Package name: `phpcs-composer-installer/dummy-src`
+
+**Description:**
+An external PHPCS standard with the `ruleset.xml` file in a deeper nested subdirectory.
+
+| Characteristics          | Notes             |
+|--------------------------|-------------------|
+| **Standard(s):**         | `DummySrcSubDir`  |
+| **Includes sniff(s):**   | :x:               |
+| **Requires the plugin:** | :heavy_checkmark: |
+
