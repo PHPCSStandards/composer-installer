@@ -64,18 +64,6 @@ final class BaseLineTest extends TestCase
      */
     public function testBaseLineGlobal($phpcsVersion, $expectedStnds)
     {
-        if (
-            $phpcsVersion === PHPCSVersions::MASTER
-            && \CLI_PHP_MINOR === '5.5'
-            && $this->onWindows() === true
-            && substr(\COMPOSER_VERSION, 0, 1) === '1'
-        ) {
-            $this->markTestSkipped(
-                'Composer 1.x on Windows with PHP 5.5 does run the plugin when there are no external standards,'
-                . ' but doesn\'t consistently show this in the logs'
-            );
-        }
-
         $config                                             = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
@@ -83,10 +71,11 @@ final class BaseLineTest extends TestCase
         $this->assertComposerValidates(static::$tempGlobalPath);
 
         // Make sure the plugin runs.
+        $expectedStdOut = $this->willPluginOutputShow() ? 'Running PHPCodeSniffer Composer Installer' : null;
         $this->assertExecute(
             'composer global install -v --no-ansi',
             0,    // Expected exit code.
-            'Running PHPCodeSniffer Composer Installer', // Expected stdout.
+            $expectedStdOut, // Expected stdout.
             null, // No stderr expectation.
             'Failed to install dependencies.'
         );
@@ -119,18 +108,6 @@ final class BaseLineTest extends TestCase
      */
     public function testBaseLineLocal($phpcsVersion, $expectedStnds)
     {
-        if (
-            $phpcsVersion === PHPCSVersions::MASTER
-            && \CLI_PHP_MINOR === '5.5'
-            && $this->onWindows() === true
-            && substr(\COMPOSER_VERSION, 0, 1) === '1'
-        ) {
-            $this->markTestSkipped(
-                'Composer 1.x on Windows with PHP 5.5 does run the plugin when there are no external standards,'
-                . ' but doesn\'t consistently show this in the logs'
-            );
-        }
-
         $config                                             = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
@@ -138,10 +115,11 @@ final class BaseLineTest extends TestCase
         $this->assertComposerValidates(static::$tempLocalPath);
 
         // Make sure the plugin runs.
+        $expectedStdOut = $this->willPluginOutputShow() ? 'Running PHPCodeSniffer Composer Installer' : null;
         $this->assertExecute(
             sprintf('composer install -v --no-ansi --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
             0,    // Expected exit code.
-            'Running PHPCodeSniffer Composer Installer', // Expected stdout.
+            $expectedStdOut, // Expected stdout.
             null, // No stderr expectation.
             'Failed to install dependencies.'
         );
