@@ -43,6 +43,14 @@ final class RegisterExternalStandardsTest extends TestCase
         ),
     );
 
+    private $configOneStandardInPackageRoot = array(
+        'name'        => 'phpcs-composer-installer/register-external-stnds-package-root',
+        'require-dev' => array(
+            'squizlabs/php_codesniffer'          => null,
+            'phpcs-composer-installer/dummyroot' => '*',
+        ),
+    );
+
     /**
      * Set up test environment before each test.
      */
@@ -322,6 +330,61 @@ final class RegisterExternalStandardsTest extends TestCase
 
         $expected   = PHPCSVersions::getStandards($phpcsVersion);
         $expected[] = 'DummySrcSubDir';
+        sort($expected, \SORT_NATURAL);
+
+        $this->assertSame(
+            $expected,
+            $this->standardsPhraseToArray($result['stdout']),
+            'Installed standards do not match the expected standards.'
+        );
+    }
+
+    /**
+     * Test registering an external standard which has the ruleset in the package root, as supported
+     * by PHPCS since PHPCS 3.0.
+     *
+     * @dataProvider dataRandomPHPCSVersion
+     *
+     * @param string $phpcsVersion PHPCS version to use in this test.
+     *
+     * @return void
+     */
+    public function testRegisterOneStandardWithRulesetInPackageRoot($phpcsVersion)
+    {
+        $config = $this->configOneStandardInPackageRoot;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+
+        $this->writeComposerJsonFile($config, static::$tempLocalPath);
+
+        // Install the dependencies and verify that the plugin has run.
+        $this->assertExecute(
+            sprintf('composer install -v --no-ansi --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
+            0,    // Expected exit code.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
+            null, // No stderr expectation.
+            'Failed to install dependencies.'
+        );
+
+        // Verify that the path for the directory above the package root is registered.
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs --config-show" did not match 0');
+
+        $expected = array(
+            '/phpcs-composer-installer',
+        );
+
+        $this->assertSame(
+            $expected,
+            $this->configShowToPathsArray($result['stdout']),
+            'Paths as updated by the plugin does not contain the expected path'
+        );
+
+        // Verify that PHPCS sees the external standard.
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" -i', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs -i" did not match 0');
+
+        $expected   = PHPCSVersions::getStandards($phpcsVersion);
+        $expected[] = 'dummyroot';
         sort($expected, \SORT_NATURAL);
 
         $this->assertSame(

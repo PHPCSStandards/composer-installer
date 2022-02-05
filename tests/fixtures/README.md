@@ -64,6 +64,17 @@ An external PHPCS standard with the `ruleset.xml` file in a deeper nested subdir
 | **Includes sniff(s):**   | :x:               |
 | **Requires the plugin:** | :heavy_checkmark: |
 
+### Package name: `phpcs-composer-installer/dummyroot`
+
+**Description:**
+An external PHPCS standard with the `ruleset.xml` file in the project root (as supported since PHPCS 3.x).
+
+| Characteristics          | Notes             |
+|--------------------------|-------------------|
+| **Standard(s):**         | `dummyroot`       |
+| **Includes sniff(s):**   | :x:               |
+| **Requires the plugin:** | :heavy_checkmark: |
+
 
 ## Invalid packages
 
