@@ -40,3 +40,14 @@ An external PHPCS standard with the `ruleset.xml` file in a subdirectory ("norma
 | **Includes sniff(s):**   | :heavy_checkmark: One sniff - `DummySubDir.Demo.Demo` - which is PHPCS cross-version compatible. |
 | **Requires the plugin:** | :x:                                                                                              |
 
+### Package name: `phpcs-composer-installer/multistandard`
+
+**Description:**
+An external PHPCS standard with multiple rulesets, each in a subdirectory ("normal" standard setup).
+
+| Characteristics          | Notes                                                      |
+|--------------------------|------------------------------------------------------------|
+| **Standard(s):**         | `MyFirstStandard`, `MySecondStandard`, `My-Third-Standard` |
+| **Includes sniff(s):**   | :x:                                                        |
+| **Requires the plugin:** | :heavy_checkmark:                                          |
+
