@@ -403,6 +403,9 @@ abstract class TestCase extends PolyfillTestCase
      *                                Defaults to `null` = the working directory of the current PHP process.
      *                                Note: if the command itself already contains a "working directory" argument,
      *                                this parameter will normally not need to be passed.
+     * @param bool        $autoRetry  Internal. Whether the command should be retried if it fails on a particular
+     *                                Composer exception. This parameter should only be set by the method itself
+     *                                when recursing on itself.
      *
      * @return array Format:
      *               'exitcode' int    The exit code from the command.
@@ -412,7 +415,7 @@ abstract class TestCase extends PolyfillTestCase
      * @throws RuntimeException When the passed arguments do not comply.
      * @throws RuntimeException When no resource could be obtained to execute the command.
      */
-    public static function executeCliCommand($command, $workingDir = null)
+    public static function executeCliCommand($command, $workingDir = null, $autoRetry = true)
     {
         if (is_string($command) === false || $command === '') {
             throw new RuntimeException('Command must be a non-empty string.');
@@ -453,6 +456,22 @@ abstract class TestCase extends PolyfillTestCase
             . 'Output: ' . var_export($result, true) . \PHP_EOL
             . '---------------------------------------' . \PHP_EOL
         );
+
+        /*
+         * Prevent the complete CI run failing on a particular error which Composer sometimes
+         * runs into. Retry the command instead. In most cases, that should fix it.
+         * If the command still fails, just return the results.
+         */
+        if (
+            $autoRetry === true
+            && $result['exitcode'] === 1
+            && strpos($command, '"' . \COMPOSER_PHAR . '"') !== false
+            && strpos($result['stderr'], '[Composer\\Downloader\\TransportException]') !== false
+            && strpos($result['stderr'], 'Peer fingerprint did not match') !== false
+        ) {
+            // Retry and return the results of the retry.
+            return self::executeCliCommand($command, $workingDir, false);
+        }
 
         return $result;
     }
