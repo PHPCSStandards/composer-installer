@@ -122,7 +122,7 @@ abstract class TestCase extends PolyfillTestCase
             $command,
             0,       // Expected exit code.
             null,    // Expected stdout.
-            $stderr, // Expected sterr.
+            $stderr, // Expected stderr.
             $message
         );
     }
@@ -205,7 +205,7 @@ abstract class TestCase extends PolyfillTestCase
      */
     protected static function onWindows()
     {
-        return strpos(strtoupper(\PHP_OS), 'WIN') === 0;
+        return stripos(\PHP_OS, 'WIN') === 0;
     }
 
     /**
@@ -224,7 +224,7 @@ abstract class TestCase extends PolyfillTestCase
     {
         return ((\CLI_PHP_MINOR === '5.5'
             && $this->onWindows() === true
-            && substr(\COMPOSER_VERSION, 0, 1) === '1') === false);
+            && strpos(\COMPOSER_VERSION, '1') === 0) === false);
     }
 
     /**
@@ -273,7 +273,7 @@ abstract class TestCase extends PolyfillTestCase
          * Disable TLS when on Windows with Composer 1.x and PHP 5.4.
          * @link https://github.com/composer/composer/issues/10495
          */
-        if (static::onWindows() === true && \CLI_PHP_MINOR === '5.4' && substr(\COMPOSER_VERSION, 0, 1) === '1') {
+        if (static::onWindows() === true && \CLI_PHP_MINOR === '5.4' && strpos(\COMPOSER_VERSION, '1') === 0) {
             $config['config']['disable-tls'] = true;
         }
 
@@ -484,8 +484,8 @@ abstract class TestCase extends PolyfillTestCase
         }
 
         if (
-            strpos($expected, "\033") === false && strpos($actual, "\033") !== false
-            || strpos($expected, "\x1b") === false && strpos($actual, "\x1b") !== false
+            (strpos($expected, "\033") === false && strpos($actual, "\033") !== false)
+            || (strpos($expected, "\x1b") === false && strpos($actual, "\x1b") !== false)
         ) {
             $actual = preg_replace('`(?:\\\\033|\\\\x1b)\\\\[[0-9]+(;[0-9]*)[A-Za-z]`', '', $actual);
         }

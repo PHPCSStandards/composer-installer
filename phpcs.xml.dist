@@ -22,7 +22,11 @@
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
     </rule>
 
-    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <properties>
+            <property name="maxPadding" value="40" />
+        </properties>
+    </rule>
 
     <rule ref="PSR1.Files.SideEffects">
         <exclude-pattern>*/tests/bootstrap\.php$</exclude-pattern>

@@ -250,7 +250,7 @@ final class PHPCSVersions
     /**
      * Convert a versions array to an array suitable for use as a PHPUnit dataprovider.
      *
-     * @param array $version Array with PHPCS version numbers as values.
+     * @param array $versions Array with PHPCS version numbers as values.
      *
      * @return array Array of PHPCS version identifiers in a format usable for a test data provider.
      */
@@ -277,8 +277,6 @@ final class PHPCSVersions
      */
     public static function getSupportedVersions()
     {
-        $versions = self::$allPhpcsVersions;
-
         /*
          * Adjust the list of available versions based on the PHP version on which the tests are run.
          */
@@ -381,8 +379,8 @@ final class PHPCSVersions
         if (
             is_string($version) === false
             || (isset(self::$allPhpcsVersions[$version]) === false
-            && $version !== PHPCSVersions::MASTER
-            && $version !== PHPCSVersions::NEXT_MAJOR)
+            && $version !== self::MASTER
+            && $version !== self::NEXT_MAJOR)
         ) {
             throw new RuntimeException('The version parameter must be a valid PHPCS version number as a string.');
         }
@@ -395,14 +393,14 @@ final class PHPCSVersions
             'Zend',
         );
 
-        if ($version !== PHPCSVersions::NEXT_MAJOR) {
+        if ($version !== self::NEXT_MAJOR) {
             // The MySource standard is available in PHPCS 2.x and 3.x, but will be removed in 4.0.
             $standards[] = 'MySource';
         }
 
         if (
-            $version !== PHPCSVersions::MASTER
-            && $version !== PHPCSVersions::NEXT_MAJOR
+            $version !== self::MASTER
+            && $version !== self::NEXT_MAJOR
             && version_compare($version, '3.0.0', '<')
         ) {
             // The PHPCS standard was available in PHPCS 2.x, but has been removed in 3.0.
@@ -410,8 +408,8 @@ final class PHPCSVersions
         }
 
         if (
-            $version === PHPCSVersions::MASTER
-            || $version === PHPCSVersions::NEXT_MAJOR
+            $version === self::MASTER
+            || $version === self::NEXT_MAJOR
             || version_compare($version, '3.3.0', '>=')
         ) {
             // The PSR12 standard is available since PHPCS 3.3.0.

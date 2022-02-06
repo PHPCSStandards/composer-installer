@@ -64,7 +64,7 @@ final class BaseLineTest extends TestCase
      */
     public function testBaseLineGlobal($phpcsVersion, $expectedStnds)
     {
-        $config                                             = $this->composerConfig;
+        $config = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
@@ -108,7 +108,7 @@ final class BaseLineTest extends TestCase
      */
     public function testBaseLineLocal($phpcsVersion, $expectedStnds)
     {
-        $config                                             = $this->composerConfig;
+        $config = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);

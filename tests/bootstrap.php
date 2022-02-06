@@ -15,7 +15,7 @@ namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
  */
 $tempDir = sys_get_temp_dir() . '/PHPCSPluginTest';
 if (file_exists($tempDir) === true) {
-    if (strpos(strtoupper(\PHP_OS), 'WIN') === 0) {
+    if (stripos(\PHP_OS, 'WIN') === 0) {
         // Windows.
         shell_exec(sprintf('rd /s /q %s', escapeshellarg($tempDir)));
     } else {

@@ -56,7 +56,7 @@ final class RegisterExternalStandardsTest extends TestCase
      */
     public function testRegisterOneStandardGlobal($phpcsVersion)
     {
-        $config                                             = $this->configOneStandard;
+        $config = $this->configOneStandard;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
@@ -121,7 +121,7 @@ final class RegisterExternalStandardsTest extends TestCase
      */
     public function testRegisterOneStandardLocal($phpcsVersion)
     {
-        $config                                             = $this->configOneStandard;
+        $config = $this->configOneStandard;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);

@@ -92,11 +92,7 @@ class CreateComposerZipArtifacts
     public function __construct($artifactDir)
     {
         // Make sure the directory has a trailing slash.
-        if (substr($artifactDir, -1) !== '/') {
-            $artifactDir .= '/';
-        }
-
-        $this->artifactDir = $artifactDir;
+        $this->artifactDir = rtrim($artifactDir, '/') . '/';
     }
 
     /**
@@ -108,15 +104,9 @@ class CreateComposerZipArtifacts
     {
         $di = new DirectoryIterator($this->artifactDir);
         foreach ($di as $fileinfo) {
-            if (
-                $fileinfo->isDot()
-                || $fileinfo->isFile() === false
-                || $fileinfo->getExtension() !== 'zip'
-            ) {
-                continue;
+            if ($fileinfo->isFile() && $fileinfo->getExtension() === 'zip') {
+                @unlink($fileinfo->getPathname());
             }
-
-            @unlink($fileinfo->getPathname());
         }
     }
 
