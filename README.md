@@ -71,7 +71,7 @@ multiple `phpcodesniffer-standard` packages.
 
 ```json
 {
-    "name": "dealerdirect/example-project",
+    "name": "example/project",
     "description": "Just an example project",
     "type": "project",
     "require": {},
@@ -235,7 +235,8 @@ For a full list of all author and/or contributors, check [the contributors page]
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2022 Dealerdirect B.V.
+Copyright (c) 2016-2022 Dealerdirect B.V. and contributors
+Copyright (c) 2022 PHPCSStandards and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -256,7 +257,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
-[changelog]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases
+[changelog]: https://github.com/PHPCSStandards/composer-installer/releases
 [code-of-conduct-shield]: https://img.shields.io/badge/Contributor%20Covenant-v2.0-ff69b4.svg
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
@@ -264,11 +265,11 @@ THE SOFTWARE.
 [composer-manual-caret]: https://getcomposer.org/doc/articles/versions.md#caret-version-range-
 [composer]: https://getcomposer.org/
 [contributing-guidelines]: CONTRIBUTING.md
-[contributors]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors
+[contributors]: https://github.com/PHPCSStandards/composer-installer/graphs/contributors
 [definition-ci]: https://en.wikipedia.org/wiki/Continuous_integration
 [frenck]: https://github.com/frenck
-[last-updated-shield]: https://img.shields.io/github/last-commit/Dealerdirect/phpcodesniffer-composer-installer.svg
-[license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
+[last-updated-shield]: https://img.shields.io/github/last-commit/PHPCSStandards/composer-installer.svg
+[license-shield]: https://img.shields.io/github/license/PHPCSStandards/composer-installer.svg
 [packagist-shield]: https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version-shield]: https://img.shields.io/packagist/v/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
@@ -277,9 +278,9 @@ THE SOFTWARE.
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
-[ghactionstest-shield]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml/badge.svg
-[ghactions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml
+[ghactionstest-shield]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml/badge.svg
+[ghactions]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
-[v0.4]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases/tag/v0.4.0
-[v0.7]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/releases/tag/v0.7.0
+[v0.4]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.4.0
+[v0.7]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.7.0

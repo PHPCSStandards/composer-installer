@@ -19,12 +19,12 @@
     },
     {
       "name" : "Contributors",
-      "homepage" : "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
+      "homepage" : "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
     }
   ],
   "support": {
-    "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
-    "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
+    "issues": "https://github.com/PHPCSStandards/composer-installer/issues",
+    "source": "https://github.com/PHPCSStandards/composer-installer"
   },
   "require": {
     "php": ">=5.3",
