@@ -34,7 +34,7 @@ final class PHPCSVersions
      *
      * Note: PHPCS 3.0.0, 3.0.1 and 3.0.2 are not included in this list as they are not supported.
      * This matches the version constraint in the `composer.json` file of this package.
-     * {@link https://github.com/Dealerdirect/phpcodesniffer-composer-installer/pull/152}
+     * {@link https://github.com/PHPCSStandards/composer-installer/pull/152}
      *
      * @var array
      */
