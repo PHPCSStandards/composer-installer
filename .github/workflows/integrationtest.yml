@@ -29,7 +29,7 @@ jobs:
 
         include:
           # Ensure a "highest" PHP/PHPCS build combination for PHPCS 2.x is included.
-          - php: '5.3'
+          - php: '5.4'
             phpcs_version: '2.9.2'
             phpcompat: 'composer'
             experimental: false
@@ -78,10 +78,6 @@ jobs:
             phpcompat: '^7.0'
             experimental: false
           - php: '5.4'
-            phpcs_version: '2.0.0'
-            phpcompat: '^7.0'
-            experimental: false
-          - php: '5.3'
             phpcs_version: '2.0.0'
             phpcompat: '^7.0'
             experimental: false
