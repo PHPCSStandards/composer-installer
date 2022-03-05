@@ -6,7 +6,6 @@
 [![License][license-shield]](LICENSE.md)
 
 [![Tests][ghactionstest-shield]][ghactions]
-[![Scrutinizer][scrutinizer-shield]][scrutinizer]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
 [![Packagist][packagist-shield]][packagist]
 
@@ -49,7 +48,7 @@ That's it.
 
 This plugin is compatible with:
 
-- PHP **5.x**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
+- PHP **5.4+**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
 - [Composer][composer] **1.x** and **2.x** (Support for Composer v2 is available since [`v0.7.0`][v0.7])
 - [PHP_CodeSniffer][codesniffer] **2.x** and **3.x** (Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4])
 
