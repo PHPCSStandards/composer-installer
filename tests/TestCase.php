@@ -598,4 +598,47 @@ PHP;
 
         return $standards;
     }
+
+    /**
+     * Retrieve a list of the paths registered with PHPCS based on the output of `phpcs --config-show`.
+     *
+     * @param string $configShow The `stdout` output of `phpcs --config-show`.
+     *
+     * @return array Numerically indexed array of paths, stripped of absolute/relative path differences,
+     *               natural sort applied.
+     *
+     * @throws RuntimeException When the passed argument is not a string.
+     */
+    protected function configShowToPathsArray($configShow)
+    {
+        if (is_string($configShow) === false) {
+            throw new RuntimeException('The config-show input must be a string.');
+        }
+
+        if (preg_match('`installed_paths:\s+([^\n\r]+)\s+`', $configShow, $matches) !== 1) {
+            return array();
+        }
+
+        $pathsAsArray = explode(',', $matches[1]);
+        $pathsAsArray = array_map(
+            function ($value) {
+                $search = array(
+                    '`^[^\r\n]+/vendor/`',
+                    '`^\.\./\.\./`',
+                );
+
+                $replaced = preg_replace($search, '/', $value);
+                if ($replaced === null) {
+                    return $value;
+                }
+
+                return trim($replaced); // Trim off whitespace just to be on the safe side.
+            },
+            $pathsAsArray
+        );
+
+        sort($pathsAsArray, \SORT_NATURAL);
+
+        return $pathsAsArray;
+    }
 }
