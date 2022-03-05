@@ -10,6 +10,7 @@
 
 namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
 
+use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
 use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\PHPCSVersions;
 use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
 
@@ -71,7 +72,7 @@ final class BaseLineTest extends TestCase
         $this->assertComposerValidates(static::$tempGlobalPath);
 
         // Make sure the plugin runs.
-        $expectedStdOut = $this->willPluginOutputShow() ? 'Running PHPCodeSniffer Composer Installer' : null;
+        $expectedStdOut = $this->willPluginOutputShow() ? Plugin::MESSAGE_RUNNING_INSTALLER : null;
         $this->assertExecute(
             'composer global install -v --no-ansi',
             0,    // Expected exit code.
@@ -115,7 +116,7 @@ final class BaseLineTest extends TestCase
         $this->assertComposerValidates(static::$tempLocalPath);
 
         // Make sure the plugin runs.
-        $expectedStdOut = $this->willPluginOutputShow() ? 'Running PHPCodeSniffer Composer Installer' : null;
+        $expectedStdOut = $this->willPluginOutputShow() ? Plugin::MESSAGE_RUNNING_INSTALLER : null;
         $this->assertExecute(
             sprintf('composer install -v --no-ansi --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
             0,    // Expected exit code.
