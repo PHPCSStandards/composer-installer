@@ -1,0 +1,10 @@
+{
+    "name" : "phpcs-composer-installer/dummy-subdir",
+    "description" : "Dummy PHPCS standard with subdirectory ruleset for use in the tests.",
+    "type" : "phpcodesniffer-standard",
+    "license" : "MIT",
+    "require" : {
+        "php" : ">=5.4",
+        "squizlabs/php_codesniffer" : "*"
+    }
+}
