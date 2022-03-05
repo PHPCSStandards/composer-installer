@@ -7,7 +7,7 @@ before making a change.
 Please note we have [a code of conduct][], please follow it in all your interactions
 with the project.
 
-[a code of conduct]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/blob/master/CODE_OF_CONDUCT.md
+[a code of conduct]: https://github.com/PHPCSStandards/composer-installer/blob/master/CODE_OF_CONDUCT.md
 
 ## Issues and feature requests
 
@@ -113,9 +113,9 @@ To create a new release:
 
 6. Close the milestone for the version that was just released.
 
-[github]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues
-[prs]: https://github.com/dealerdirect/phpcodesniffer-composer-installer/pulls
-[GitHub Actions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions
+[github]: https://github.com/PHPCSStandards/composer-installer/issues
+[prs]: https://github.com/PHPCSStandards/composer-installer/pulls
+[GitHub Actions]: https://github.com/PHPCSStandards/composer-installer/actions
 [Pipeline-Component]: https://pipeline-components.dev/
 
 ## Footnotes

@@ -35,14 +35,14 @@ about: Create a report to help us improve
 
 ## Environment
 
-| Question               | Answer
-| ------------------------| -------
-| OS                                | Windows/Linux/Mac (preferably with some version info)
-| PHP version                       | x.y.z
-| Composer version                  | x.y.z
-| PHP_CodeSniffer version           | x.y.z
-| Dealerdirect PHPCS plugin version | x.y.z
-| Install type                      | e.g. Composer global, Composer project local, other (please expand)
+| Question                      | Answer
+| ----------------------------- | -------
+| OS                            | Windows/Linux/Mac (preferably with some version info)
+| PHP version                   | x.y.z
+| Composer version              | x.y.z
+| PHP_CodeSniffer version       | x.y.z
+| Composer PHPCS plugin version | x.y.z
+| Install type                  | e.g. Composer global, Composer project local, other (please expand)
 
 Output of `vendor/bin/phpcs --config-show`:
 ```

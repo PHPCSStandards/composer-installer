@@ -23,8 +23,8 @@ generate_changelog() {
 
     local -r sChangelog="$(
         "${GITHUB_CHANGELOG_GENERATOR}"                 \
-            --user Dealerdirect                         \
-            --project phpcodesniffer-composer-installer \
+            --user PHPCSStandards                       \
+            --project composer-installer \
             --token "$(cat ~/.github-token)"            \
             --future-release "${sVersion}"              \
             --enhancement-label '### Changes'           \

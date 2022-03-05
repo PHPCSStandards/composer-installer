@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="phpcodesniffer-composer-installer">
+<ruleset name="composer-installer">
     <description>Coding standards for PHP_CodeSniffer Standards Composer Installer Plugin</description>
 
     <arg name="extensions" value="php"/>
