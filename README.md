@@ -6,7 +6,6 @@
 [![License][license-shield]](LICENSE.md)
 
 [![Tests][ghactionstest-shield]][ghactions]
-[![Scrutinizer][scrutinizer-shield]][scrutinizer]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
 [![Packagist][packagist-shield]][packagist]
 
@@ -275,8 +274,6 @@ THE SOFTWARE.
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [`phpcodesniffer-standard` packages]: https://packagist.org/explore/?type=phpcodesniffer-standard
 [project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
-[scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
-[scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
 [ghactionstest-shield]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml/badge.svg
 [ghactions]: https://github.com/Dealerdirect/phpcodesniffer-composer-installer/actions/workflows/integrationtest.yml
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
