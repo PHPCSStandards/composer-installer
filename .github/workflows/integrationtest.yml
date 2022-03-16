@@ -42,6 +42,48 @@ jobs:
           - 'windows-latest'
 
         include:
+          # Composer 2.3 drops support for PHP < 7.2, so for PHP 5.4 to 7.1, `v2` will install
+          # Composer 2.2, for PHP 7.2 and up, `v2` will install Composer 2.3.
+          # These builds make sure the Composer 2.2 LTS version is 100% supported for PHP 7.2-8.x.
+          - php: '7.2'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+          - php: '7.3'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+          - php: '7.4'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+          - php: '8.0'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+          - php: '8.1'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+          - php: '8.2'
+            composer: '2.2'
+            os: 'ubuntu-latest'
+
+          - php: '7.2'
+            composer: '2.2'
+            os: 'windows-latest'
+          - php: '7.3'
+            composer: '2.2'
+            os: 'windows-latest'
+          - php: '7.4'
+            composer: '2.2'
+            os: 'windows-latest'
+          - php: '8.0'
+            composer: '2.2'
+            os: 'windows-latest'
+          - php: '8.1'
+            composer: '2.2'
+            os: 'windows-latest'
+          - php: '8.2'
+            composer: '2.2'
+            os: 'windows-latest'
+
+          # Also test against the dev version of Composer for early warning about upcoming changes.
           - php: 'latest'
             composer: 'snapshot'
             os: 'ubuntu-latest'
