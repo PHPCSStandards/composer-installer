@@ -114,7 +114,7 @@ if (defined('COMPOSER_PHAR') === false) {
 // Get the version of Composer being used.
 $command  = '"' . \PHP_BINARY . '" "' . \COMPOSER_PHAR . '" --version --no-ansi --no-interaction';
 $lastLine = exec($command, $output, $exitcode);
-if ($exitcode === 0 && preg_match('`Composer version ([^\s]+)`', $lastLine, $matches) === 1) {
+if ($exitcode === 0 && preg_match('`Composer (?:version )?([^\s]+)`', $lastLine, $matches) === 1) {
     define('COMPOSER_VERSION', $matches[1]);
 } else {
     echo 'Could not determine the version of Composer being used.';
