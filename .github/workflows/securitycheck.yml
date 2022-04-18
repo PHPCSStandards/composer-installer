@@ -1,7 +1,6 @@
 ---
 name: Security check
 
-# yamllint disable-line rule:truthy
 on:
   - push
   - pull_request
@@ -39,6 +38,7 @@ jobs:
         uses: "ramsey/composer-install@v2"
 
       - name: Download security checker
+        # yamllint disable-line rule:line-length
         run: wget -P . https://github.com/fabpot/local-php-security-checker/releases/download/v1.2.0/local-php-security-checker_1.2.0_linux_amd64
 
       - name: Make security checker executable
