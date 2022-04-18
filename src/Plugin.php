@@ -234,9 +234,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         if ($this->isPHPCodeSnifferInstalled() === true) {
             $this->processExecutor->execute(
-                'phpcs --config-show',
+                $this->getPhpcsCommand() . ' --config-show',
                 $output,
-                $this->composer->getConfig()->get('bin-dir')
+                $this->getPHPCodeSnifferInstallPath()
             );
 
             $regex = sprintf(self::PHPCS_CONFIG_REGEX, self::PHPCS_CONFIG_KEY);
@@ -287,27 +287,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             self::PHPCS_CONFIG_KEY
         );
 
-        // Determine the path to the main PHPCS file.
-        $phpcsPath = $this->getPHPCodeSnifferInstallPath();
-        if (file_exists($phpcsPath . '/bin/phpcs') === true) {
-            // PHPCS 3.x.
-            $phpcsExecutable = './bin/phpcs';
-        } else {
-            // PHPCS 2.x.
-            $phpcsExecutable = './scripts/phpcs';
-        }
-
         // Okay, lets rock!
         $command = vsprintf(
-            '%s %s %s',
+            '%s %s',
             array(
-                'php executable'   => $this->getPhpExecCommand(),
-                'phpcs executable' => $phpcsExecutable,
-                'arguments'        => implode(' ', $arguments),
+                'phpcs command' => $this->getPhpcsCommand(),
+                'arguments'     => implode(' ', $arguments),
             )
         );
 
-        $exitCode = $this->processExecutor->execute($command, $configResult, $phpcsPath);
+        $exitCode = $this->processExecutor->execute($command, $configResult, $this->getPHPCodeSnifferInstallPath());
         if ($exitCode === 0) {
             $exitCode = $this->verifySaveSuccess();
         }
@@ -357,6 +346,30 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
 
         return $exitCode;
+    }
+
+    /**
+     * Get the command to call PHPCS.
+     */
+    protected function getPhpcsCommand()
+    {
+        // Determine the path to the main PHPCS file.
+        $phpcsPath = $this->getPHPCodeSnifferInstallPath();
+        if (file_exists($phpcsPath . '/bin/phpcs') === true) {
+            // PHPCS 3.x.
+            $phpcsExecutable = './bin/phpcs';
+        } else {
+            // PHPCS 2.x.
+            $phpcsExecutable = './scripts/phpcs';
+        }
+
+        return vsprintf(
+            '%s %s',
+            array(
+                'php executable'   => $this->getPhpExecCommand(),
+                'phpcs executable' => $phpcsExecutable,
+            )
+        );
     }
 
     /**
