@@ -1,7 +1,6 @@
 ---
 name: Security check
 
-# yamllint disable-line rule:truthy
 on:
   - push
   - pull_request
