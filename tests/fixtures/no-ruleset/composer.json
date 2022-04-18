@@ -1,0 +1,16 @@
+{
+    "name" : "phpcs-composer-installer/no-ruleset",
+    "description" : "Dummy PHPCS standard without a ruleset for use in the tests.",
+    "type" : "phpcodesniffer-standard",
+    "license" : "MIT",
+    "require" : {
+        "php" : ">=5.4",
+        "squizlabs/php_codesniffer" : "*",
+        "dealerdirect/phpcodesniffer-composer-installer" : "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -29,6 +29,8 @@ Notes:
 
 It is recommended to add a short description of the situation which can be tested with each fixture to the below list.
 
+## Valid packages
+
 ### Package name: `phpcs-composer-installer/dummy-subdir`
 
 **Description:**
@@ -62,3 +64,27 @@ An external PHPCS standard with the `ruleset.xml` file in a deeper nested subdir
 | **Includes sniff(s):**   | :x:               |
 | **Requires the plugin:** | :heavy_checkmark: |
 
+
+## Invalid packages
+
+**_These packages should not be installed by the plugin._**
+
+### Package name: `phpcs-composer-installer/no-ruleset`
+
+**Description:**
+A Composer package which has the `phpcodesniffer-standard` type set in the `composer.json` file, but doesn't contain a `ruleset.xml` file (but does contain a `ruleset.xml.dist` file, which is not a file recognized by PHPCS).
+
+| Characteristics          | Notes             |
+|--------------------------|-------------------|
+| **Standard(s):**         | `NoRuleset`       |
+| **Requires the plugin:** | :heavy_checkmark: |
+
+### Package name: `phpcs-composer-installer/incorrect-type`
+
+**Description:**
+An external PHPCS standard which does not have the `phpcodesniffer-standard` type set in the `composer.json` file.
+
+| Characteristics          | Notes             |
+|--------------------------|-------------------|
+| **Standard(s):**         | `IncorrectType`   |
+| **Requires the plugin:** | :heavy_checkmark: |
