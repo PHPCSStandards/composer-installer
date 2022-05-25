@@ -86,15 +86,18 @@ final class PlayNiceWithScriptsTest extends TestCase
 
         $this->assertSame(0, $result['exitcode'], 'Exitcode for initial composer install did not match 0');
 
-        $this->assertStringContainsString(
-            Plugin::MESSAGE_RUNNING_INSTALLER,
-            $result['stdout'],
-            'Output from initial composer install missing expected contents.'
-        );
+        if ($this->willPluginOutputShow()) {
+            $this->assertStringContainsString(
+                Plugin::MESSAGE_RUNNING_INSTALLER,
+                $result['stdout'],
+                'Output from initial composer install missing expected contents.'
+            );
+        }
 
+        $output = $this->willPluginOutputShow() ? $result['stdout'] : $result['stderr'];
         $this->assertStringContainsString(
             'post-update-cmd successfully run',
-            $result['stdout'],
+            $output,
             'Output from initial composer install missing expected contents.'
         );
 
@@ -122,42 +125,59 @@ final class PlayNiceWithScriptsTest extends TestCase
      */
     public function dataScriptsAreNotBlockedFromRunning()
     {
-        return array(
-            'install:command' => array(
-                'command'         => 'composer install',
-                'expectedOutputs' => array(
-                    'post-install-cmd successfully run',
-                    Plugin::MESSAGE_RUNNING_INSTALLER,
-                ),
-            ),
-            'update:command' => array(
-                'command'         => 'composer update',
-                'expectedOutputs' => array(
-                    'post-update-cmd successfully run',
-                    Plugin::MESSAGE_RUNNING_INSTALLER,
-                ),
-            ),
-            'post-install-cmd:script' => array(
-                'command'         => 'composer run-script post-install-cmd',
-                'expectedOutputs' => array(
-                    Plugin::MESSAGE_RUNNING_INSTALLER,
-                    'post-install-cmd successfully run',
-                ),
-            ),
-            'post-update-cmd:script' => array(
-                'command'         => 'composer run-script post-update-cmd',
-                'expectedOutputs' => array(
-                    Plugin::MESSAGE_RUNNING_INSTALLER,
-                    'post-update-cmd successfully run',
-                ),
-            ),
-            'install-codestandards:script' => array(
-                'command'         => 'composer run-script install-codestandards',
-                'expectedOutputs' => array(
-                    Plugin::MESSAGE_RUNNING_INSTALLER,
-                    'install-codestandards successfully run',
-                ),
+        $data           = array();
+        $willOutputShow = self::willPluginOutputShow();
+
+        $data['install:command'] = array(
+            'command'         => 'composer install',
+            'expectedOutputs' => array(
+                'post-install-cmd successfully run',
             ),
         );
+        if ($willOutputShow) {
+            $data['install:command']['expectedOutputs'][] = Plugin::MESSAGE_RUNNING_INSTALLER;
+        }
+
+        $data['update:command'] = array(
+            'command'         => 'composer update',
+            'expectedOutputs' => array(
+                'post-update-cmd successfully run',
+            ),
+        );
+        if ($willOutputShow) {
+            $data['update:command']['expectedOutputs'][] = Plugin::MESSAGE_RUNNING_INSTALLER;
+        }
+
+        $data['post-install-cmd:script'] = array(
+            'command'         => 'composer run-script post-install-cmd',
+            'expectedOutputs' => array(
+                'post-install-cmd successfully run',
+            ),
+        );
+        if ($willOutputShow) {
+            $data['post-install-cmd:script']['expectedOutputs'][] = Plugin::MESSAGE_RUNNING_INSTALLER;
+        }
+
+        $data['post-update-cmd:script'] = array(
+            'command'         => 'composer run-script post-update-cmd',
+            'expectedOutputs' => array(
+                'post-update-cmd successfully run',
+            ),
+        );
+        if ($willOutputShow) {
+            $data['post-update-cmd:script']['expectedOutputs'][] = Plugin::MESSAGE_RUNNING_INSTALLER;
+        }
+
+        $data['install-codestandards:script'] = array(
+            'command'         => 'composer run-script install-codestandards',
+            'expectedOutputs' => array(
+                'install-codestandards successfully run',
+            ),
+        );
+        if ($willOutputShow) {
+            $data['install-codestandards:script']['expectedOutputs'][] = Plugin::MESSAGE_RUNNING_INSTALLER;
+        }
+
+        return $data;
     }
 }

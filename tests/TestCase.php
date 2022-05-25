@@ -220,10 +220,10 @@ abstract class TestCase extends PolyfillTestCase
      *
      * @return bool
      */
-    protected function willPluginOutputShow()
+    protected static function willPluginOutputShow()
     {
         return ((\CLI_PHP_MINOR === '5.5'
-            && $this->onWindows() === true
+            && self::onWindows() === true
             && strpos(\COMPOSER_VERSION, '1') === 0) === false);
     }
 
