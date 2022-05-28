@@ -10,6 +10,8 @@
 
 namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use RuntimeException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase as PolyfillTestCase;
 
@@ -549,6 +551,63 @@ PHP;
 
         if ($written === false) {
             throw new RuntimeException('Failed to create the file.');
+        }
+    }
+
+    /**
+     * Helper function to recursively copy a directory with all its content to another location.
+     *
+     * Includes making any potentially needed tweaks to `composer.json` files.
+     *
+     * @param string $src  Full path to the source directory.
+     * @param string $dest Full path to the destination directory.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When either or the passed arguments is not a string.
+     * @throws RuntimeException When a (sub)directory could not be created.
+     * @throws RuntimeException When a file could not be copied.
+     */
+    protected function recursiveDirectoryCopy($srcDir, $destDir)
+    {
+        if (is_string($srcDir) === false || is_dir($srcDir) === false) {
+            throw new RuntimeException('The source directory must be a string pointing to an existing directory.');
+        }
+
+        if (is_string($destDir) === false) {
+            throw new RuntimeException('The destination directory must be a string.');
+        }
+
+        $directory = new RecursiveDirectoryIterator(
+            realpath($srcDir),
+            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::UNIX_PATHS
+        );
+        $iterator  = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach ($iterator as $path => $fileInfo) {
+            $subPath = $iterator->getSubPathname();
+
+            // Special case the Composer config.
+            if ($subPath === 'composer.json') {
+                $composerConfig = json_decode(file_get_contents($fileInfo->getPathname()), true);
+                $this->writeComposerJsonFile($composerConfig, $destDir);
+                continue;
+            }
+
+            $target = $destDir . '/' . $subPath;
+
+            if ($fileInfo->isDir()) {
+                if (mkdir($target, 0766, true) === false || is_dir($target) === false) {
+                    throw new RuntimeException("Failed to create the $target directory for the test");
+                }
+                continue;
+            }
+
+            if ($fileInfo->isFile()) {
+                if (copy($fileInfo->getPathname(), $target) === false || is_file($target) === false) {
+                    throw new RuntimeException("Failed to copy $src to $target ");
+                }
+            }
         }
     }
 

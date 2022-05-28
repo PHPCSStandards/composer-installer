@@ -444,9 +444,17 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function updateInstalledPaths()
     {
-        $changes = false;
+        $changes     = false;
+        $searchPaths = array();
 
-        $searchPaths            = array($this->cwd);
+        // Add root package only if it has the expected package type.
+        if (
+            $this->composer->getPackage() instanceof RootPackageInterface
+            && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE
+        ) {
+            $searchPaths[] = $this->cwd;
+        }
+
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
             $installPath = $this->composer->getInstallationManager()->getInstallPath($package);
@@ -456,6 +464,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 );
             }
             $searchPaths[] = $installPath;
+        }
+
+        // Nothing to do.
+        if ($searchPaths === array()) {
+            return false;
         }
 
         $finder = new Finder();
@@ -499,9 +512,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
      *
-     * If the package is the RootPackage (the one the plugin is installed into),
-     * the package is ignored for now since it needs a different install path logic.
-     *
      * @return array Composer packages containing coding standard(s)
      */
     private function getPHPCodingStandardPackages()
@@ -515,13 +525,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 return $package->getType() === Plugin::PACKAGE_TYPE;
             }
         );
-
-        if (
-            ! $this->composer->getPackage() instanceof RootPackageInterface
-            && $this->composer->getPackage()->getType() === self::PACKAGE_TYPE
-        ) {
-            $codingStandardPackages[] = $this->composer->getPackage();
-        }
 
         return $codingStandardPackages;
     }
