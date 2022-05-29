@@ -25,15 +25,16 @@ jobs:
     strategy:
       matrix:
         php:
-          - '5.4'
-          - '7.2'
+#          - '5.4'
+#          - '7.2'
           - 'latest'
+          - '8.2'
         composer:
           - 'v1'
           - 'v2'
         os:
           - 'ubuntu-latest'
-          - 'windows-latest'
+#          - 'windows-latest'
 
     name: "Quick test"
 
@@ -57,9 +58,16 @@ jobs:
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: Install Composer dependencies
+        if: ${{ matrix.php != '8.2' }}
         uses: "ramsey/composer-install@v2"
         with:
           composer-options: '--optimize-autoloader'
+
+      - name: Install Composer dependencies
+        if: ${{ matrix.php == '8.2' }}
+        uses: "ramsey/composer-install@v2"
+        with:
+          composer-options: '--ignore-platform-reqs --optimize-autoloader'
 
       - name: Run integration tests
         run: vendor/bin/phpunit --no-coverage
