@@ -475,6 +475,25 @@ abstract class TestCase extends PolyfillTestCase
             return self::executeCliCommand($command, $workingDir, false);
         }
 
+        /*
+         * As we are "catching" the output of commands and this output will mostly be examined
+         * via "string contains string"-like assertions, PHP deprecation notices or other
+         * notices/warnings in the output may go unnoticed if we don't check for them explicitly.
+         * This will also fail tests on "upstream" deprecation notices coming from Composer itself,
+         * but those should be fixed before a new PHP version is stable anyway, so by the time
+         * a PHP version is stable.
+         */
+        static::assertStringNotContainsString(
+            'Deprecation Notice:',
+            $result['stdout'],
+            'The stdout output contains a PHP deprecation notice'
+        );
+        static::assertStringNotContainsString(
+            'Deprecation Notice:',
+            $result['stderr'],
+            'The stderr output contains a PHP deprecation notice'
+        );
+
         return $result;
     }
 
