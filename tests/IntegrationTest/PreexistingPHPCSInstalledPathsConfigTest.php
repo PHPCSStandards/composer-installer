@@ -134,12 +134,11 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
         /*
          * 3. Install an external standard.
          */
-        $expectedStdOut = $this->willPluginOutputShow() ? 'PHP CodeSniffer Config installed_paths set to ' : null;
-        $command        = 'composer global require --dev phpcs-composer-installer/dummy-subdir --no-ansi -v';
+        $command = 'composer global require --dev phpcs-composer-installer/dummy-subdir --no-ansi -v';
         $this->assertExecute(
             $command,
             0,    // Expected exit code.
-            $expectedStdOut, // Expectation for stdout.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
             null, // No stderr expectation.
             'Failed to install Dummy subdir standard.'
         );
@@ -246,15 +245,14 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
         /*
          * 3. Install an external standard.
          */
-        $expectedStdOut = $this->willPluginOutputShow() ? 'PHP CodeSniffer Config installed_paths set to ' : null;
-        $command        = sprintf(
+        $command = sprintf(
             'composer require --dev phpcs-composer-installer/dummy-subdir --no-ansi -v --working-dir=%s',
             escapeshellarg(static::$tempLocalPath)
         );
         $this->assertExecute(
             $command,
             0,    // Expected exit code.
-            $expectedStdOut, // Expectation for stdout.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
             null, // No stderr expectation.
             'Failed to install Dummy subdir standard.'
         );
