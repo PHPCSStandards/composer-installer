@@ -87,26 +87,11 @@ final class InstallUpdateEventsTest extends TestCase
         $result  = $this->executeCliCommand($command);
 
         $this->assertSame(0, $result['exitcode'], "Exitcode for composer $action did not match 0");
-
-        if ($this->willPluginOutputShow() === true) {
-            $this->assertStringContainsString(
-                Plugin::MESSAGE_RUNNING_INSTALLER,
-                $result['stdout'],
-                "Output from composer $action does not show the plugin as running while it should be."
-            );
-        } else {
-            /*
-             * Composer edge-case where it doesn't show plugin output.
-             * Verify the plugin has run by checking via PHPCS.
-             */
-            $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
-            $this->assertSame(0, $result['exitcode'], 'Exitcode for "--config-show" did not match 0');
-            $this->assertStringContainsString(
-                'installed_paths:',
-                $result['stdout'],
-                'PHPCS has no paths to external standards registered.'
-            );
-        }
+        $this->assertStringContainsString(
+            Plugin::MESSAGE_RUNNING_INSTALLER,
+            $result['stdout'],
+            "Output from composer $action does not show the plugin as running while it should be."
+        );
     }
 
     /**

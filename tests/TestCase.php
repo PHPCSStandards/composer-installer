@@ -211,25 +211,6 @@ abstract class TestCase extends PolyfillTestCase
     }
 
     /**
-     * Determine whether output expectations can be set for a typical Composer `install`/`update` run.
-     *
-     * Composer 1.x on Windows with PHP 5.5 DOES run the plugin, but doesn't consistently show this in the logs.
-     * This method can be used to still test output expectations in _most_ cases, without failing the tests
-     * in the rare case they won't show.
-     *
-     * It is recommended to only add a call to this method to a test when it has been proven
-     * to fail without it.
-     *
-     * @return bool
-     */
-    protected static function willPluginOutputShow()
-    {
-        return ((\CLI_PHP_MINOR === '5.5'
-            && self::onWindows() === true
-            && strpos(\COMPOSER_VERSION, '1') === 0) === false);
-    }
-
-    /**
      * Create a composer.json file based on a given configuration.
      *
      * @param array  $config    Composer configuration as an array.

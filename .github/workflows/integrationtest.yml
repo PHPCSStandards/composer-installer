@@ -41,6 +41,13 @@ jobs:
           - 'ubuntu-latest'
           - 'windows-latest'
 
+        exclude:
+          # Exclude a particularly problematic build.
+          # @link https://github.com/PHPCSStandards/composer-installer/issues/181
+          - php: '5.5'
+            composer: 'v1'
+            os: 'windows-latest'
+
         include:
           # Composer 2.3 drops support for PHP < 7.2, so for PHP 5.4 to 7.1, `v2` will install
           # Composer 2.2, for PHP 7.2 and up, `v2` will install Composer 2.3.

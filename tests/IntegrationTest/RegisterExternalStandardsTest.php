@@ -224,11 +224,10 @@ final class RegisterExternalStandardsTest extends TestCase
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
 
         // Install the dependencies and verify that the plugin has run.
-        $expectedStdOut = $this->willPluginOutputShow() ? 'PHP CodeSniffer Config installed_paths set to ' : null;
         $this->assertExecute(
             sprintf('composer install -v --no-ansi --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
             0,    // Expected exit code.
-            $expectedStdOut, // Expectation for stdout.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
             null, // No stderr expectation.
             'Failed to install dependencies.'
         );
@@ -293,11 +292,10 @@ final class RegisterExternalStandardsTest extends TestCase
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
 
         // Install the dependencies and verify that the plugin has run.
-        $expectedStdOut = $this->willPluginOutputShow() ? 'PHP CodeSniffer Config installed_paths set to ' : null;
         $this->assertExecute(
             'composer global install -v --no-ansi',
             0,    // Expected exit code.
-            $expectedStdOut, // Expectation for stdout.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
             null, // No stderr expectation.
             'Failed to install dependencies.'
         );
