@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   validate-composer:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Validate composer.json and composer.lock
@@ -23,7 +23,7 @@ jobs:
           args: "composer validate --no-check-lock"
 
   lint-json:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Lint json
@@ -32,21 +32,21 @@ jobs:
           args: "find . -not -path './.git/*' -name '*.json' -type f -exec jsonlint --quiet {} ;"
 
   yamllint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Check yaml for issues
         uses: pipeline-components/yamllint@master
 
   php-codesniffer:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Check php for code style and php cross-version compatibility issues
         uses: pipeline-components/php-codesniffer@master
 
   lint-remark:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Check markdown
