@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
 
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
 
 /**
  * Test plugin does not throw errors when the plugin is still in memory, but PHPCS and the plugin are uninstalled.

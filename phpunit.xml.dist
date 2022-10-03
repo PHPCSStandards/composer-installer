@@ -18,7 +18,7 @@
     </testsuites>
 
     <listeners>
-        <listener class="Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\DebugTestListener" />
+        <listener class="PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\DebugTestListener" />
     </listeners>
 
     <filter>

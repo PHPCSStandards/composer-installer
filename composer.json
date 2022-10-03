@@ -43,20 +43,20 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+      "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Tests\\": "tests/"
+      "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Tests\\": "tests/"
     }
   },
   "extra": {
-    "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+    "class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
   },
   "scripts": {
     "install-codestandards": [
-      "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+      "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
     ],
     "lint": [
       "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git"

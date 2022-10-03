@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
 
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
 
 /**
  * Test that the plugin is hooked into the right events and doesn't get triggered when those events are blocked.
@@ -42,7 +42,7 @@ final class InstallUpdateEventsTest extends TestCase
         ),
         'scripts'     => array(
             'custom-runner'    => array(
-                'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
+                'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
             ),
             'post-install-cmd' => array(
                 'echo "post-install-cmd successfully run"',
