@@ -39,10 +39,10 @@ jobs:
 
       - name: Download security checker
         # yamllint disable-line rule:line-length
-        run: wget -P . https://github.com/fabpot/local-php-security-checker/releases/download/v2.0.4/local-php-security-checker_2.0.4_linux_amd64
+        run: wget -P . https://github.com/fabpot/local-php-security-checker/releases/download/v2.0.5/local-php-security-checker_2.0.5_linux_amd64
 
       - name: Make security checker executable
-        run: chmod +x ./local-php-security-checker_2.0.4_linux_amd64
+        run: chmod +x ./local-php-security-checker_2.0.5_linux_amd64
 
       - name: Check against insecure dependencies
-        run: ./local-php-security-checker_2.0.4_linux_amd64 --path=composer.lock
+        run: ./local-php-security-checker_2.0.5_linux_amd64 --path=composer.lock
