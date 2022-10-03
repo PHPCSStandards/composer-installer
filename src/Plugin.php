@@ -37,7 +37,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     const KEY_MAX_DEPTH = 'phpcodesniffer-search-depth';
 
     const MESSAGE_ERROR_WRONG_MAX_DEPTH =
-        'The value of "%s" (in the composer.json "extra".section) must be an integer larger then %d, %s given.';
+        'The value of "%s" (in the composer.json "extra".section) must be an integer larger than %d, %s given.';
 
     const MESSAGE_NOT_INSTALLED      = 'PHPCodeSniffer is not installed';
     const MESSAGE_NOTHING_TO_INSTALL = 'No PHPCS standards to install or update';
