@@ -1,8 +1,0 @@
-vendor/
-composer.lock
-.phpcs.xml
-phpcs.xml
-.phpunit.result.cache
-phpunit.xml
-/build/
-/tests/artifact/*.zip
