@@ -111,7 +111,7 @@ section of the `composer.json`:
 {
     "scripts": {
         "install-codestandards": [
-            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+            "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ]
     }
 }
@@ -124,7 +124,7 @@ referenced from other script configurations, as follows:
 {
     "scripts": {
         "install-codestandards": [
-            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+            "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
         "post-install-cmd": [
             "@install-codestandards"

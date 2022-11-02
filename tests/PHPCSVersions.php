@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
 /**
  * Helper class to retrieve PHPCS versions suitable for the current PHP version.

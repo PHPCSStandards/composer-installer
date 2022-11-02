@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
 
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
 
 /**
  * Test that the plugin does not block other post install/update scripts from running.
@@ -39,7 +39,7 @@ final class PlayNiceWithScriptsTest extends TestCase
                 'echo "post-update-cmd successfully run"',
             ),
             'install-codestandards' => array(
-                'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
+                'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
                 'echo "install-codestandards successfully run"',
             ),
         ),

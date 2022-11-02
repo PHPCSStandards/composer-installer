@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
 /*
  * Make sure the tests always start with a clean slate.

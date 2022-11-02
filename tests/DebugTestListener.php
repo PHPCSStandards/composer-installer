@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
 use PHPUnit\Framework\TestListener;
 use Yoast\PHPUnitPolyfills\TestListeners\TestListenerDefaultImplementation;

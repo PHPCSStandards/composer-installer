@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -243,7 +243,7 @@ abstract class TestCase extends PolyfillTestCase
         // Inject ability to run the plugin via a script.
         if (isset($config['scripts']['install-codestandards']) === false) {
             $config['scripts']['install-codestandards'] = array(
-                'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
+                'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run',
             );
         }
 

@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;

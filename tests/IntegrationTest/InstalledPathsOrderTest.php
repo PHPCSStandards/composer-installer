@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-namespace Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
+namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\IntegrationTest;
 
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
-use Dealerdirect\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
+use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
 
 /**
  * Test that the plugin always registers the installed_paths in the same order.
