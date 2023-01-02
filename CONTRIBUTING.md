@@ -7,7 +7,7 @@ before making a change.
 Please note we have [a code of conduct][], please follow it in all your interactions
 with the project.
 
-[a code of conduct]: https://github.com/PHPCSStandards/composer-installer/blob/master/CODE_OF_CONDUCT.md
+[a code of conduct]: https://github.com/PHPCSStandards/composer-installer/blob/main/CODE_OF_CONDUCT.md
 
 ## Issues and feature requests
 
@@ -131,7 +131,7 @@ A changelog can be generated using the [`github-changelog-generator`][github-cha
 
 Our release versions follow [Semantic Versioning][semver].
 
-New releases (and any related tags) are always created from the `master` branch.
+New releases (and any related tags) are always created from the `main` branch.
 
 To create a new release:
 

@@ -5,7 +5,7 @@ on:
   # Run on pushes to feature branches.
   push:
     branches-ignore:
-      - master
+      - main
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
