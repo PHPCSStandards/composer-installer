@@ -49,6 +49,7 @@ jobs:
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
           tools: "composer:${{ matrix.composer }}"
           coverage: none
+        env:
           fail-fast: true
 
       - name: "Conditionally disable tls (Composer 1.x/Windows/PHP 5.4)"
