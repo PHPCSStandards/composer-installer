@@ -2,10 +2,10 @@
 name: Integration Test
 
 on:
-  # Run on pushes to `master` and on all pull requests.
+  # Run on pushes to `main` and on all pull requests.
   push:
     branches:
-      - master
+      - main
   pull_request:
   # Allow manually triggering the workflow.
   workflow_dispatch:

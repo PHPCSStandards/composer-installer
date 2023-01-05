@@ -49,5 +49,5 @@ Output of `vendor/bin/phpcs --config-show`:
 (Please paste the output you get here)
 ```
 
-## Tested against `master` branch?
-- [ ] I have verified the issue still exists in the `master` branch.
+## Tested against `main` branch?
+- [ ] I have verified the issue still exists in the `main` branch.
