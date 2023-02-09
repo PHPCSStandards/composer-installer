@@ -1,6 +1,6 @@
 # PHP_CodeSniffer Standards Composer Installer Plugin
 
-![Project Stage][project-stage-shield]
+[![Project stage: Production Ready][project-stage-shield]][project-stage-page]
 ![Last Commit][last-updated-shield]
 ![Awesome][awesome-shield]
 [![License][license-shield]](LICENSE.md)
@@ -274,7 +274,8 @@ THE SOFTWARE.
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [`phpcodesniffer-standard` packages]: https://packagist.org/explore/?type=phpcodesniffer-standard
-[project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
+[project-stage-page]: https://blog.pother.ca/project-stages/
+[project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Production%20Ready-brightgreen.svg
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
 [ghactionstest-shield]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml/badge.svg
