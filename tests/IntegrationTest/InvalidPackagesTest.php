@@ -28,7 +28,7 @@ final class InvalidPackagesTest extends TestCase
     private $composerConfigNoRuleset = array(
         'name'        => 'phpcs-composer-installer/invalid-package-no-ruleset-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'           => '*',
+            'phpcsstandards/php_codesniffer'      => '*',
             'phpcs-composer-installer/no-ruleset' => '*',
         ),
     );
@@ -36,7 +36,7 @@ final class InvalidPackagesTest extends TestCase
     private $composerConfigIncorrectType = array(
         'name'        => 'phpcs-composer-installer/invalid-package-incorrect-type-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'               => '*',
+            'phpcsstandards/php_codesniffer'          => '*',
             'phpcs-composer-installer/incorrect-type' => '*',
         ),
     );
@@ -82,7 +82,7 @@ final class InvalidPackagesTest extends TestCase
 
         // Make sure the CodeSniffer.conf file does not get created when no (valid) external standards are found.
         $this->assertFileDoesNotExist(
-            static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
+            static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
         );
 
         // Make sure that the standard does not show up as registered with PHPCS.

@@ -27,7 +27,7 @@ final class PlayNiceWithScriptsTest extends TestCase
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/dont-block-scripts-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'                      => '*',
+            'phpcsstandards/php_codesniffer'                 => '*',
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
             'phpcs-composer-installer/dummy-subdir'          => '*',
         ),

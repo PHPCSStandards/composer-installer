@@ -29,7 +29,7 @@
   "require": {
     "php": ">=5.4",
     "composer-plugin-api": "^1.0 || ^2.0",
-    "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
+    "phpcsstandards/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
   },
   "require-dev": {
     "ext-json": "*",

@@ -62,7 +62,7 @@ images provided by [Pipeline-Component][].
 
 [PHPUnit]: https://phpunit.de/
 [PHPUnit Polyfills]: https://github.com/Yoast/PHPUnit-Polyfills/
-[PHP_CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[PHP_CodeSniffer]: https://github.com/PHPCSStandards/PHP_CodeSniffer
 [PHPCompatibility]: https://github.com/PHPCompatibility/PHPCompatibility
 [PHP-Parallel-Lint]: https://github.com/php-parallel-lint/PHP-Parallel-Lint
 [PHP-Security-Checker]: https://github.com/fabpot/local-php-security-checker

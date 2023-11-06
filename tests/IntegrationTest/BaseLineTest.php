@@ -30,7 +30,7 @@ final class BaseLineTest extends TestCase
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/baseline-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'                      => null,
+            'phpcsstandards/php_codesniffer'                 => null,
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
         ),
     );
@@ -66,7 +66,7 @@ final class BaseLineTest extends TestCase
     public function testBaseLineGlobal($phpcsVersion, $expectedStnds)
     {
         $config = $this->composerConfig;
-        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
         $this->assertComposerValidates(static::$tempGlobalPath);
@@ -90,7 +90,7 @@ final class BaseLineTest extends TestCase
 
         // Make sure the CodeSniffer.conf file does not get created when no external standards are found.
         $this->assertFileDoesNotExist(
-            static::$tempGlobalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
+            static::$tempGlobalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
         );
     }
 
@@ -121,7 +121,7 @@ final class BaseLineTest extends TestCase
         }
 
         $config = $this->composerConfig;
-        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
         $this->assertComposerValidates(static::$tempLocalPath);
@@ -145,7 +145,7 @@ final class BaseLineTest extends TestCase
 
         // Make sure the CodeSniffer.conf file does not get created when no external standards are found.
         $this->assertFileDoesNotExist(
-            static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
+            static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
         );
     }
 

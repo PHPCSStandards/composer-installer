@@ -368,11 +368,13 @@ abstract class TestCase extends PolyfillTestCase
      */
     protected static function getPhpcsCommand($workingDir = null)
     {
-        $command = '"vendor/squizlabs/php_codesniffer/bin/phpcs"'; // PHPCS 3.x.
+        $command = '"vendor/phpcsstandards/php_codesniffer/bin/phpcs"'; // PHPCS 3.x.
 
-        if (is_string($workingDir) && file_exists($workingDir . '/vendor/squizlabs/php_codesniffer/scripts/phpcs')) {
+        if (is_string($workingDir)
+            && file_exists($workingDir . '/vendor/phpcsstandards/php_codesniffer/scripts/phpcs')
+        ) {
             // PHPCS 2.x.
-            $command = '"vendor/squizlabs/php_codesniffer/scripts/phpcs"';
+            $command = '"vendor/phpcsstandards/php_codesniffer/scripts/phpcs"';
         }
 
         return $command;

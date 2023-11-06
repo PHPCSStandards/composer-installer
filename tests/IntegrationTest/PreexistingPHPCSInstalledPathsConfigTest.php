@@ -34,7 +34,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/preexisting-config-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'                      => null,
+            'phpcsstandards/php_codesniffer'                 => null,
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
         ),
     );
@@ -88,7 +88,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     public function testPreexistingValidInstalledPathsConfigIsKeptIntact($phpcsVersion)
     {
         $config = $this->composerConfig;
-        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
 
@@ -176,7 +176,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     public function testPreexistingInvalidInstalledPathsConfigIsRemoved($phpcsVersion)
     {
         $config = $this->composerConfig;
-        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
 
@@ -216,7 +216,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
          * will error on an exception from the DirectoryIterator as used by PHPCS itself.
          * The manual setting prevents this exception, but still allows us to test this use-case.
          */
-        $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
+        $confFile     = static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf';
         $confContents = file_get_contents($confFile);
         $this->assertNotFalse($confContents);
         $confContents = str_replace(

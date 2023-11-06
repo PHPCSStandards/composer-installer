@@ -28,14 +28,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  * the plugin handles this correctly in all supported PHPCS versions.
  *
  * @link https://github.com/PHPCSStandards/composer-installer/pull/98
- * @link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options
+ * @link https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Configuration-Options
  */
 final class PreexistingPHPCSConfigTest extends TestCase
 {
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/preexisting-config-test',
         'require-dev' => array(
-            'squizlabs/php_codesniffer'                      => null,
+            'phpcsstandards/php_codesniffer'                 => null,
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
         ),
     );
@@ -71,7 +71,7 @@ final class PreexistingPHPCSConfigTest extends TestCase
     public function testPreexistingNonInstalledPathsConfigIsKeptIntact($phpcsVersion)
     {
         $config = $this->composerConfig;
-        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
 
@@ -88,7 +88,7 @@ final class PreexistingPHPCSConfigTest extends TestCase
 
         // Verify the CodeSniffer.conf file does not exist to start with.
         $this->assertFileDoesNotExist(
-            static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
+            static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
         );
 
         // Verify that the config is empty to start with.
@@ -122,7 +122,7 @@ final class PreexistingPHPCSConfigTest extends TestCase
 
         // Make sure the CodeSniffer.conf file has been created.
         $this->assertFileExists(
-            static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
+            static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
         );
 
         // Verify that the config contains the newly set values.
