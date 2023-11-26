@@ -23,7 +23,8 @@
   ],
   "support": {
     "issues": "https://github.com/PHPCSStandards/composer-installer/issues",
-    "source": "https://github.com/PHPCSStandards/composer-installer"
+    "source": "https://github.com/PHPCSStandards/composer-installer",
+    "security": "https://github.com/PHPCSStandards/composer-installer/security/policy"
   },
   "require": {
     "php": ">=5.4",
