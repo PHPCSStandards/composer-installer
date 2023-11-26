@@ -35,6 +35,21 @@ jobs:
           - 'ubuntu-latest'
           - 'windows-latest'
 
+        # Installing on Windows with PHP 5.4 runs into all sorts of problems (which are not ours).
+        # Exclude the Windows PHP 5.4 builds and replace them with PHP 5.5/5.6 for the same.
+        # @link https://github.com/PHPCSStandards/composer-installer/issues/181
+        # @link https://github.com/PHPCSStandards/composer-installer/pull/213
+        exclude:
+          - php: '5.4'
+            os: 'windows-latest'
+        include:
+          - php: '5.5'
+            composer: 'v2'
+            os: 'windows-latest'
+          - php: '5.6'
+            composer: 'v1'
+            os: 'windows-latest'
+
     name: "Quick test"
 
     steps:
@@ -51,10 +66,6 @@ jobs:
           coverage: none
         env:
           fail-fast: true
-
-      - name: "Conditionally disable tls (Composer 1.x/Windows/PHP 5.4)"
-        if: ${{ matrix.os == 'windows-latest' && matrix.composer == 'v1' && matrix.php == '5.4' }}
-        run: composer config -- disable-tls true
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
