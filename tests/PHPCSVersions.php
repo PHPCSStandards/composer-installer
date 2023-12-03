@@ -354,9 +354,10 @@ final class PHPCSVersions
                 break;
 
             case '8.3':
+            case '8.4':
                 /*
-                 * At this point in time, it is unclear as of which PHPCS version PHP 8.2 will be supported.
-                 * In other words: tests should only use dev-master/4.x when on PHP 8.2 for the time being.
+                 * At this point in time, it is unclear as of which PHPCS version PHP 8.3/8.4 will be supported.
+                 * In other words: tests should only use dev-master/4.x when on PHP 8.3/8.4 for the time being.
                  */
                 $versions = array();
                 break;

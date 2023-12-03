@@ -35,6 +35,7 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         composer:
           - 'v1'
           - 'v2'
@@ -79,6 +80,9 @@ jobs:
           - php: '8.3'
             composer: '2.2'
             os: 'ubuntu-latest'
+          - php: '8.4'
+            composer: '2.2'
+            os: 'ubuntu-latest'
 
           - php: '7.2'
             composer: '2.2'
@@ -101,6 +105,9 @@ jobs:
           - php: '8.3'
             composer: '2.2'
             os: 'windows-latest'
+          - php: '8.4'
+            composer: '2.2'
+            os: 'windows-latest'
 
           # Also test against the dev version of Composer for early warning about upcoming changes.
           - php: 'latest'
@@ -113,7 +120,7 @@ jobs:
 
     name: "Integration test"
 
-    continue-on-error: ${{ matrix.php == '8.3' || matrix.composer == 'snapshot' }}
+    continue-on-error: ${{ matrix.php == '8.4' || matrix.composer == 'snapshot' }}
 
     steps:
       - name: Checkout code
@@ -133,7 +140,7 @@ jobs:
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
       - name: Install Composer dependencies
-        if: ${{ matrix.php != '8.3' }}
+        if: ${{ matrix.php != '8.4' }}
         uses: "ramsey/composer-install@v2"
         with:
           composer-options: '--optimize-autoloader'
@@ -141,7 +148,7 @@ jobs:
           custom-cache-suffix: $(date -u "+%Y-%m")
 
       - name: Install Composer dependencies
-        if: ${{ matrix.php == '8.3' }}
+        if: ${{ matrix.php == '8.4' }}
         uses: "ramsey/composer-install@v2"
         with:
           composer-options: '--ignore-platform-reqs --optimize-autoloader'
