@@ -48,6 +48,11 @@ jobs:
           - php: '5.5'
             composer: 'v1'
             os: 'windows-latest'
+          # Installing on Windows with PHP 5.4 runs into all sorts of problems (which are not ours).
+          # Considering PHP 5.4 is ancient, I deem it acceptable to exclude the Windows PHP 5.4 builds.
+          # @link https://github.com/PHPCSStandards/composer-installer/pull/213
+          - php: '5.4'
+            os: 'windows-latest'
 
         include:
           # Composer 2.3 drops support for PHP < 7.2, so for PHP 5.4 to 7.1, `v2` will install
@@ -124,10 +129,6 @@ jobs:
           coverage: none
         env:
           fail-fast: true
-
-      - name: "Conditionally disable tls (Composer 1.x/Windows/PHP 5.4)"
-        if: ${{ matrix.os == 'windows-latest' && matrix.composer == 'v1' && matrix.php == '5.4' }}
-        run: composer config -- disable-tls true
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
