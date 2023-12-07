@@ -150,7 +150,7 @@ final class InstallUpdateEventsTest extends TestCase
          * 2. Reinstall PHPCS.
          */
         $command = sprintf(
-            'composer reinstall phpcsstandards/php_codesniffer -v --no-ansi --working-dir=%s',
+            'composer reinstall squizlabs/php_codesniffer -v --no-ansi --working-dir=%s',
             escapeshellarg(static::$tempLocalPath)
         );
         $result  = $this->executeCliCommand($command);

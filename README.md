@@ -168,7 +168,7 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
     "php" : ">=5.4.0",
-    "phpcsstandards/php_codesniffer" : "^3.8"
+    "squizlabs/php_codesniffer" : "^3.6"
   },
   "type" : "phpcodesniffer-standard"
 }

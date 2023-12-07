@@ -21,7 +21,7 @@ final class RegisterExternalStandardsTest extends TestCase
     private $configOneStandard = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-one-stnd',
         'require-dev' => array(
-            'phpcsstandards/php_codesniffer'                 => null,
+            'squizlabs/php_codesniffer'                      => null,
             'phpcs-composer-installer/dummy-subdir'          => '*',
             'dealerdirect/phpcodesniffer-composer-installer' => '*',
         ),
@@ -30,7 +30,7 @@ final class RegisterExternalStandardsTest extends TestCase
     private $configOneStandardMultiRuleset = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-multistnd',
         'require-dev' => array(
-            'phpcsstandards/php_codesniffer'         => null,
+            'squizlabs/php_codesniffer'              => null,
             'phpcs-composer-installer/multistandard' => '*',
         ),
     );
@@ -38,7 +38,7 @@ final class RegisterExternalStandardsTest extends TestCase
     private $configOneStandardInSrcSubdir = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-in-src-subdir',
         'require-dev' => array(
-            'phpcsstandards/php_codesniffer'     => null,
+            'squizlabs/php_codesniffer'          => null,
             'phpcs-composer-installer/dummy-src' => '*',
         ),
     );
@@ -73,7 +73,7 @@ final class RegisterExternalStandardsTest extends TestCase
     public function testRegisterOneStandardGlobal($phpcsVersion)
     {
         $config = $this->configOneStandard;
-        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
         $this->assertComposerValidates(static::$tempGlobalPath);
@@ -99,7 +99,7 @@ final class RegisterExternalStandardsTest extends TestCase
 
         // Make sure the CodeSniffer.conf file has been created.
         $this->assertFileExists(
-            static::$tempGlobalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
+            static::$tempGlobalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
         );
 
         // Verify that PHPCS sees the external standard.
@@ -138,7 +138,7 @@ final class RegisterExternalStandardsTest extends TestCase
     public function testRegisterOneStandardLocal($phpcsVersion)
     {
         $config = $this->configOneStandard;
-        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
         $this->assertComposerValidates(static::$tempLocalPath);
@@ -168,7 +168,7 @@ final class RegisterExternalStandardsTest extends TestCase
 
         // Make sure the CodeSniffer.conf file has been created.
         $this->assertFileExists(
-            static::$tempLocalPath . '/vendor/phpcsstandards/php_codesniffer/CodeSniffer.conf'
+            static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf'
         );
 
         // Verify that PHPCS sees the external standard.
@@ -219,7 +219,7 @@ final class RegisterExternalStandardsTest extends TestCase
     public function testRegisterOneStandardWithMultipleRulesets($phpcsVersion)
     {
         $config = $this->configOneStandardMultiRuleset;
-        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempLocalPath);
 
@@ -287,7 +287,7 @@ final class RegisterExternalStandardsTest extends TestCase
     public function testRegisterOneStandardInSrcSubdir($phpcsVersion)
     {
         $config = $this->configOneStandardInSrcSubdir;
-        $config['require-dev']['phpcsstandards/php_codesniffer'] = $phpcsVersion;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
         $this->writeComposerJsonFile($config, static::$tempGlobalPath);
 

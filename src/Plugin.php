@@ -44,7 +44,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     const MESSAGE_PLUGIN_UNINSTALLED = 'PHPCodeSniffer Composer Installer is uninstalled';
     const MESSAGE_RUNNING_INSTALLER  = 'Running PHPCodeSniffer Composer Installer';
 
-    const PACKAGE_NAME = 'phpcsstandards/php_codesniffer';
+    const PACKAGE_NAME = 'squizlabs/php_codesniffer';
     const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
     const PHPCS_CONFIG_REGEX = '`%s:[^\r\n]+`';

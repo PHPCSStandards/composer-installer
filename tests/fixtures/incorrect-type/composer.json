@@ -5,7 +5,7 @@
     "license" : "MIT",
     "require" : {
         "php" : ">=5.4",
-        "phpcsstandards/php_codesniffer" : "*",
+        "squizlabs/php_codesniffer" : "*",
         "dealerdirect/phpcodesniffer-composer-installer" : "*"
     },
     "config": {
