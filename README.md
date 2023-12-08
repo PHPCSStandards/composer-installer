@@ -258,7 +258,7 @@ THE SOFTWARE.
 [changelog]: https://github.com/PHPCSStandards/composer-installer/releases
 [code-of-conduct-shield]: https://img.shields.io/badge/Contributor%20Covenant-v2.0-ff69b4.svg
 [code-of-conduct]: CODE_OF_CONDUCT.md
-[codesniffer]: https://github.com/squizlabs/PHP_CodeSniffer
+[codesniffer]: https://github.com/PHPCSStandards/PHP_CodeSniffer
 [composer-manual-scripts]: https://getcomposer.org/doc/articles/scripts.md
 [composer-manual-caret]: https://getcomposer.org/doc/articles/versions.md#caret-version-range-
 [composer]: https://getcomposer.org/
@@ -277,7 +277,7 @@ THE SOFTWARE.
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
 [ghactionstest-shield]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml/badge.svg
 [ghactions]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml
-[tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
+[tutorial]: https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [v0.4]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.4.0
 [v0.7]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.7.0

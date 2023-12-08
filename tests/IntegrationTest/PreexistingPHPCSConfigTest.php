@@ -28,7 +28,7 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  * the plugin handles this correctly in all supported PHPCS versions.
  *
  * @link https://github.com/PHPCSStandards/composer-installer/pull/98
- * @link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options
+ * @link https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Configuration-Options
  */
 final class PreexistingPHPCSConfigTest extends TestCase
 {
