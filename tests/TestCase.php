@@ -415,7 +415,12 @@ abstract class TestCase extends PolyfillTestCase
            2 => array("pipe", "w"),  // stderr
         );
 
-        $process = proc_open($command, $descriptorspec, $pipes, $workingDir);
+        $options = null;
+        if (self::onWindows()) {
+            $options = array('bypass_shell' => true);
+        }
+
+        $process = proc_open($command, $descriptorspec, $pipes, $workingDir, null, $options);
 
         if (is_resource($process) === false) {
             throw new RuntimeException('Could not obtain a resource with proc_open() to execute the command.');
