@@ -538,6 +538,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getPHPCodeSnifferPackage($versionConstraint = null)
     {
+        $rootPackage = $this->composer->getPackage();
+        if ($rootPackage->getName() === self::PACKAGE_NAME) {
+            return $rootPackage;
+        }
+
         $packages = $this
             ->composer
             ->getRepositoryManager()
@@ -554,7 +559,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getPHPCodeSnifferInstallPath()
     {
-        return $this->composer->getInstallationManager()->getInstallPath($this->getPHPCodeSnifferPackage());
+        $package = $this->getPHPCodeSnifferPackage();
+        if ($package instanceof \Composer\Package\RootPackageInterface) {
+            return realpath(dirname(\Composer\Factory::getComposerFile()));
+        }
+
+        return $this->composer->getInstallationManager()->getInstallPath($package);
     }
 
     /**
