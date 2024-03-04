@@ -141,7 +141,7 @@ jobs:
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
       - name: Install Composer dependencies
         if: ${{ matrix.php != '8.4' }}
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v3"
         with:
           composer-options: '--optimize-autoloader'
           # Bust the cache at least once a month - output format: YYYY-MM.
@@ -149,7 +149,7 @@ jobs:
 
       - name: Install Composer dependencies
         if: ${{ matrix.php == '8.4' }}
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v3"
         with:
           composer-options: '--ignore-platform-reqs --optimize-autoloader'
           custom-cache-suffix: $(date -u "+%Y-%m")
