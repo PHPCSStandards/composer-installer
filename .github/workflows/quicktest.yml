@@ -9,6 +9,9 @@ on:
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
+env:
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
+
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name.
