@@ -224,12 +224,18 @@ The original idea and setup of this repository is by [Franck Nijhof][frenck], em
 
 For a full list of all author and/or contributors, check [the contributors page][contributors].
 
+## Funding
+
+This project is included in the projects supported via the [PHP_CodeSniffer Open Collective][phpcs-open-collective].
+
+If you use this plugin, financial contributions to the Open Collective are encouraged and appreciated.
+
 ## License
 
 The MIT License (MIT)
 
 Copyright (c) 2016-2022 Dealerdirect B.V. and contributors
-Copyright (c) 2022 PHPCSStandards and contributors
+Copyright (c) 2022- PHPCSStandards and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -268,6 +274,7 @@ THE SOFTWARE.
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [`phpcodesniffer-standard` packages]: https://packagist.org/explore/?type=phpcodesniffer-standard
+[phpcs-open-collective]: https://opencollective.com/php_codesniffer
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
 [ghactionstest-shield]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml/badge.svg
