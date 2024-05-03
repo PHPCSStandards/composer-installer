@@ -51,6 +51,9 @@
       "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Tests\\": "tests/"
     }
   },
+  "config": {
+    "lock": false
+  },
   "extra": {
     "class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
   },
