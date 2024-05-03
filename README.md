@@ -194,8 +194,8 @@ via `require`, **not** `require-dev`.
 > To prevent your end-users getting into "_dependency hell_", make sure to make the version requirement
 > for this plugin flexible.
 >
-> Remember that Composer treats unstable minors as majors and will not be able to resolve one config
-> requiring this plugin at version `^0.7`, while another requires it at version `^1.0`.
+> Remember that [Composer treats unstable minors as majors][composer-manual-caret] and will not be able to resolve
+> one config requiring this plugin at version `^0.7`, while another requires it at version `^1.0`.
 > Either allow multiple minors or use `*` as the version requirement.
 >
 > Some examples of flexible requirements which can be used:
