@@ -20,7 +20,7 @@ the `phpcs` configuration.
 Installation can be done with [Composer][composer], by requiring this package as a development dependency:
 
 ```bash
-composer require --dev dealerdirect/phpcodesniffer-composer-installer
+composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^1.0"
 ```
 
 When using Composer 2.2 or higher, Composer will [ask for your permission](https://blog.packagist.com/composer-2-2/#more-secure-plugin-execution) to allow this plugin to execute code. For this plugin to be functional, permission needs to be granted.
@@ -50,9 +50,6 @@ This plugin is compatible with:
 - PHP **5.4+**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
 - [Composer][composer] **1.x** and **2.x** (Support for Composer v2 is available since [`v0.7.0`][v0.7])
 - [PHP_CodeSniffer][codesniffer] **2.x** and **3.x** (Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4])
-
-
-> **ℹ️ Please Note:** [Composer treats _minor_ releases below 1.0.0 as _major_ releases][composer-manual-caret]. So version `0.7.x` (or higher) of this plugin must be _explicitly_ set as version constraint when using Composer 2.x or PHP 8.0. In other words: using `^0.6` will **not** work with Composer 2.x or PHP 8.0.
 
 ### How it works
 
@@ -197,16 +194,14 @@ via `require`, **not** `require-dev`.
 > To prevent your end-users getting into "_dependency hell_", make sure to make the version requirement
 > for this plugin flexible.
 >
-> As, for now, this plugin is still regarded as "unstable" (version < 1.0), remember that Composer
-> treats unstable minors as majors and will not be able to resolve one config requiring this plugin
-> at version `^0.5`, while another requires it at version `^0.6`.
+> Remember that [Composer treats unstable minors as majors][composer-manual-caret] and will not be able to resolve
+> one config requiring this plugin at version `^0.7`, while another requires it at version `^1.0`.
 > Either allow multiple minors or use `*` as the version requirement.
 >
 > Some examples of flexible requirements which can be used:
 > ```bash
 > composer require dealerdirect/phpcodesniffer-composer-installer:"*"
-> composer require dealerdirect/phpcodesniffer-composer-installer:"0.*"
-> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4.1 || ^0.5 || ^0.6 || ^0.7"
+> composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4.1 || ^0.5 || ^0.6 || ^0.7 || ^1.0"
 > ```
 
 ## Changelog
@@ -229,12 +224,18 @@ The original idea and setup of this repository is by [Franck Nijhof][frenck], em
 
 For a full list of all author and/or contributors, check [the contributors page][contributors].
 
+## Funding
+
+This project is included in the projects supported via the [PHP_CodeSniffer Open Collective][phpcs-open-collective].
+
+If you use this plugin, financial contributions to the Open Collective are encouraged and appreciated.
+
 ## License
 
 The MIT License (MIT)
 
 Copyright (c) 2016-2022 Dealerdirect B.V. and contributors
-Copyright (c) 2022 PHPCSStandards and contributors
+Copyright (c) 2022- PHPCSStandards and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -273,6 +274,7 @@ THE SOFTWARE.
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [packagist]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
 [`phpcodesniffer-standard` packages]: https://packagist.org/explore/?type=phpcodesniffer-standard
+[phpcs-open-collective]: https://opencollective.com/php_codesniffer
 [scrutinizer-shield]: https://img.shields.io/scrutinizer/g/dealerdirect/phpcodesniffer-composer-installer.svg
 [scrutinizer]: https://scrutinizer-ci.com/g/dealerdirect/phpcodesniffer-composer-installer/
 [ghactionstest-shield]: https://github.com/PHPCSStandards/composer-installer/actions/workflows/integrationtest.yml/badge.svg
