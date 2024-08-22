@@ -19,7 +19,9 @@ jobs:
 
     strategy:
       matrix:
-        php: ['5.4', '5.6', '7.2', 'latest']
+        php: ['5.4', '5.6', '7.2', 'latest', 'nightly']
+
+    continue-on-error: ${{ matrix.php == 'nightly' }}
 
     name: "PHP Lint: PHP ${{ matrix.php }}"
 
