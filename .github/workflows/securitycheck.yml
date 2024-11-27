@@ -45,6 +45,8 @@ jobs:
         with:
           # Bust the cache at least once a month - output format: YYYY-MM.
           custom-cache-suffix: $(date -u "+%Y-%m")
+          # Ignore development-only packages in security check
+          composer-options: "--no-dev"
 
       - name: Download security checker
         # yamllint disable-line rule:line-length
