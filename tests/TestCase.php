@@ -252,14 +252,6 @@ abstract class TestCase extends PolyfillTestCase
             $config['config']['allow-plugins']['dealerdirect/phpcodesniffer-composer-installer'] = true;
         }
 
-        /*
-         * Disable TLS when on Windows with Composer 1.x and PHP 5.4.
-         * @link https://github.com/composer/composer/issues/10495
-         */
-        if (static::onWindows() === true && \CLI_PHP_MINOR === '5.4' && strpos(\COMPOSER_VERSION, '1') === 0) {
-            $config['config']['disable-tls'] = true;
-        }
-
         $encoded = json_encode($config, \JSON_UNESCAPED_SLASHES | \JSON_PRETTY_PRINT);
         if (json_last_error() !== \JSON_ERROR_NONE || $encoded === false) {
             throw new RuntimeException('Provided configuration can not be encoded to valid JSON');

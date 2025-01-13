@@ -177,7 +177,7 @@ final class InstallUpdateEventsTest extends TestCase
     }
 
     /**
-     * Test that the plugin runs (or doesn't run) when Composer is invoked with the --no-scripts argument.
+     * Test that the plugin runs when Composer is invoked with the --no-scripts argument.
      *
      * Note: the behaviour of Composer changed in 2.1.2. Prior to that, `--no-scripts` would
      * also stop plugins from running. As of Composer 2.1.2, `--no-scripts` and `--no-plugins`
@@ -198,20 +198,11 @@ final class InstallUpdateEventsTest extends TestCase
 
         $this->assertSame(0, $result['exitcode'], 'Exitcode for composer install did not match 0');
 
-        if (version_compare(\COMPOSER_VERSION, '2.1.2', '>=') === true) {
-            $this->assertStringContainsString(
-                Plugin::MESSAGE_RUNNING_INSTALLER,
-                $result['stdout'],
-                'Output from running Composer install missing expected contents.'
-            );
-        } else {
-            // Composer 1.x.
-            $this->assertStringNotContainsString(
-                Plugin::MESSAGE_RUNNING_INSTALLER,
-                $result['stdout'],
-                'Output from running Composer install contains unexpected contents.'
-            );
-        }
+        $this->assertStringContainsString(
+            Plugin::MESSAGE_RUNNING_INSTALLER,
+            $result['stdout'],
+            'Output from running Composer install missing expected contents.'
+        );
     }
 
     /**
