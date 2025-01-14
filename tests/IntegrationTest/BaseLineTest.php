@@ -156,7 +156,7 @@ final class BaseLineTest extends TestCase
      * get displayed may differ depending on the machine/OS on which the tests get run.
      * With that in mind, the verification that the PHPCS native standards are the only recognized standards
      * is done using a regex instead of an exact match.
-     * Also see: https://github.com/squizlabs/PHP_CodeSniffer/pull/3539
+     * Also see: https://github.com/squizlabs/PHP_CodeSniffer/pull/3539 which was merged in PHPCS 3.7.0.
      *
      * @return array
      */

@@ -112,7 +112,7 @@ final class RegisterExternalStandardsTest extends TestCase
             static::$tempGlobalPath
         );
 
-        // Verify that PHPCS can with the external standard set as the standard.
+        // Verify that PHPCS can run with the external standard set as the standard.
         $phpcsCommand = '"vendor/bin/phpcs" --standard=DummySubDir -e';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempGlobalPath);
 
@@ -181,7 +181,7 @@ final class RegisterExternalStandardsTest extends TestCase
             static::$tempLocalPath
         );
 
-        // Verify that PHPCS can with the external standard set as the standard.
+        // Verify that PHPCS can run with the external standard set as the standard.
         $phpcsCommand = '"vendor/bin/phpcs" --standard=DummySubDir -e';
         $phpcsResult  = $this->executeCliCommand($phpcsCommand, static::$tempLocalPath);
 
