@@ -222,7 +222,7 @@ Thank you for being involved! :heart_eyes:
 
 The original idea and setup of this repository is by [Franck Nijhof][frenck], employee @ Dealerdirect.
 
-For a full list of all author and/or contributors, check [the contributors page][contributors].
+For a full list of all authors and/or contributors, check [the contributors page][contributors].
 
 ## Funding
 
