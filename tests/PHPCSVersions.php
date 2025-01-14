@@ -95,6 +95,9 @@ final class PHPCSVersions
         '3.10.0' => '3.10.0',
         '3.10.1' => '3.10.1',
         '3.10.2' => '3.10.2',
+        '3.10.3' => '3.10.3',
+        '3.11.0' => '3.11.0',
+        '3.11.1' => '3.11.1',
     );
 
     /**
@@ -363,19 +366,22 @@ final class PHPCSVersions
                 break;
 
             case '8.3':
+            case '8.4':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
                     function ($version) {
                         // PHPCS 3.8.0 is the first PHPCS version with runtime support for PHP 8.3.
+                        // And while officially, PHPCS 3.11.0 is the first PHPCS version with runtime support
+                        // for PHP 8.4, for our purposes, we should be fine with PHPCS 3.8.0 or higher.
                         return version_compare($version, '3.8.0', '>=');
                     }
                 );
                 break;
 
-            case '8.4':
+            case '8.5':
                 /*
-                 * At this point in time, it is unclear as of which PHPCS version PHP 8.4 will be supported.
-                 * In other words: tests should only use dev-master/4.x when on PHP 8.4 for the time being.
+                 * At this point in time, it is unclear as of which PHPCS version PHP 8.5 will be supported.
+                 * In other words: tests should only use dev-master/4.x when on PHP 8.5 for the time being.
                  */
                 $versions = array();
                 break;
