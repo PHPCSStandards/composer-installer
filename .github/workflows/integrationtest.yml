@@ -41,31 +41,17 @@ jobs:
           - '8.4'
           - '8.5'
         composer:
-          - 'v1'
           - 'v2'
         os:
           - 'ubuntu-latest'
           - 'windows-latest'
 
         exclude:
-          # Exclude a particularly problematic build.
-          # @link https://github.com/PHPCSStandards/composer-installer/issues/181
-          - php: '5.5'
-            composer: 'v1'
-            os: 'windows-latest'
           # Installing on Windows with PHP 5.4 runs into all sorts of problems (which are not ours).
           # Considering PHP 5.4 is ancient, I deem it acceptable to exclude the Windows PHP 5.4 builds.
           # @link https://github.com/PHPCSStandards/composer-installer/pull/213
           - php: '5.4'
             os: 'windows-latest'
-          # Composer 1.x is no longer supported and while Composer 2.2 is an LTS version, the LTS
-          # is only for critical bugs and security issues, not for supporting new PHP versions.
-          # In practice, this means that Composer 1.x and 2.2 are not compatible with PHP 8.4 and later.
-          # @link https://github.com/composer/composer/issues/10340
-          - php: '8.4'
-            composer: 'v1'
-          - php: '8.5'
-            composer: 'v1'
 
         include:
           # Composer 2.3 drops support for PHP < 7.2, so for PHP 5.4 to 7.1, `v2` will install

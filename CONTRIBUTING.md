@@ -32,12 +32,12 @@ Even better: You could submit a pull request with a fix / new feature!
 ### (Code) Quality checks
 
 Every merge-request triggers a build process which runs various checks to help
-maintain a quality standard. All JSON, Markdown, PHP, and Yaml files are 
+maintain a quality standard. All JSON, Markdown, PHP, and Yaml files are
 expected to adhere to these quality standards.
 
 These tools fall into two categories: PHP and non-PHP.
 
-### PHP 
+### PHP
 
 The PHP specific tools used by this build are:
 
@@ -99,7 +99,7 @@ In case the test setup has trouble locating your `composer.phar` file:
     </php>
     ```
     **Note**: this setting also allows for locally testing with different versions of Composer.
-    You could, for instance, have multiple Composer Phar files locally, `composer1.phar`, `composer2.1.phar`, `composer2.2.phar`.
+    You could, for instance, have multiple Composer Phar files locally, `composer.phar`, `composer2.2.phar`, `composer2.6.phar`.
     By changing the path in the value of this `env` setting, you can switch which version will be used in the tests.
 
 ### Non-PHP
@@ -112,7 +112,7 @@ The non-PHP specific tools used by this build are:
 
 These tools are also run as [GitHub actions][].
 All the checks can be run locally using [`act`][].
-Alternatively they can be run using `docker run`, as all checks use Docker 
+Alternatively they can be run using `docker run`, as all checks use Docker
 images provided by [Pipeline-Component][].
 
 Finally, they could be run locally using NodeJS, Ruby, PHP, or whatever the tool

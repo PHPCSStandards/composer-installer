@@ -23,7 +23,7 @@ Installation can be done with [Composer][composer], by requiring this package as
 composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^1.0"
 ```
 
-When using Composer 2.2 or higher, Composer will [ask for your permission](https://blog.packagist.com/composer-2-2/#more-secure-plugin-execution) to allow this plugin to execute code. For this plugin to be functional, permission needs to be granted.
+Since Composer 2.2, Composer will [ask for your permission](https://blog.packagist.com/composer-2-2/#more-secure-plugin-execution) to allow this plugin to execute code. For this plugin to be functional, permission needs to be granted.
 
 When permission has been granted, the following snippet will automatically be added to your `composer.json` file by Composer:
 ```json
@@ -36,7 +36,7 @@ When permission has been granted, the following snippet will automatically be ad
 }
 ```
 
-When using Composer < 2.2, you can add the permission flag ahead of the upgrade to Composer 2.2, by running:
+You can safely add the permission flag (to avoid Composer needing to ask), by running:
 ```bash
 composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 ```
@@ -48,7 +48,7 @@ That's it.
 This plugin is compatible with:
 
 - PHP **5.4+**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
-- [Composer][composer] **1.x** and **2.x** (Support for Composer v2 is available since [`v0.7.0`][v0.7])
+- [Composer][composer] **2.2+** (Support for Composer v2 is available since [`v0.7.0`][v0.7]; support for Composer < 2.2 was dropped in [`v1.1.0`][v1.1])
 - [PHP_CodeSniffer][codesniffer] **2.x** and **3.x** (Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4])
 
 ### How it works
@@ -283,3 +283,4 @@ THE SOFTWARE.
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [v0.4]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.4.0
 [v0.7]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.7.0
+[v1.1]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v1.1.0

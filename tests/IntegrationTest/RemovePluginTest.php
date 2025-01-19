@@ -57,24 +57,6 @@ final class RemovePluginTest extends TestCase
     }
 
     /**
-     * Helper method to get the stdout expectation for when the plugin is uninstalled.
-     *
-     * As of Composer 2.0.0, plugins which have been uninstalled will not run anymore
-     * after the uninstall (which is good).
-     * It is unclear which particular change this can be attributed to.
-     *
-     * @return string
-     */
-    private function getUninstallStdOutExpectation()
-    {
-        if (strpos(\COMPOSER_VERSION, '1') === 0) {
-            return Plugin::MESSAGE_PLUGIN_UNINSTALLED;
-        }
-
-        return '';
-    }
-
-    /**
      * Test the plugin doesn't exit with a non-0 exit code and doesn't throw errors when PHPCS and the plugin
      * were installed via --dev and a no-dev install is run, which removes the plugin and PHPCS.
      *
@@ -101,7 +83,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             'composer global install --no-dev -v --no-ansi',
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall by switching to no-dev did not meet expectations.'
         );
@@ -133,7 +115,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             sprintf('composer install --no-dev -v --no-ansi --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall by switching to no-dev did not meet expectations.'
         );
@@ -166,7 +148,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             'composer global remove --dev phpcs-composer-installer/multistandard -v --no-ansi',
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall of dev dependency did not meet expectations.'
         );
@@ -203,7 +185,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             $command,
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall of dev dependency did not meet expectations.'
         );
@@ -236,7 +218,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             'composer global remove phpcs-composer-installer/multistandard -v --no-ansi',
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall of no-dev dependency did not meet expectations.'
         );
@@ -273,7 +255,7 @@ final class RemovePluginTest extends TestCase
         $this->assertExecute(
             $command,
             0,    // Expected exit code.
-            $this->getUninstallStdOutExpectation(), // Expected stdout.
+            null, // No stdout expectation.
             null, // No stderr expectation.
             'Uninstall of no-dev dependency did not meet expectations.'
         );

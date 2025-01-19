@@ -108,18 +108,6 @@ final class BaseLineTest extends TestCase
      */
     public function testBaseLineLocal($phpcsVersion, $expectedStnds)
     {
-        if (
-            $phpcsVersion === PHPCSVersions::MASTER
-            && \CLI_PHP_MINOR === '5.5'
-            && $this->onWindows() === true
-            && substr(\COMPOSER_VERSION, 0, 1) === '1'
-        ) {
-            $this->markTestSkipped(
-                'Composer 1.x on Windows with PHP 5.5 does run the plugin when there are no external standards,'
-                . ' but doesn\'t consistently show this in the logs'
-            );
-        }
-
         $config = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
 
