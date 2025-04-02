@@ -555,7 +555,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getPHPCodeSnifferInstallPath()
     {
-        return $this->composer->getInstallationManager()->getInstallPath($this->getPHPCodeSnifferPackage());
+        return (string) InstalledVersions::getInstallPath(self::PACKAGE_NAME);
     }
 
     /**
