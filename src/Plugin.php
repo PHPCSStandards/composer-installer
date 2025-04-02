@@ -12,6 +12,7 @@ namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\InstalledVersions;
 use Composer\IO\IOInterface;
 use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
@@ -566,6 +567,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function isPHPCodeSnifferInstalled($versionConstraint = null)
     {
+        if ($versionConstraint === null) {
+            return InstalledVersions::isInstalled(self::PACKAGE_NAME);
+        }
+
         return ($this->getPHPCodeSnifferPackage($versionConstraint) !== null);
     }
 
