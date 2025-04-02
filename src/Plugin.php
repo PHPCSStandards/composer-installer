@@ -12,8 +12,8 @@ namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\InstalledVersions;
 use Composer\IO\IOInterface;
-use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
 use Composer\Package\RootPackageInterface;
 use Composer\Plugin\PluginInterface;
@@ -457,7 +457,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $codingStandardPackages = $this->getPHPCodingStandardPackages();
         foreach ($codingStandardPackages as $package) {
-            $installPath = $this->composer->getInstallationManager()->getInstallPath($package);
+            $installPath = (string) InstalledVersions::getInstallPath($package);
             if ($this->filesystem->isAbsolutePath($installPath) === false) {
                 $installPath = $this->filesystem->normalizePath(
                     $this->cwd . \DIRECTORY_SEPARATOR . $installPath
@@ -512,21 +512,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
      *
-     * @return array Composer packages containing coding standard(s)
+     * @return array<string> Composer packages containing coding standard(s)
      */
     private function getPHPCodingStandardPackages()
     {
-        $codingStandardPackages = array_filter(
-            $this->composer->getRepositoryManager()->getLocalRepository()->getPackages(),
-            function (PackageInterface $package) {
-                if ($package instanceof AliasPackage) {
-                    return false;
-                }
-                return $package->getType() === Plugin::PACKAGE_TYPE;
-            }
-        );
-
-        return $codingStandardPackages;
+        return InstalledVersions::getInstalledPackagesByType(self::PACKAGE_TYPE);
     }
 
     /**
