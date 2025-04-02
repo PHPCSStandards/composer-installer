@@ -516,6 +516,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getPHPCodingStandardPackages()
     {
+        $codingStandardPackages = InstalledVersions::getInstalledPackagesByType(self::PACKAGE_TYPE);
+var_dump($codingStandardPackages);
         return InstalledVersions::getInstalledPackagesByType(self::PACKAGE_TYPE);
     }
 
