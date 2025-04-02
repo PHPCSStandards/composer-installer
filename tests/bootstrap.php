@@ -71,7 +71,7 @@ if (\defined('__PHPUNIT_PHAR__')) {
 define('ZIP_ARTIFACT_DIR', __DIR__ . '/artifact/');
 
 if (extension_loaded('zip') === true) {
-    define('PLUGIN_ARTIFACT_VERSION', '1.0.0');
+    define('PLUGIN_ARTIFACT_VERSION', '1.99.99');
 
     $zipCreator = new CreateComposerZipArtifacts(\ZIP_ARTIFACT_DIR);
     $zipCreator->clearOldArtifacts();
