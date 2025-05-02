@@ -30,6 +30,7 @@
 
     <rule ref="PSR1.Files.SideEffects">
         <exclude-pattern>*/tests/bootstrap\.php$</exclude-pattern>
+        <exclude-pattern>*/tests/fixtures/dummy-subdir/DummySubDir/dummy-autoload\.php$</exclude-pattern>
     </rule>
 
     <!-- Fixture method names in the test classes will be in snake_case because of the PHPUnit Polyfills. -->
