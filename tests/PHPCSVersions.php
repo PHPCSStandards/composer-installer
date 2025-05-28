@@ -27,7 +27,7 @@ final class PHPCSVersions
      *
      * @var string
      */
-    const NEXT_MAJOR = '4.0.x-dev as 3.9.99';
+    const NEXT_MAJOR = '4.x-dev as 3.99.99';
 
     /**
      * List of all PHPCS version which are supported by this plugin.

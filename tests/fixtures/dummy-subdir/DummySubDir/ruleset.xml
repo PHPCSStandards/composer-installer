@@ -2,4 +2,6 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="DummySubDir" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
 
     <description>Dummy PHPCS standard for testing.</description>
+
+    <autoload>/dummy-autoload.php</autoload>
 </ruleset>
