@@ -2,7 +2,6 @@
 
 .editorconfig               export-ignore
 .gitattributes              export-ignore
-.github_changelog_generator export-ignore
 .gitignore                  export-ignore
 .remarkrc                   export-ignore
 .yamllint                   export-ignore
@@ -14,5 +13,4 @@ phpunit.xml.dist            export-ignore
 
 # Ignore directories for distribution archives.
 /.github/                   export-ignore
-/bin/                       export-ignore
 /tests/                     export-ignore
