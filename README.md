@@ -10,10 +10,9 @@
 
 [![Contributor Covenant][code-of-conduct-shield]][code-of-conduct]
 
-This composer installer plugin allows for easy installation of [PHP_CodeSniffer][codesniffer] coding standards (rulesets).
+This composer installer plugin makes installation of [PHP_CodeSniffer][codesniffer] coding standards (rulesets) straight-forward.
 
-No more symbolic linking of directories, checking out repositories on specific locations or changing
-the `phpcs` configuration.
+No more symbolic linking of directories, checking out repositories on specific locations or manually changing the `phpcs` configuration.
 
 ## Usage
 
@@ -49,7 +48,7 @@ This plugin is compatible with:
 
 - PHP **5.4+**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
 - [Composer][composer] **2.2+** (Support for Composer v2 is available since [`v0.7.0`][v0.7]; support for Composer < 2.2 was dropped in [`v1.1.0`][v1.1])
-- [PHP_CodeSniffer][codesniffer] **2.x** and **3.x** (Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4])
+- [PHP_CodeSniffer][codesniffer] **2.x**, **3.x** and **4.x**(Support for PHP_CodeSniffer v3 is available since [`v0.4.0`][v0.4], support for PHP_CodeSniffer v4 since [`v0.7.0`][v0.7])
 
 ### How it works
 
@@ -88,7 +87,7 @@ After running `composer install` PHP_CodeSniffer just works:
 
 ```bash
 $ ./vendor/bin/phpcs -i
-The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, ObjectCalisthenics,
+The installed coding standards are PEAR, PSR1, PSR2, PSR12, Squiz, Zend, ObjectCalisthenics,
 PHPCompatibility, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
 ```
 
