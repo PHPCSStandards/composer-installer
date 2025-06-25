@@ -10,6 +10,18 @@ This projects adheres to [Keep a CHANGELOG](https://keepachangelog.com/) and use
 _Nothing yet._
 
 
+## [v1.1.1] - 2025-06-27
+
+### Changed
+- Various housekeeping, including improvements to the documentation.
+
+### Fixed
+- [#239]: The PHP_CodeSniffer package could not be always found when running the plugin in a Drupal or Magento setup. Thanks [@jrfnl] ! [#245]
+
+[#239]:  https://github.com/PHPCSStandards/composer-installer/issues/239
+[#245]:  https://github.com/PHPCSStandards/composer-installer/pull/245
+
+
 ## [v1.1.0] - 2025-06-24
 
 ### Changed
@@ -147,7 +159,7 @@ _Nothing yet._
 
 ## [v0.7.1] - 2020-12-07
 
-### Closed issues:
+### Closed issues
 - Order of installed_paths inconsistent between runs [#125]
 - Maintaining this project and Admin rights [#113]
 
@@ -171,7 +183,7 @@ _Nothing yet._
 
 ## [v0.7.0] - 2020-06-25
 
-### Closed issues:
+### Closed issues
 - Composer 2.x compatibility [#108]
 - Add link to Packagist on main page [#110]
 - Switch from Travis CI .org to .com [#112]
@@ -202,7 +214,7 @@ _Nothing yet._
 
 ## [v0.6.1] - 2020-01-27
 
-### Closed issues:
+### Closed issues
 - Do not exit with code 1 on uninstall (--no-dev) [#103]
 
 ### Changed
@@ -218,7 +230,7 @@ _Nothing yet._
 
 ## [v0.6.0] - 2020-01-19
 
-### Closed issues:
+### Closed issues
 - Composer PHP version appears not to be respected [#79]
 - Allow a string value for extra.phpcodesniffer-search-depth [#82]
 - Add [@jrfnl] as (co)maintainer to this project [#87]
@@ -268,7 +280,7 @@ _Nothing yet._
 
 ## [v0.5.0] - 2018-10-26
 
-### Closed issues:
+### Closed issues
 - Scan depth as parameter [#45]
 - phpcs: Exit Code: 127 (Command not found) on every Composer command [#48]
 - The composer plugin implementation seems to be breaking the composer lifecycle [#49]
@@ -284,7 +296,7 @@ _Nothing yet._
 - Build/PHPCS: update PHPCompatibility repo name by [@jrfnl] in [#54]
 - README: remove VersionEye badge by [@jrfnl] in [#55]
 - README: replace maintenance badge by [@jrfnl] in [#56]
-- Execute phpcs and security-checker from vendor/bin by @gapple] in [#52]
+- Execute phpcs and security-checker from vendor/bin by [@gapple] in [#52]
 - PHPCS: various minor tweaks by [@jrfnl] in [#57]
 - Travis: various tweaks by [@jrfnl] in [#58]
 - Use PHPCompatibility 9.0.0 by [@jrfnl] in [#61]
@@ -338,7 +350,7 @@ _Nothing yet._
 
 ## [v0.4.4] - 2017-12-06
 
-### Closed issues:
+### Closed issues
 - PHP 7.2 compatibility issue [#43]
 
 ### Changed
@@ -376,7 +388,7 @@ _Nothing yet._
 
 ## [v0.4.1] - 2017-08-01
 
-### Closed issues:
+### Closed issues
 - Incorrect relative paths for WPCS [#33]
 
 ### Fixed
@@ -388,7 +400,7 @@ _Nothing yet._
 
 ## [v0.4.0] - 2017-05-11
 
-### Closed issues:
+### Closed issues
 - Add support for code standards in root of repository for PHP_CodeSniffer 3.x [#26]
 - Config codings styles in composer.json from project [#23]
 - Check the root package for sniffs to install [#20]
@@ -402,7 +414,7 @@ _Nothing yet._
 
 ### Changed
 - Local projects uses relative paths to their coding standards [#28] ([@frenck])
-- Docs: Updated README. … [#31] ([@frenck])
+- Docs: Updated README. [#31] ([@frenck])
 - Docs: Adds reference to calling the script directly in the README. [#29] ([@Potherca])
 - Adds Travis-CI configuration file. [#27] ([@Potherca])
 
@@ -422,7 +434,7 @@ _Nothing yet._
 
 ## [v0.3.2] - 2017-03-29
 
-### Closed issues:
+### Closed issues
 - Coding Standard tries itself to install with installPath when it's the root package [#19]
 
 ### Changed
@@ -439,7 +451,7 @@ _Nothing yet._
 
 ## [v0.3.1] - 2017-02-17
 
-### Closed issues:
+### Closed issues
 - Plugin not working correctly when sniffs install depth is equal to "1" [#13]
 - Create new stable release version to support wider use [#11]
 
@@ -453,7 +465,7 @@ _Nothing yet._
 
 ## [v0.3.0] - 2017-02-15
 
-### Implemented enhancements:
+### Implemented enhancements
 - Install Plugin provides no feedback [#7]
 - Installing coding standards when executing Composer with --no-scripts [#4]
 - Github contribution templates [#10] ([@christopher-hopper])
@@ -507,6 +519,7 @@ For this version on, this installer no longer messes with the installation paths
 
 First useable release.
 
+[v1.1.1]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/PHPCSStandards/composer-installer/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/PHPCSStandards/composer-installer/compare/v0.7.2...v1.0.0
 [v0.7.2]: https://github.com/PHPCSStandards/composer-installer/compare/v0.7.1...v0.7.2
@@ -545,5 +558,5 @@ First useable release.
 [@paras-malhotra]:     https://github.com/paras-malhotra
 [@Potherca]:           https://github.com/Potherca
 [@Seldaek]:            https://github.com/Seldaek
-[@SplotyCode];         https://github.com/SplotyCode
+[@SplotyCode]:         https://github.com/SplotyCode
 [@TravisCarden]:       https://github.com/TravisCarden
