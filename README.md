@@ -203,11 +203,6 @@ via `require`, **not** `require-dev`.
 > composer require dealerdirect/phpcodesniffer-composer-installer:"^0.4.1 || ^0.5 || ^0.6 || ^0.7 || ^1.0"
 > ```
 
-## Changelog
-
-This repository does not contain a `CHANGELOG.md` file, however, we do publish a changelog on each release
-using the [GitHub releases][changelog] functionality.
-
 ## Contributing
 
 This is an active open-source project. We are always open to people who want to
@@ -255,7 +250,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 [awesome-shield]: https://img.shields.io/badge/awesome%3F-yes-brightgreen.svg
-[changelog]: https://github.com/PHPCSStandards/composer-installer/releases
 [code-of-conduct-shield]: https://img.shields.io/badge/Contributor%20Covenant-v2.0-ff69b4.svg
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [codesniffer]: https://github.com/PHPCSStandards/PHP_CodeSniffer
