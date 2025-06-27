@@ -125,43 +125,14 @@ is written in. For details please consult the relevant tool's documentation.
 
 ## Release process
 
-To make it possible to automatically generate a changelog, all tickets/issues must have a milestone and at least one label.
+See the [release checklist][release-checklist].
 
-A changelog can be generated using the [`github-changelog-generator`][github-changelog-generator].[<sup>(1)</sup>](#footnotes)
+To facilitate the creation of release changelogs, all tickets/issues must have a milestone and at least one label.
 
-Our release versions follow [Semantic Versioning][semver].
+[release-checklist]: https://github.com/PHPCSStandards/composer-installer/blob/main/.github/release-checklist.md
 
-New releases (and any related tags) are always created from the `main` branch.
-
-To create a new release:
-
-1. Make sure all closed tickets and MRs have a label.
-
-2. Make sure all closed tickets and MRs are added to the milestone that is to be released.
-
-3. Move any open tickets to the next milestone (create a new one if needed).
-
-4. Generate a changelog by running `github_changelog_generator` in the project root:[<sup>(2)</sup>](#footnotes)
-   ```
-   github_changelog_generator --future-release "${sVersion}" --header --output --unreleased-only 2>/dev/null
-   ```
-   Where `sVersion` contains the new version to release.
-
-5. Use GitHub "Draft a new release" functionality to draft a new release (this also creates a tag).
-
-6. Close the milestone for the version that was just released.
 
 [github]: https://github.com/PHPCSStandards/composer-installer/issues
 [prs]: https://github.com/PHPCSStandards/composer-installer/pulls
 [GitHub Actions]: https://github.com/PHPCSStandards/composer-installer/actions
 [Pipeline-Component]: https://pipeline-components.dev/
-
-## Footnotes
-
-1. All settings needed for the changelog-generator are set in `.github_changelog_generator` file.
-
-2. A convenience script is present at `bin/generate-changelog.sh` that will install the changelog-generator, if it is not present, and run the appropriate `github_changelog_generator` command.
-   The script requires BASH to run. It should be run from the project root, similar to `github_changelog_generator`.
-
-[github-changelog-generator]: https://github.com/github-changelog-generator/github-changelog-generator/
-[semver]: https://semver.org/
