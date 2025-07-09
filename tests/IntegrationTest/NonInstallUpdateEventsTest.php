@@ -12,6 +12,7 @@ namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\Integra
 
 use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin;
 use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
+use RuntimeException;
 
 /**
  * Test that the plugin doesn't get triggered on events it isn't hooked into.

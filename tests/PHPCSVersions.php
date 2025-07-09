@@ -10,6 +10,8 @@
 
 namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
+use RuntimeException;
+
 /**
  * Helper class to retrieve PHPCS versions suitable for the current PHP version.
  */
