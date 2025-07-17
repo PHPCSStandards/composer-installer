@@ -10,6 +10,18 @@ This projects adheres to [Keep a CHANGELOG](https://keepachangelog.com/) and use
 _Nothing yet._
 
 
+## [v1.1.2] - 2025-07-10
+
+### Changed
+- General housekeeping.
+
+### Fixed
+- [#247]: Potential fatal error when the Composer EventDispatcher is called programmatically from an integration. Thanks [@jrfnl] ! [#248]
+
+[#247]:  https://github.com/PHPCSStandards/composer-installer/issues/247
+[#248]:  https://github.com/PHPCSStandards/composer-installer/pull/248
+
+
 ## [v1.1.1] - 2025-06-27
 
 ### Changed
@@ -519,6 +531,7 @@ For this version on, this installer no longer messes with the installation paths
 
 First useable release.
 
+[v1.1.2]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.1...v1.1.2
 [v1.1.1]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/PHPCSStandards/composer-installer/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/PHPCSStandards/composer-installer/compare/v0.7.2...v1.0.0
