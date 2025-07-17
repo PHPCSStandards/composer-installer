@@ -10,7 +10,7 @@ This projects adheres to [Keep a CHANGELOG](https://keepachangelog.com/) and use
 _Nothing yet._
 
 
-## [v1.1.2] - 2025-07-10
+## [v1.1.2] - 2025-07-17
 
 ### Changed
 - General housekeeping.
