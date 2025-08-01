@@ -130,7 +130,6 @@ jobs:
           coverage: none
         env:
           fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
