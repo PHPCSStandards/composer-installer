@@ -125,7 +125,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: json, zip
-          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
+          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On, display_startup_errors=On
           tools: "composer:${{ matrix.composer }}"
           coverage: none
         env:
