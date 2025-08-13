@@ -25,7 +25,7 @@ updates:
       prefix: "Composer:"
       include: "scope"
     labels:
-      - "builds / deploys / releases"
+      - "Type: builds / deploys / releases"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -35,4 +35,4 @@ updates:
     commit-message:
       prefix: "GH Actions:"
     labels:
-      - "builds / deploys / releases"
+      - "Type: builds / deploys / releases"
