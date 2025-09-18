@@ -3,6 +3,7 @@
 .editorconfig               export-ignore
 .gitattributes              export-ignore
 .gitignore                  export-ignore
+.pinact.yaml                export-ignore
 .remarkrc                   export-ignore
 .yamllint                   export-ignore
 
