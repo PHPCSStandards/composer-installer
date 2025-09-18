@@ -16,7 +16,7 @@ jobs:
   validate-composer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Validate composer.json and composer.lock
         uses: "docker://composer"
         with:
@@ -25,7 +25,7 @@ jobs:
   lint-json:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Lint json
         uses: "docker://pipelinecomponents/jsonlint:latest"
         with:
@@ -34,20 +34,20 @@ jobs:
   yamllint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Check yaml for issues
         uses: pipeline-components/yamllint@master
 
   php-codesniffer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Check php for code style and php cross-version compatibility issues
         uses: pipeline-components/php-codesniffer@master
 
   lint-remark:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Check markdown
         uses: pipeline-components/remark-lint@master
