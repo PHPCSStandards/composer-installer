@@ -22,14 +22,14 @@ final class PHPCSVersions
      *
      * @var string
      */
-    const MASTER = 'dev-master';
+    const MASTER = '4.x-dev';
 
     /**
      * Composer name for the development branch for the next major.
      *
      * @var string
      */
-    const NEXT_MAJOR = '4.x-dev as 3.99.99';
+    const NEXT_MAJOR = '5.x-dev as 4.99.99';
 
     /**
      * List of all PHPCS version which are supported by this plugin.
@@ -108,6 +108,9 @@ final class PHPCSVersions
         '3.13.0' => '3.13.0',
         '3.13.1' => '3.13.1',
         '3.13.2' => '3.13.2',
+        '3.13.3' => '3.13.3',
+        '3.13.4' => '3.13.4',
+        '4.0.0'  => '4.0.0',
     );
 
     /**
@@ -141,7 +144,7 @@ final class PHPCSVersions
             $selection = (array) array_rand($versions, $number);
         }
 
-        if ($addMaster === true) {
+        if ($addMaster === true && self::isDevSupported()) {
             $selection[] = self::MASTER;
         }
 
@@ -175,7 +178,7 @@ final class PHPCSVersions
             $selection[] = max($versions);
         }
 
-        if ($addMaster === true) {
+        if ($addMaster === true && self::isDevSupported()) {
             $selection[] = self::MASTER;
         }
 
@@ -232,7 +235,7 @@ final class PHPCSVersions
             $selection[] = max($versions3);
         }
 
-        if ($addMaster === true) {
+        if ($addMaster === true && self::isDevSupported()) {
             $selection[] = self::MASTER;
         }
 
@@ -260,7 +263,7 @@ final class PHPCSVersions
     {
         $versions = self::getSupportedVersions();
 
-        if ($inclMaster === true) {
+        if ($inclMaster === true && self::isDevSupported()) {
             $versions[self::MASTER] = self::MASTER;
         }
 
@@ -311,6 +314,20 @@ final class PHPCSVersions
                     function ($version) {
                         // PHPCS 2.9.2 is the highest version still supporting PHP 5.3.
                         return version_compare($version, '2.9.2', '<=');
+                    }
+                );
+                break;
+
+            case '5.4':
+            case '5.5':
+            case '5.6':
+            case '7.0':
+            case '7.1':
+                $versions = array_filter(
+                    self::$allPhpcsVersions,
+                    function ($version) {
+                        // PHPCS 3.x is the last version still supporting PHP < 7.2.
+                        return version_compare($version, '3.99.99', '<=');
                     }
                 );
                 break;
@@ -405,13 +422,26 @@ final class PHPCSVersions
     }
 
     /**
+     * Determine if the current PHP version is supported on the "dev" branch of PHPCS.
+     *
+     * @return bool
+     */
+    public static function isDevSupported()
+    {
+        return version_compare(\CLI_PHP_MINOR, '7.2', '>=');
+    }
+
+    /**
      * Determine if the current PHP version is supported on the "next major" branch of PHPCS.
      *
      * @return bool
      */
     public static function isNextMajorSupported()
     {
-        return version_compare(\CLI_PHP_MINOR, '7.2', '>=');
+        // TEMPORARILY COMMENTED OUT.
+        // Re-activate once a 5.x branch is created in the PHPCS repo and the next minimum PHP version is known.
+        //return version_compare(\CLI_PHP_MINOR, '7.2', '>=');
+        return false;
     }
 
     /**
@@ -440,8 +470,12 @@ final class PHPCSVersions
             'Zend',
         );
 
-        if ($version !== self::NEXT_MAJOR) {
-            // The MySource standard is available in PHPCS 2.x and 3.x, but will be removed in 4.0.
+        if (
+            $version !== self::MASTER
+            && $version !== self::NEXT_MAJOR
+            && version_compare($version, '4.0.0', '<')
+        ) {
+            // The MySource standard is available in PHPCS 2.x and 3.x, but has been removed in 4.0.
             $standards[] = 'MySource';
         }
 

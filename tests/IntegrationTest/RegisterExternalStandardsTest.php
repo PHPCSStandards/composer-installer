@@ -270,8 +270,8 @@ final class RegisterExternalStandardsTest extends TestCase
      */
     public function dataRegisterOneStandardMultipleRulesets()
     {
-        // Test against the highest and lowest supported PHPCS version of each major + PHPCS 4.x dev.
-        $versions = PHPCSVersions::getHighLowEachMajor(false, true);
+        // Test against the highest and lowest supported PHPCS version of each major + PHPCS 5.x dev (if available).
+        $versions = PHPCSVersions::getHighLowEachMajor(true, true);
         return PHPCSVersions::toDataprovider($versions);
     }
 
