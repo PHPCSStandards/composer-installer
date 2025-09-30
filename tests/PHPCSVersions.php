@@ -332,20 +332,6 @@ final class PHPCSVersions
          * Adjust the list of available versions based on the PHP version on which the tests are run.
          */
         switch (\CLI_PHP_MINOR) {
-            case '5.4':
-            case '5.5':
-            case '5.6':
-            case '7.0':
-            case '7.1':
-                $versions = array_filter(
-                    self::$allPhpcsVersions,
-                    static function ($version) {
-                        // PHPCS 3.x is the last version still supporting PHP < 7.2.
-                        return version_compare($version, '3.99.99', '<=');
-                    }
-                );
-                break;
-
             case '7.2':
                 $versions = self::$allPhpcsVersions;
                 break;

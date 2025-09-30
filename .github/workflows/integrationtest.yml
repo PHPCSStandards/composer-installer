@@ -26,11 +26,6 @@ jobs:
     strategy:
       matrix:
         php:
-          - '5.4'
-          - '5.5'
-          - '5.6'
-          - '7.0'
-          - '7.1'
           - '7.2'
           - '7.3'
           - '7.4'
@@ -43,67 +38,22 @@ jobs:
           - '8.6'
         composer:
           - 'v2'
+          - '2.2'
         os:
           - 'ubuntu-latest'
           - 'windows-latest'
 
         exclude:
-          # Installing on Windows with PHP 5.4 runs into all sorts of problems (which are not ours).
-          # Considering PHP 5.4 is ancient, I deem it acceptable to exclude the Windows PHP 5.4 builds.
-          # @link https://github.com/PHPCSStandards/composer-installer/pull/213
-          - php: '5.4'
-            os: 'windows-latest'
+          # Composer 2.3 drops support for PHP < 7.2, so `v2` will install Composer >= 2.3.
+          # The current matrix is set up to safeguard that the Composer 2.2 LTS version is 100% supported for PHP 7.2-8.3.
+          # Note: Composer 2.2 is not compatible with PHP >= 8.4 and it is unlikely that it will be
+          # made compatible with PHP >= 8.4, so we need to exclude those builds.
+          - php: '8.4'
+            composer: '2.2'
+          - php: '8.5'
+            composer: '2.2'
 
         include:
-          # Composer 2.3 drops support for PHP < 7.2, so for PHP 5.4 to 7.1, `v2` will install
-          # Composer 2.2, for PHP 7.2 and up, `v2` will install Composer >= 2.3.
-          # These builds make sure the Composer 2.2 LTS version is 100% supported for PHP 7.2-8.3.
-          # Note: Composer 2.2 is not compatible with PHP 8.4 and it is unlikely that it will be
-          # made compatible with PHP 8.4.
-          - php: '7.2'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '7.3'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '7.4'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '8.0'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '8.1'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '8.2'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-          - php: '8.3'
-            composer: '2.2'
-            os: 'ubuntu-latest'
-
-          - php: '7.2'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '7.3'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '7.4'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '8.0'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '8.1'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '8.2'
-            composer: '2.2'
-            os: 'windows-latest'
-          - php: '8.3'
-            composer: '2.2'
-            os: 'windows-latest'
-
           # Also test against the dev version of Composer for early warning about upcoming changes.
           - php: 'latest'
             composer: 'snapshot'
