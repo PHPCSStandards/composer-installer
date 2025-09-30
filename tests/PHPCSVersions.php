@@ -41,27 +41,6 @@ final class PHPCSVersions
      * @var array
      */
     private static $allPhpcsVersions = array(
-        '2.0.0'  => '2.0.0',
-        '2.1.0'  => '2.1.0',
-        '2.2.0'  => '2.2.0',
-        '2.3.0'  => '2.3.0',
-        '2.3.1'  => '2.3.1',
-        '2.3.2'  => '2.3.2',
-        '2.3.3'  => '2.3.3',
-        '2.3.4'  => '2.3.4',
-        '2.4.0'  => '2.4.0',
-        '2.5.0'  => '2.5.0',
-        '2.5.1'  => '2.5.1',
-        '2.6.0'  => '2.6.0',
-        '2.6.1'  => '2.6.1',
-        '2.6.2'  => '2.6.2',
-        '2.7.0'  => '2.7.0',
-        '2.7.1'  => '2.7.1',
-        '2.8.0'  => '2.8.0',
-        '2.8.1'  => '2.8.1',
-        '2.9.0'  => '2.9.0',
-        '2.9.1'  => '2.9.1',
-        '2.9.2'  => '2.9.2',
         '3.1.0'  => '3.1.0',
         '3.1.1'  => '3.1.1',
         '3.2.0'  => '3.2.0',
@@ -206,16 +185,9 @@ final class PHPCSVersions
     public static function getHighLowEachMajor($addMaster = false, $addNextMajor = false)
     {
         $versions  = self::getSupportedVersions();
-        $versions2 = array();
         $versions3 = array();
 
         if (empty($versions) === false) {
-            $versions2 = array_filter(
-                $versions,
-                function ($v) {
-                    return $v[0] === '2';
-                }
-            );
             $versions3 = array_filter(
                 $versions,
                 function ($v) {
@@ -225,11 +197,6 @@ final class PHPCSVersions
         }
 
         $selection = array();
-        if (empty($versions2) === false) {
-            $selection[] = min($versions2);
-            $selection[] = max($versions2);
-        }
-
         if (empty($versions3) === false) {
             $selection[] = min($versions3);
             $selection[] = max($versions3);
@@ -308,16 +275,6 @@ final class PHPCSVersions
          * Adjust the list of available versions based on the PHP version on which the tests are run.
          */
         switch (\CLI_PHP_MINOR) {
-            case '5.3':
-                $versions = array_filter(
-                    self::$allPhpcsVersions,
-                    function ($version) {
-                        // PHPCS 2.9.2 is the highest version still supporting PHP 5.3.
-                        return version_compare($version, '2.9.2', '<=');
-                    }
-                );
-                break;
-
             case '5.4':
             case '5.5':
             case '5.6':
@@ -333,13 +290,7 @@ final class PHPCSVersions
                 break;
 
             case '7.2':
-                $versions = array_filter(
-                    self::$allPhpcsVersions,
-                    function ($version) {
-                        // PHPCS 2.9.2 is the first PHPCS version with runtime support for PHP 7.2.
-                        return version_compare($version, '2.9.2', '>=');
-                    }
-                );
+                $versions = self::$allPhpcsVersions;
                 break;
 
             case '7.3':
@@ -475,17 +426,8 @@ final class PHPCSVersions
             && $version !== self::NEXT_MAJOR
             && version_compare($version, '4.0.0', '<')
         ) {
-            // The MySource standard is available in PHPCS 2.x and 3.x, but has been removed in 4.0.
+            // The MySource standard is available in PHPCS 3.x, but has been removed in 4.0.
             $standards[] = 'MySource';
-        }
-
-        if (
-            $version !== self::MASTER
-            && $version !== self::NEXT_MAJOR
-            && version_compare($version, '3.0.0', '<')
-        ) {
-            // The PHPCS standard was available in PHPCS 2.x, but has been removed in 3.0.
-            $standards[] = 'PHPCS';
         }
 
         if (
