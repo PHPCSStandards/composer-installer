@@ -22,14 +22,14 @@ final class PHPCSVersions
      *
      * @var string
      */
-    const MASTER = '4.x-dev';
+    private const MASTER = '4.x-dev';
 
     /**
      * Composer name for the development branch for the next major.
      *
      * @var string
      */
-    const NEXT_MAJOR = '5.x-dev as 4.99.99';
+    private const NEXT_MAJOR = '5.x-dev as 4.99.99';
 
     /**
      * List of all PHPCS version which are supported by this plugin.
