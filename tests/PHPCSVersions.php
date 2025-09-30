@@ -208,6 +208,7 @@ final class PHPCSVersions
         $versions  = self::getSupportedVersions();
         $versions2 = array();
         $versions3 = array();
+        $versions4 = array();
 
         if (empty($versions) === false) {
             $versions2 = array_filter(
@@ -222,6 +223,12 @@ final class PHPCSVersions
                     return $v[0] === '3';
                 }
             );
+            $versions4 = array_filter(
+                $versions,
+                function ($v) {
+                    return $v[0] === '4';
+                }
+            );
         }
 
         $selection = array();
@@ -233,6 +240,11 @@ final class PHPCSVersions
         if (empty($versions3) === false) {
             $selection[] = min($versions3);
             $selection[] = max($versions3);
+        }
+
+        if (empty($versions4) === false) {
+            $selection[] = min($versions4);
+            $selection[] = max($versions4);
         }
 
         if ($addMaster === true && self::isDevSupported()) {
