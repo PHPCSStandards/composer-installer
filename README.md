@@ -86,8 +86,8 @@ After running `composer install` PHP_CodeSniffer just works:
 
 ```bash
 $ ./vendor/bin/phpcs -i
-The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, PHPCompatibility,
-Modernize, NormalizedArrays, Universal, PHPCSUtils, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
+The installed coding standards are PEAR, PSR1, PSR2, PSR12, Squiz, Zend, PHPCompatibility, Modernize,
+NormalizedArrays, Universal, PHPCSUtils, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
 ```
 
 ### Calling the plugin directly
