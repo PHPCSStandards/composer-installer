@@ -10,18 +10,13 @@
 
 namespace DummySubDir\Sniffs\Demo;
 
-use PHP_CodeSniffer_File as File;
-use PHP_CodeSniffer_Sniff as PHPCS_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Dummy sniff which can be used to verify that PHPCS runs with an external standard.
- *
- * Note: this sniff does not implement the PHPCS native Sniff class, nor does it have
- * the typical `File` type declaration in the `process()` method.
- * This is to allow the sniff to be compatible with both PHPCS 2.x as well as 3.x
- * without too much other work-arounds being needed.
  */
-class DemoSniff implements PHPCS_Sniff
+class DemoSniff implements Sniff
 {
     /**
      * Registers the tokens that this sniff wants to listen for.

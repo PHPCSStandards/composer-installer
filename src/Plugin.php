@@ -353,21 +353,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected function getPhpcsCommand()
     {
-        // Determine the path to the main PHPCS file.
-        $phpcsPath = $this->getPHPCodeSnifferInstallPath();
-        if (file_exists($phpcsPath . '/bin/phpcs') === true) {
-            // PHPCS 3.x.
-            $phpcsExecutable = './bin/phpcs';
-        } else {
-            // PHPCS 2.x.
-            $phpcsExecutable = './scripts/phpcs';
-        }
-
         return vsprintf(
             '%s %s',
             array(
                 'php executable'   => $this->getPhpExecCommand(),
-                'phpcs executable' => $phpcsExecutable,
+                'phpcs executable' => './bin/phpcs',
             )
         );
     }

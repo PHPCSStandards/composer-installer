@@ -10,7 +10,7 @@ Using these fixtures will make creating tests more straight-forward as:
     - whether or not the external standard uses the correct project `type` in their `composer.json`.
     - whether or not they `require` the plugin.
     - whether or not they comply with the PHPCS naming conventions.
-    - whether or not the standard is compatible with PHPCS 2.x/3.x/4.x.
+    - whether or not the standard is compatible with PHPCS 3.x/4.x.
     - etc...
 
 Each subdirectory in this `fixtures` directory will be zipped up and placed in the `artifact` subdirectory ahead of running the tests, making them available to all tests.
