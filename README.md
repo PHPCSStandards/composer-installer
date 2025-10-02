@@ -71,7 +71,6 @@ multiple `phpcodesniffer-standard` packages.
     "require": {},
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "object-calisthenics/phpcs-calisthenics-rules": "*",
         "phpcompatibility/php-compatibility": "*",
         "wp-coding-standards/wpcs": "*"
     },
@@ -87,8 +86,8 @@ After running `composer install` PHP_CodeSniffer just works:
 
 ```bash
 $ ./vendor/bin/phpcs -i
-The installed coding standards are PEAR, PSR1, PSR2, PSR12, Squiz, Zend, ObjectCalisthenics,
-PHPCompatibility, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
+The installed coding standards are PEAR, PSR1, PSR2, PSR12, Squiz, Zend, PHPCompatibility, Modernize,
+NormalizedArrays, Universal, PHPCSUtils, WordPress, WordPress-Core, WordPress-Docs and WordPress-Extra
 ```
 
 ### Calling the plugin directly
@@ -164,7 +163,7 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
     "php" : ">=5.4.0",
-    "squizlabs/php_codesniffer" : "^3.6"
+    "squizlabs/php_codesniffer" : "^3.13"
   },
   "type" : "phpcodesniffer-standard"
 }
