@@ -38,7 +38,7 @@ final class PHPCSVersions
      * This matches the version constraint in the `composer.json` file of this package.
      * {@link https://github.com/PHPCSStandards/composer-installer/pull/152}
      *
-     * @var array
+     * @var array<string, string>
      */
     private static $allPhpcsVersions = array(
         '3.1.0'  => '3.1.0',
@@ -107,7 +107,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function get($number = 0, $addMaster = false, $addNextMajor = false)
     {
@@ -145,7 +145,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function getHighLow($addMaster = false, $addNextMajor = false)
     {
@@ -180,7 +180,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function getHighLowEachMajor($addMaster = false, $addNextMajor = false)
     {
@@ -256,9 +256,10 @@ final class PHPCSVersions
     /**
      * Convert a versions array to an array suitable for use as a PHPUnit dataprovider.
      *
-     * @param array $versions Array with PHPCS version numbers as values.
+     * @param array<string> $versions Array with PHPCS version numbers as values.
      *
-     * @return array Array of PHPCS version identifiers in a format usable for a test data provider.
+     * @return array<string, array<string, string>> Array of PHPCS version identifiers in a format usable
+     *                                              for a test data provider.
      */
     public static function toDataprovider($versions)
     {
@@ -279,7 +280,7 @@ final class PHPCSVersions
     /**
      * Retrieve an array with PHPCS versions valid for the current PHP version.
      *
-     * @return array Array with PHPCS version identifiers as both keys and values.
+     * @return array<string, string> Array with PHPCS version identifiers as both keys and values.
      */
     public static function getSupportedVersions()
     {
@@ -412,7 +413,7 @@ final class PHPCSVersions
      *
      * @param string $version PHPCS version number.
      *
-     * @return array Numerically indexed array of standards, natural sort applied.
+     * @return array<string> Numerically indexed array of standards, natural sort applied.
      */
     public static function getStandards($version)
     {
