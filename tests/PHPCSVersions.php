@@ -153,8 +153,8 @@ final class PHPCSVersions
         $selection = array();
 
         if (empty($versions) === false) {
-            $selection[] = min($versions);
-            $selection[] = max($versions);
+            $selection[] = self::min($versions);
+            $selection[] = self::max($versions);
         }
 
         if ($addMaster === true && self::isDevSupported()) {
@@ -205,13 +205,13 @@ final class PHPCSVersions
 
         $selection = array();
         if (empty($versions3) === false) {
-            $selection[] = min($versions3);
-            $selection[] = max($versions3);
+            $selection[] = self::min($versions3);
+            $selection[] = self::max($versions3);
         }
 
         if (empty($versions4) === false) {
-            $selection[] = min($versions4);
-            $selection[] = max($versions4);
+            $selection[] = self::min($versions4);
+            $selection[] = self::max($versions4);
         }
 
         if ($addMaster === true && self::isDevSupported()) {
@@ -223,6 +223,50 @@ final class PHPCSVersions
         }
 
         return $selection;
+    }
+
+    /**
+     * Find the lowest version in an array of PHPCS versions.
+     *
+     * @param array<string> List of PHPCS version identifiers.
+     *
+     * @return string The version identifier of the lowest PHPCS version in the list.
+     */
+    public static function min($versions)
+    {
+        return array_reduce(
+            $versions,
+            static function ($carry, $item) {
+                if ($carry === null) {
+                    // First iteration.
+                    return $item;
+                }
+
+                return version_compare($carry, $item, '<') ? $carry : $item;
+            }
+        );
+    }
+
+    /**
+     * Find the highest version in an array of PHPCS versions.
+     *
+     * @param array<string> List of PHPCS version identifiers.
+     *
+     * @return string The version identifier of the highest PHPCS version in the list.
+     */
+    public static function max($versions)
+    {
+        return array_reduce(
+            $versions,
+            static function ($carry, $item) {
+                if ($carry === null) {
+                    // First iteration.
+                    return $item;
+                }
+
+                return version_compare($carry, $item, '>') ? $carry : $item;
+            }
+        );
     }
 
     /**
