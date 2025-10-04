@@ -191,13 +191,13 @@ final class PHPCSVersions
         if (empty($versions) === false) {
             $versions3 = array_filter(
                 $versions,
-                function ($v) {
+                static function ($v) {
                     return $v[0] === '3';
                 }
             );
             $versions4 = array_filter(
                 $versions,
-                function ($v) {
+                static function ($v) {
                     return $v[0] === '4';
                 }
             );
@@ -295,7 +295,7 @@ final class PHPCSVersions
             case '7.1':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.x is the last version still supporting PHP < 7.2.
                         return version_compare($version, '3.99.99', '<=');
                     }
@@ -309,7 +309,7 @@ final class PHPCSVersions
             case '7.3':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.3.1 is the first PHPCS version with runtime support for PHP 7.3.
                         return version_compare($version, '3.3.1', '>=');
                     }
@@ -319,7 +319,7 @@ final class PHPCSVersions
             case '7.4':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.5.0 is the first PHPCS version with runtime support for PHP 7.4.
                         return version_compare($version, '3.5.0', '>=');
                     }
@@ -329,7 +329,7 @@ final class PHPCSVersions
             case '8.0':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.5.7 is the first PHPCS version with runtime support for PHP 8.0.
                         return version_compare($version, '3.5.7', '>=');
                     }
@@ -339,7 +339,7 @@ final class PHPCSVersions
             case '8.1':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.6.1 is the first PHPCS version with runtime support for PHP 8.1.
                         return version_compare($version, '3.6.1', '>=');
                     }
@@ -349,7 +349,7 @@ final class PHPCSVersions
             case '8.2':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.6.1 is the first PHPCS version with runtime support for PHP 8.2.
                         return version_compare($version, '3.6.1', '>=');
                     }
@@ -360,7 +360,7 @@ final class PHPCSVersions
             case '8.4':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.8.0 is the first PHPCS version with runtime support for PHP 8.3.
                         // And while officially, PHPCS 3.11.0 is the first PHPCS version with runtime support
                         // for PHP 8.4, for our purposes, we should be fine with PHPCS 3.8.0 or higher.
