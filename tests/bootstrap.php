@@ -52,7 +52,7 @@ if (\defined('__PHPUNIT_PHAR__')) {
         }
 
         // Strip namespace prefix.
-        $relativeClass = \substr($className, 61);
+        $relativeClass = \substr($className, 63);
         $file          = \realpath(__DIR__) . \DIRECTORY_SEPARATOR
             . \strtr($relativeClass, '\\', \DIRECTORY_SEPARATOR) . '.php';
 
