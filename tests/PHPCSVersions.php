@@ -38,7 +38,7 @@ final class PHPCSVersions
      * This matches the version constraint in the `composer.json` file of this package.
      * {@link https://github.com/PHPCSStandards/composer-installer/pull/152}
      *
-     * @var array
+     * @var array<string, string>
      */
     private static $allPhpcsVersions = array(
         '3.1.0'  => '3.1.0',
@@ -107,7 +107,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function get($number = 0, $addMaster = false, $addNextMajor = false)
     {
@@ -145,7 +145,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function getHighLow($addMaster = false, $addNextMajor = false)
     {
@@ -153,8 +153,8 @@ final class PHPCSVersions
         $selection = array();
 
         if (empty($versions) === false) {
-            $selection[] = min($versions);
-            $selection[] = max($versions);
+            $selection[] = self::min($versions);
+            $selection[] = self::max($versions);
         }
 
         if ($addMaster === true && self::isDevSupported()) {
@@ -180,7 +180,7 @@ final class PHPCSVersions
      *                           Defaults to `false`.
      *                           Note: if `true`, the version will be returned in a Composer usable format.
      *
-     * @return array Numerically indexed array with PHPCS version identifiers as values.
+     * @return array<string> Numerically indexed array with PHPCS version identifiers as values.
      */
     public static function getHighLowEachMajor($addMaster = false, $addNextMajor = false)
     {
@@ -191,13 +191,13 @@ final class PHPCSVersions
         if (empty($versions) === false) {
             $versions3 = array_filter(
                 $versions,
-                function ($v) {
+                static function ($v) {
                     return $v[0] === '3';
                 }
             );
             $versions4 = array_filter(
                 $versions,
-                function ($v) {
+                static function ($v) {
                     return $v[0] === '4';
                 }
             );
@@ -205,13 +205,13 @@ final class PHPCSVersions
 
         $selection = array();
         if (empty($versions3) === false) {
-            $selection[] = min($versions3);
-            $selection[] = max($versions3);
+            $selection[] = self::min($versions3);
+            $selection[] = self::max($versions3);
         }
 
         if (empty($versions4) === false) {
-            $selection[] = min($versions4);
-            $selection[] = max($versions4);
+            $selection[] = self::min($versions4);
+            $selection[] = self::max($versions4);
         }
 
         if ($addMaster === true && self::isDevSupported()) {
@@ -223,6 +223,50 @@ final class PHPCSVersions
         }
 
         return $selection;
+    }
+
+    /**
+     * Find the lowest version in an array of PHPCS versions.
+     *
+     * @param array<string> List of PHPCS version identifiers.
+     *
+     * @return string The version identifier of the lowest PHPCS version in the list.
+     */
+    public static function min($versions)
+    {
+        return array_reduce(
+            $versions,
+            static function ($carry, $item) {
+                if ($carry === null) {
+                    // First iteration.
+                    return $item;
+                }
+
+                return version_compare($carry, $item, '<') ? $carry : $item;
+            }
+        );
+    }
+
+    /**
+     * Find the highest version in an array of PHPCS versions.
+     *
+     * @param array<string> List of PHPCS version identifiers.
+     *
+     * @return string The version identifier of the highest PHPCS version in the list.
+     */
+    public static function max($versions)
+    {
+        return array_reduce(
+            $versions,
+            static function ($carry, $item) {
+                if ($carry === null) {
+                    // First iteration.
+                    return $item;
+                }
+
+                return version_compare($carry, $item, '>') ? $carry : $item;
+            }
+        );
     }
 
     /**
@@ -256,9 +300,10 @@ final class PHPCSVersions
     /**
      * Convert a versions array to an array suitable for use as a PHPUnit dataprovider.
      *
-     * @param array $versions Array with PHPCS version numbers as values.
+     * @param array<string> $versions Array with PHPCS version numbers as values.
      *
-     * @return array Array of PHPCS version identifiers in a format usable for a test data provider.
+     * @return array<string, array<string, string>> Array of PHPCS version identifiers in a format usable
+     *                                              for a test data provider.
      */
     public static function toDataprovider($versions)
     {
@@ -279,7 +324,7 @@ final class PHPCSVersions
     /**
      * Retrieve an array with PHPCS versions valid for the current PHP version.
      *
-     * @return array Array with PHPCS version identifiers as both keys and values.
+     * @return array<string, string> Array with PHPCS version identifiers as both keys and values.
      */
     public static function getSupportedVersions()
     {
@@ -294,7 +339,7 @@ final class PHPCSVersions
             case '7.1':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.x is the last version still supporting PHP < 7.2.
                         return version_compare($version, '3.99.99', '<=');
                     }
@@ -308,7 +353,7 @@ final class PHPCSVersions
             case '7.3':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.3.1 is the first PHPCS version with runtime support for PHP 7.3.
                         return version_compare($version, '3.3.1', '>=');
                     }
@@ -318,7 +363,7 @@ final class PHPCSVersions
             case '7.4':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.5.0 is the first PHPCS version with runtime support for PHP 7.4.
                         return version_compare($version, '3.5.0', '>=');
                     }
@@ -328,7 +373,7 @@ final class PHPCSVersions
             case '8.0':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.5.7 is the first PHPCS version with runtime support for PHP 8.0.
                         return version_compare($version, '3.5.7', '>=');
                     }
@@ -338,7 +383,7 @@ final class PHPCSVersions
             case '8.1':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.6.1 is the first PHPCS version with runtime support for PHP 8.1.
                         return version_compare($version, '3.6.1', '>=');
                     }
@@ -348,7 +393,7 @@ final class PHPCSVersions
             case '8.2':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.6.1 is the first PHPCS version with runtime support for PHP 8.2.
                         return version_compare($version, '3.6.1', '>=');
                     }
@@ -359,7 +404,7 @@ final class PHPCSVersions
             case '8.4':
                 $versions = array_filter(
                     self::$allPhpcsVersions,
-                    function ($version) {
+                    static function ($version) {
                         // PHPCS 3.8.0 is the first PHPCS version with runtime support for PHP 8.3.
                         // And while officially, PHPCS 3.11.0 is the first PHPCS version with runtime support
                         // for PHP 8.4, for our purposes, we should be fine with PHPCS 3.8.0 or higher.
@@ -412,7 +457,7 @@ final class PHPCSVersions
      *
      * @param string $version PHPCS version number.
      *
-     * @return array Numerically indexed array of standards, natural sort applied.
+     * @return array<string> Numerically indexed array of standards, natural sort applied.
      */
     public static function getStandards($version)
     {
