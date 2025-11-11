@@ -35,7 +35,7 @@
     "ext-json": "*",
     "ext-zip": "*",
     "composer/composer": "^2.2",
-    "phpcompatibility/php-compatibility": "^9.0",
+    "phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
     "php-parallel-lint/php-parallel-lint": "^1.4.0",
     "yoast/phpunit-polyfills": "^1.0"
   },
