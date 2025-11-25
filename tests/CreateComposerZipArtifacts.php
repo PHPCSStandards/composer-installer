@@ -34,7 +34,7 @@ class CreateComposerZipArtifacts
      *
      * @var string
      */
-    const FIXTURE_VERSION = '1.0.0';
+    private const FIXTURE_VERSION = '1.0.0';
 
     /**
      * The full path to the directory to place the zipped artifacts in (including trailing slash).
