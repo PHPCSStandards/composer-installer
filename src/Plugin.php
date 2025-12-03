@@ -409,12 +409,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $alternativePath = realpath($this->getPHPCodeSnifferInstallPath() . \DIRECTORY_SEPARATOR . $path);
 
             if (
-                (is_dir($path) === false || is_readable($path) === false) &&
                 (
                     $alternativePath === false ||
                     is_dir($alternativePath) === false ||
                     is_readable($alternativePath) === false
-                )
+                ) &&
+                (is_dir($path) === false || is_readable($path) === false)
             ) {
                 unset($this->installedPaths[$key]);
                 $changes = true;
