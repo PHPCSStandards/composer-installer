@@ -29,7 +29,7 @@ abstract class TestCase extends PolyfillTestCase
     public static function createTestEnvironment()
     {
         // Make temp directory
-        $class           = substr(strrchr(get_called_class(), '\\'), 1);
+        $class           = substr(strrchr(static::class, '\\'), 1);
         static::$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest/' . uniqid("{$class}_", true);
 
         $subDirs = array(
@@ -340,7 +340,7 @@ abstract class TestCase extends PolyfillTestCase
 
         /*
          * If the command will be run on Windows in combination with PHP < 8.0, wrap it in an extra set of quotes.
-         * Note: it is unclear what changes in PHP 8.0, but the quotes will now suddenly break things.
+         * Note: it is unclear what changed in PHP 8.0, but the quotes will now suddenly break things.
          * Ref: https://www.php.net/manual/en/function.proc-open.php#example-3331
          */
         if (static::onWindows() === true && substr(\CLI_PHP_MINOR, 0, 1) < 8) {
