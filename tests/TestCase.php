@@ -29,7 +29,7 @@ abstract class TestCase extends PolyfillTestCase
     public static function createTestEnvironment()
     {
         // Make temp directory
-        $class           = substr(strrchr(get_called_class(), '\\'), 1);
+        $class           = substr(strrchr(static::class, '\\'), 1);
         static::$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest/' . uniqid("{$class}_", true);
 
         $subDirs = array(
