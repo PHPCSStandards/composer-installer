@@ -1,3 +1,4 @@
+---
 name: Check PRs for merge conflicts
 
 on:
