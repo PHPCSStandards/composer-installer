@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - name: Validate composer.json and composer.lock
+      - name: Validate composer.json
         uses: "docker://composer"
         with:
           args: "composer validate --no-check-lock"
@@ -61,3 +61,33 @@ jobs:
           persist-credentials: false
       - name: Check markdown
         uses: pipeline-components/remark-lint@master
+
+  lint-xml:
+    name: Check XML files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      # Validate dev tool related XML files.
+      - name: Validate Project PHPCS ruleset against schema
+        uses: phpcsstandards/xmllint-validate@0fd9c4a9046055f621fca4bbdccb8eab1fd59fdc # v1.0.1
+        with:
+          pattern: phpcs.xml.dist
+          xsd-url: https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/refs/heads/4.x/phpcs.xsd
+
+      - name: Validate PHPUnit config against schema
+        uses: phpcsstandards/xmllint-validate@0fd9c4a9046055f621fca4bbdccb8eab1fd59fdc # v1.0.1
+        with:
+          pattern: phpunit.xml.dist
+          xsd-url: https://raw.githubusercontent.com/sebastianbergmann/phpunit/refs/heads/main/schema/9.2.xsd
+
+      # Validate the XML ruleset files used in the tests.
+      - name: Validate rulesets against schema
+        uses: phpcsstandards/xmllint-validate@0fd9c4a9046055f621fca4bbdccb8eab1fd59fdc # v1.0.1
+        with:
+          pattern: tests/fixtures/*/*/ruleset.xml
+          xsd-url: https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/refs/heads/4.x/phpcs.xsd
