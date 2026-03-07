@@ -41,11 +41,11 @@ These tools fall into two categories: PHP and non-PHP.
 
 The PHP specific tools used by this build are:
 
+- [Composer][] to install dependencies.
 - [PHPUnit][] and the [PHPUnit Polyfills][] for the integration tests.
 - [PHP_CodeSniffer][] to verify PHP code complies with the [PSR12][] standard.
 - [PHPCompatibility][] to verify that code is written in a PHP cross-version compatible manner.
 - [PHP-Parallel-Lint][] to check against parse errors in PHP files.
-- [PHP-Security-Checker][] to prevent insecure dependencies being installed.
 
 The automated checks with these tools are run via [GitHub Actions][].
 
@@ -54,28 +54,24 @@ run locally with PHP.
 
 For the Parallel Lint check, the `composer lint` script has been added for convenience.
 
-The Security Checker package is not included in the Composer configuration. An executable
-can be downloaded suitable for your operating system from their [releases page][].
-
 Alternatively, these tools can be run using `docker run`, through the Docker
 images provided by [Pipeline-Component][].
 
+[Composer]: https://getcomposer.org/
 [PHPUnit]: https://phpunit.de/
 [PHPUnit Polyfills]: https://github.com/Yoast/PHPUnit-Polyfills/
 [PHP_CodeSniffer]: https://github.com/PHPCSStandards/PHP_CodeSniffer
 [PHPCompatibility]: https://github.com/PHPCompatibility/PHPCompatibility
 [PHP-Parallel-Lint]: https://github.com/php-parallel-lint/PHP-Parallel-Lint
-[PHP-Security-Checker]: https://github.com/fabpot/local-php-security-checker
 [PSR12]: https://www.php-fig.org/psr/psr-12/
-[releases page]: https://github.com/fabpot/local-php-security-checker/releases/
 
 #### Automated testing
 
 This package includes a test setup for automated testing on all supported PHP versions
 using [PHPUnit][] with the [PHPUnit Polyfills][].
-This means that tests can be written for the latest version of PHPUnit
+This means that tests can be written for the highest supported version of PHPUnit
 (9.x at the time of writing) and still be run on all PHPUnit versions needed to test
-all supported PHP versions (PHPUnit 4.x - 9.x).
+all supported PHP versions (PHPUnit 8.x - 9.x).
 
 The tests can be run both via a Composer installed version of PHPUnit, as well as using
 a PHPUnit PHAR file, however, whichever way you run the tests, you will always need to

@@ -28,27 +28,13 @@ jobs:
     strategy:
       matrix:
         php:
-          - '5.4'
           - '7.2'
           - 'latest'
         composer:
-          # Note: for PHP 5.4 - 7.1, "v2" will install Composer 2.2.
-          # For PHP 7.2+, it will install Composer "latest".
           - 'v2'
         os:
           - 'ubuntu-latest'
           - 'windows-latest'
-
-        # Installing on Windows with PHP 5.4 runs into all sorts of problems (which are not ours).
-        # Exclude the Windows PHP 5.4 builds and replace them with PHP 5.5 for the same.
-        # @link https://github.com/PHPCSStandards/composer-installer/issues/181
-        # @link https://github.com/PHPCSStandards/composer-installer/pull/213
-        exclude:
-          - php: '5.4'
-            os: 'windows-latest'
-        include:
-          - php: '5.5'
-            os: 'windows-latest'
 
     name: "Quick test"
 
