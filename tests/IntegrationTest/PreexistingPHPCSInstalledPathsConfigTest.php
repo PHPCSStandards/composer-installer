@@ -446,7 +446,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
             '"vendor/bin/phpcs" --config-set installed_paths %s',
             escapeshellarg($absoluteStndPath)
         );
-        $result = $this->executeCliCommand($command, static::$tempLocalPath);
+        $result  = $this->executeCliCommand($command, static::$tempLocalPath);
         $this->assertSame(
             0,
             $result['exitcode'],
