@@ -278,6 +278,237 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     }
 
     /**
+     * Test correctly handling a pre-existing PHPCS configuration file which includes both
+     * a pre-set, valid path, as well as an invalid absolute path in `installed_paths`.
+     *
+     * @dataProvider dataPHPCSVersions
+     *
+     * @param string $phpcsVersion  PHPCS version to use in this test.
+     *                              This version is randomly selected from the PHPCS versions compatible
+     *                              with the PHP version used in the test.
+     *
+     * @return void
+     */
+    public function testPreexistingInvalidAbsoluteInstalledPathsConfigIsRemoved($phpcsVersion)
+    {
+        $config = $this->composerConfig;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+
+        $this->writeComposerJsonFile($config, static::$tempLocalPath);
+
+        /*
+         * 1. Install PHPCS and the plugin.
+         */
+        $this->assertExecute(
+            sprintf('composer install -v --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
+            0,    // Expected exit code.
+            null, // No stdout expectation.
+            null, // No stderr expectation.
+            'Failed to install PHPCS.'
+        );
+
+        /*
+         * 2. Set the installed_paths and verify it is registered correctly.
+         */
+        $command = sprintf(
+            '"vendor/bin/phpcs" --config-set installed_paths %s',
+            escapeshellarg($this->tempExtraStndsPath)
+        );
+        $result  = $this->executeCliCommand($command, static::$tempLocalPath);
+        $this->assertSame(
+            0,
+            $result['exitcode'],
+            'Exitcode for "phpcs --config-set installed_paths" did not match 0'
+        );
+
+        /*
+         * Manipulate the value of installed_paths to add an invalid absolute path.
+         */
+        $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
+        $confContents = file_get_contents($confFile);
+        $this->assertNotFalse($confContents);
+        $confContents = str_replace(
+            $this->tempExtraStndsSubdir,
+            $this->tempExtraStndsSubdir . ',/nonexistent/absolute/path/to/standard',
+            $confContents
+        );
+        $this->assertNotFalse(file_put_contents($confFile, $confContents));
+
+        // Verify that the config contains the newly set value.
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs --config-show" did not match 0 (first run)');
+
+        $expected = array(
+            $this->tempExtraStndsPath,
+            '/nonexistent/absolute/path/to/standard',
+        );
+        sort($expected, \SORT_NATURAL);
+
+        $this->assertSame(
+            $expected,
+            $this->configShowToPathsArray($result['stdout']),
+            'PHPCS configuration does not show the manually set installed_paths correctly'
+        );
+
+        /*
+         * 3. Install an external standard.
+         */
+        $command = sprintf(
+            'composer require --dev phpcs-composer-installer/dummy-subdir --no-ansi -v --working-dir=%s',
+            escapeshellarg(static::$tempLocalPath)
+        );
+        $this->assertExecute(
+            $command,
+            0,    // Expected exit code.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
+            null, // No stderr expectation.
+            'Failed to install Dummy subdir standard.'
+        );
+
+        /*
+         * Verify that the valid preset path is retained, that the invalid absolute path is removed
+         * and the new standard is registered correctly.
+         */
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs --config-show" did not match 0 (second run)');
+
+        $expected = array(
+            $this->tempExtraStndsPath,
+            '/phpcs-composer-installer/dummy-subdir',
+        );
+        sort($expected, \SORT_NATURAL);
+
+        $this->assertSame(
+            $expected,
+            $this->configShowToPathsArray($result['stdout']),
+            'Paths as updated by the plugin does not contain the expected paths'
+        );
+    }
+
+    /**
+     * Test correctly handling a pre-existing PHPCS configuration file which includes
+     * a pre-set, valid relative path in `installed_paths`.
+     *
+     * @dataProvider dataPHPCSVersions
+     *
+     * @param string $phpcsVersion  PHPCS version to use in this test.
+     *                              This version is randomly selected from the PHPCS versions compatible
+     *                              with the PHP version used in the test.
+     *
+     * @return void
+     */
+    public function testPreexistingValidRelativeInstalledPathsConfigIsKept($phpcsVersion)
+    {
+        $config = $this->composerConfig;
+        $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
+
+        $this->writeComposerJsonFile($config, static::$tempLocalPath);
+
+        /*
+         * 1. Install PHPCS and the plugin.
+         */
+        $this->assertExecute(
+            sprintf('composer install -v --working-dir=%s', escapeshellarg(static::$tempLocalPath)),
+            0,    // Expected exit code.
+            null, // No stdout expectation.
+            null, // No stderr expectation.
+            'Failed to install PHPCS.'
+        );
+
+        /*
+         * 2. Create a valid standard inside the vendor directory and set it as a relative path.
+         *
+         * The standard is placed at "vendor/test-extra-stnd/TestExtraStnd/" so that the relative
+         * path from the PHPCS install dir (vendor/squizlabs/php_codesniffer) is "../../test-extra-stnd".
+         */
+        $extraStndInVendor = static::$tempLocalPath . '/vendor/test-extra-stnd/TestExtraStnd';
+        if (mkdir($extraStndInVendor, 0766, true) === false || is_dir($extraStndInVendor) === false) {
+            throw new RuntimeException("Failed to create the $extraStndInVendor directory for the test");
+        }
+
+        file_put_contents(
+            $extraStndInVendor . '/ruleset.xml',
+            '<?xml version="1.0"?>' . \PHP_EOL
+            . '<ruleset name="TestExtraStnd">' . \PHP_EOL
+            . '    <description>Test standard for valid relative path testing.</description>' . \PHP_EOL
+            . '</ruleset>' . \PHP_EOL
+        );
+
+        /*
+         * Set a valid absolute path first via --config-set, then convert it to a relative path
+         * by editing the config file directly. This avoids potential PHPCS validation issues
+         * with relative paths passed to --config-set.
+         */
+        $absoluteStndPath = static::$tempLocalPath . '/vendor/test-extra-stnd';
+        $relativeStndPath = '../../test-extra-stnd';
+
+        $command = sprintf(
+            '"vendor/bin/phpcs" --config-set installed_paths %s',
+            escapeshellarg($absoluteStndPath)
+        );
+        $result = $this->executeCliCommand($command, static::$tempLocalPath);
+        $this->assertSame(
+            0,
+            $result['exitcode'],
+            'Exitcode for "phpcs --config-set installed_paths" did not match 0'
+        );
+
+        // Replace the absolute path with a relative path in the config file.
+        $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
+        $confContents = file_get_contents($confFile);
+        $this->assertNotFalse($confContents);
+        $confContents = str_replace($absoluteStndPath, $relativeStndPath, $confContents);
+        $this->assertNotFalse(file_put_contents($confFile, $confContents));
+
+        // Verify that the config contains the relative path.
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs --config-show" did not match 0 (first run)');
+
+        $expected = array(
+            '/test-extra-stnd',
+        );
+
+        $this->assertSame(
+            $expected,
+            $this->configShowToPathsArray($result['stdout']),
+            'PHPCS configuration does not show the manually set relative installed_paths correctly'
+        );
+
+        /*
+         * 3. Install an external standard.
+         */
+        $command = sprintf(
+            'composer require --dev phpcs-composer-installer/dummy-subdir --no-ansi -v --working-dir=%s',
+            escapeshellarg(static::$tempLocalPath)
+        );
+        $this->assertExecute(
+            $command,
+            0,    // Expected exit code.
+            'PHP CodeSniffer Config installed_paths set to ', // Expectation for stdout.
+            null, // No stderr expectation.
+            'Failed to install Dummy subdir standard.'
+        );
+
+        /*
+         * Verify that the valid relative path is retained and the new standard is registered correctly.
+         */
+        $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
+        $this->assertSame(0, $result['exitcode'], 'Exitcode for "phpcs --config-show" did not match 0 (second run)');
+
+        $expected = array(
+            '/phpcs-composer-installer/dummy-subdir',
+            '/test-extra-stnd',
+        );
+        sort($expected, \SORT_NATURAL);
+
+        $this->assertSame(
+            $expected,
+            $this->configShowToPathsArray($result['stdout']),
+            'Paths as updated by the plugin does not contain the expected paths'
+        );
+    }
+
+    /**
      * Data provider.
      *
      * @return array

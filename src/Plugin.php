@@ -405,17 +405,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $changes = false;
         foreach ($this->installedPaths as $key => $path) {
-            // This might be a relative path as well
-            $alternativePath = realpath($this->getPHPCodeSnifferInstallPath() . \DIRECTORY_SEPARATOR . $path);
+            // Resolve relative paths against the PHPCS install path before validation
+            // to avoid open_basedir warnings from is_dir() on raw relative paths.
+            if ($this->filesystem->isAbsolutePath($path) === false) {
+                $path = realpath($this->getPHPCodeSnifferInstallPath() . \DIRECTORY_SEPARATOR . $path);
+            }
 
-            if (
-                (
-                    $alternativePath === false ||
-                    is_dir($alternativePath) === false ||
-                    is_readable($alternativePath) === false
-                ) &&
-                (is_dir($path) === false || is_readable($path) === false)
-            ) {
+            if ($path === false || is_dir($path) === false || is_readable($path) === false) {
                 unset($this->installedPaths[$key]);
                 $changes = true;
             }
