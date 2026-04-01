@@ -75,7 +75,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
 
     /**
      * Test correctly handling a pre-existing PHPCS configuration file which includes a pre-set,
-     * valid `installed_paths`.
+     * valid absolute path in `installed_paths`.
      *
      * @dataProvider dataPHPCSVersions
      *
@@ -85,7 +85,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
      *
      * @return void
      */
-    public function testPreexistingValidInstalledPathsConfigIsKeptIntact($phpcsVersion)
+    public function testPreexistingValidAbsoluteInstalledPathsConfigIsKeptIntact($phpcsVersion)
     {
         $config = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
@@ -163,7 +163,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
 
     /**
      * Test correctly handling a pre-existing PHPCS configuration file which includes both
-     * a pre-set, valid path, as well as an invalid path in `installed_paths`.
+     * a pre-set, valid path, as well as an invalid relative path in `installed_paths`.
      *
      * @dataProvider dataPHPCSVersions
      *
@@ -173,7 +173,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
      *
      * @return void
      */
-    public function testPreexistingInvalidInstalledPathsConfigIsRemoved($phpcsVersion)
+    public function testPreexistingInvalidRelativeInstalledPathsConfigIsRemoved($phpcsVersion)
     {
         $config = $this->composerConfig;
         $config['require-dev']['squizlabs/php_codesniffer'] = $phpcsVersion;
@@ -218,13 +218,16 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
          */
         $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
         $confContents = file_get_contents($confFile);
-        $this->assertNotFalse($confContents);
+        $this->assertNotFalse($confContents, 'Failed to read the PHPCS configuration file');
         $confContents = str_replace(
             $this->tempExtraStndsSubdir,
             $this->tempExtraStndsSubdir . ',path/to/somecloned-stnd',
             $confContents
         );
-        $this->assertNotFalse(file_put_contents($confFile, $confContents));
+        $this->assertNotFalse(
+            file_put_contents($confFile, $confContents),
+            'Failed to write the PHPCS configuration file'
+        );
 
         // Verify that the config contains the newly set value.
         $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
@@ -326,13 +329,16 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
          */
         $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
         $confContents = file_get_contents($confFile);
-        $this->assertNotFalse($confContents);
+        $this->assertNotFalse($confContents, 'Failed to read the PHPCS configuration file');
         $confContents = str_replace(
             $this->tempExtraStndsSubdir,
             $this->tempExtraStndsSubdir . ',/nonexistent/absolute/path/to/standard',
             $confContents
         );
-        $this->assertNotFalse(file_put_contents($confFile, $confContents));
+        $this->assertNotFalse(
+            file_put_contents($confFile, $confContents),
+            'Failed to write the PHPCS configuration file'
+        );
 
         // Verify that the config contains the newly set value.
         $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
@@ -422,16 +428,21 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
          * path from the PHPCS install dir (vendor/squizlabs/php_codesniffer) is "../../test-extra-stnd".
          */
         $extraStndInVendor = static::$tempLocalPath . '/vendor/test-extra-stnd/TestExtraStnd';
-        if (mkdir($extraStndInVendor, 0766, true) === false || is_dir($extraStndInVendor) === false) {
-            throw new RuntimeException("Failed to create the $extraStndInVendor directory for the test");
-        }
+        $this->assertNotFalse(
+            mkdir($extraStndInVendor, 0766, true),
+            "Failed to create the $extraStndInVendor directory for the test"
+        );
+        $this->assertDirectoryExists($extraStndInVendor);
 
-        file_put_contents(
-            $extraStndInVendor . '/ruleset.xml',
-            '<?xml version="1.0"?>' . \PHP_EOL
-            . '<ruleset name="TestExtraStnd">' . \PHP_EOL
-            . '    <description>Test standard for valid relative path testing.</description>' . \PHP_EOL
-            . '</ruleset>' . \PHP_EOL
+        $this->assertNotFalse(
+            file_put_contents(
+                $extraStndInVendor . '/ruleset.xml',
+                '<?xml version="1.0"?>' . \PHP_EOL
+                . '<ruleset name="TestExtraStnd">' . \PHP_EOL
+                . '    <description>Test standard for valid relative path testing.</description>' . \PHP_EOL
+                . '</ruleset>' . \PHP_EOL
+            ),
+            'Failed to create the ruleset.xml fixture file'
         );
 
         /*
@@ -456,9 +467,12 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
         // Replace the absolute path with a relative path in the config file.
         $confFile     = static::$tempLocalPath . '/vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
         $confContents = file_get_contents($confFile);
-        $this->assertNotFalse($confContents);
+        $this->assertNotFalse($confContents, 'Failed to read the PHPCS configuration file');
         $confContents = str_replace($absoluteStndPath, $relativeStndPath, $confContents);
-        $this->assertNotFalse(file_put_contents($confFile, $confContents));
+        $this->assertNotFalse(
+            file_put_contents($confFile, $confContents),
+            'Failed to write the PHPCS configuration file'
+        );
 
         // Verify that the config contains the relative path.
         $result = $this->executeCliCommand('"vendor/bin/phpcs" --config-show', static::$tempLocalPath);
