@@ -6,3 +6,5 @@ rules:
     level: warning
     max: 120
   truthy: {allowed-values: ["true", "false", "on"]}
+  comments:
+    min-spaces-from-content: 1
