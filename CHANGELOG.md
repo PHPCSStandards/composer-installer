@@ -10,6 +10,18 @@ This projects adheres to [Keep a CHANGELOG](https://keepachangelog.com/) and use
 _Nothing yet._
 
 
+## [v1.2.1] - 2026-05-06
+
+### Changed
+- Various housekeeping, including improvements to CI.
+
+### Fixed
+- Fix potential error when running `composer install` with an `open_basedir` restriction in effect. Thanks [@srebb] ! [#271], [#272]
+
+[#271]: https://github.com/PHPCSStandards/composer-installer/issues/271
+[#272]:  https://github.com/PHPCSStandards/composer-installer/pull/272
+
+
 ## [v1.2.0] - 2025-11-11
 
 ### Changed
@@ -542,6 +554,7 @@ For this version on, this installer no longer messes with the installation paths
 
 First useable release.
 
+[v1.2.1]: https://github.com/PHPCSStandards/composer-installer/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.2...v1.2.0
 [v1.1.2]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.1...v1.1.2
 [v1.1.1]: https://github.com/PHPCSStandards/composer-installer/compare/v1.1.0...v1.1.1
@@ -584,4 +597,5 @@ First useable release.
 [@Potherca]:           https://github.com/Potherca
 [@Seldaek]:            https://github.com/Seldaek
 [@SplotyCode]:         https://github.com/SplotyCode
+[@srebb]:              https://github.com/srebb
 [@TravisCarden]:       https://github.com/TravisCarden
