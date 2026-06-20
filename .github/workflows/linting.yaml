@@ -12,8 +12,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Permissions should be configured at the job level.
+permissions: {}
+
 jobs:
   validate-composer:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -25,6 +31,9 @@ jobs:
           args: "composer validate --no-check-lock"
 
   lint-json:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -36,6 +45,9 @@ jobs:
           args: "find . -not -path './.git/*' -name '*.json' -type f -exec jsonlint --quiet {} ;"
 
   yamllint:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -45,6 +57,9 @@ jobs:
         uses: pipeline-components/yamllint@master
 
   php-codesniffer:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -54,6 +69,9 @@ jobs:
         uses: pipeline-components/php-codesniffer@master
 
   lint-remark:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -63,6 +81,9 @@ jobs:
         uses: pipeline-components/remark-lint@master
 
   lint-xml:
+    permissions:
+      contents: read # To clone the repo.
+
     name: Check XML files
     runs-on: ubuntu-latest
 
