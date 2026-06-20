@@ -22,14 +22,14 @@ final class PHPCSVersions
      *
      * @var string
      */
-    const MASTER = '4.x-dev';
+    private const MASTER = '4.x-dev';
 
     /**
      * Composer name for the development branch for the next major.
      *
      * @var string
      */
-    const NEXT_MAJOR = '5.x-dev as 4.99.99';
+    private const NEXT_MAJOR = '5.x-dev as 4.99.99';
 
     /**
      * List of all PHPCS version which are supported by this plugin.
@@ -334,20 +334,6 @@ final class PHPCSVersions
          * Adjust the list of available versions based on the PHP version on which the tests are run.
          */
         switch (\CLI_PHP_MINOR) {
-            case '5.4':
-            case '5.5':
-            case '5.6':
-            case '7.0':
-            case '7.1':
-                $versions = array_filter(
-                    self::$allPhpcsVersions,
-                    static function ($version) {
-                        // PHPCS 3.x is the last version still supporting PHP < 7.2.
-                        return version_compare($version, '3.99.99', '<=');
-                    }
-                );
-                break;
-
             case '7.2':
                 $versions = self::$allPhpcsVersions;
                 break;

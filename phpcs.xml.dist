@@ -14,13 +14,9 @@
     <exclude-pattern>*/vendor/*</exclude-pattern>
 
     <rule ref="PHPCompatibility"/>
-    <config name="testVersion" value="5.4-"/>
+    <config name="testVersion" value="7.2-"/>
 
-    <rule ref="PSR12">
-        <!-- Constant visibility can not be declared (yet) as the minimum supported PHP version is 5.4
-             and constant visibility was only introduced in PHP 7.1. -->
-        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
-    </rule>
+    <rule ref="PSR12"/>
 
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
         <properties>

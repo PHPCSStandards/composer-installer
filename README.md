@@ -46,9 +46,9 @@ That's it.
 
 This plugin is compatible with:
 
-- PHP **5.4+**, **7.x**, and **8.x** (Support for PHP v8 is available since [`v0.7.0`][v0.7])
-- [Composer][composer] **2.2+** (Support for Composer v2 is available since [`v0.7.0`][v0.7]; support for Composer < 2.2 was dropped in [`v1.1.0`][v1.1])
-- [PHP_CodeSniffer][codesniffer] **3.x** and **4.x**(Support for PHP_CodeSniffer v4 is available since [`v0.7.0`][v0.7], support for PHP_CodeSniffer v2 was dropped in [`v1.2.0`][v1.2])
+- PHP **7.2**, and **8.x** _(Support for PHP v8 is available since [`v0.7.0`][v0.7], support for PHP < 7.2 was dropped in [`v1.3.0`][v1.3])_
+- [Composer][composer] **2.2+** _(Support for Composer v2 is available since [`v0.7.0`][v0.7]; support for Composer < 2.2 was dropped in [`v1.1.0`][v1.1])_
+- [PHP_CodeSniffer][codesniffer] **3.x** and **4.x** _(Support for PHP_CodeSniffer v4 is available since [`v0.7.0`][v0.7], support for PHP_CodeSniffer v2 was dropped in [`v1.2.0`][v1.2])_
 
 ### How it works
 
@@ -162,8 +162,8 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "name" : "acme/phpcodesniffer-our-standards",
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
-    "php" : ">=5.4.0",
-    "squizlabs/php_codesniffer" : "^3.13"
+    "php" : ">=7.2.0",
+    "squizlabs/php_codesniffer" : "^4.0"
   },
   "type" : "phpcodesniffer-standard"
 }
@@ -276,3 +276,4 @@ THE SOFTWARE.
 [v0.7]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v0.7.0
 [v1.1]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v1.1.0
 [v1.2]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v1.2.0
+[v1.3]: https://github.com/PHPCSStandards/composer-installer/releases/tag/v1.3.0

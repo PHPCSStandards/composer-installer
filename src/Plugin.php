@@ -34,23 +34,23 @@ use Symfony\Component\Process\PhpExecutableFinder;
  */
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
-    const KEY_MAX_DEPTH = 'phpcodesniffer-search-depth';
+    public const KEY_MAX_DEPTH = 'phpcodesniffer-search-depth';
 
-    const MESSAGE_ERROR_WRONG_MAX_DEPTH =
+    public const MESSAGE_ERROR_WRONG_MAX_DEPTH =
         'The value of "%s" (in the composer.json "extra".section) must be an integer larger than %d, %s given.';
 
-    const MESSAGE_NOT_INSTALLED      = 'PHPCodeSniffer is not installed';
-    const MESSAGE_NOTHING_TO_INSTALL = 'No PHPCS standards to install or update';
-    const MESSAGE_PLUGIN_UNINSTALLED = 'PHPCodeSniffer Composer Installer is uninstalled';
-    const MESSAGE_RUNNING_INSTALLER  = 'Running PHPCodeSniffer Composer Installer';
+    public const MESSAGE_NOT_INSTALLED      = 'PHPCodeSniffer is not installed';
+    public const MESSAGE_NOTHING_TO_INSTALL = 'No PHPCS standards to install or update';
+    public const MESSAGE_PLUGIN_UNINSTALLED = 'PHPCodeSniffer Composer Installer is uninstalled';
+    public const MESSAGE_RUNNING_INSTALLER  = 'Running PHPCodeSniffer Composer Installer';
 
-    const PACKAGE_NAME = 'squizlabs/php_codesniffer';
-    const PACKAGE_TYPE = 'phpcodesniffer-standard';
+    public const PACKAGE_NAME = 'squizlabs/php_codesniffer';
+    public const PACKAGE_TYPE = 'phpcodesniffer-standard';
 
-    const PHPCS_CONFIG_REGEX = '`%s:[^\r\n]+`';
-    const PHPCS_CONFIG_KEY   = 'installed_paths';
+    public const PHPCS_CONFIG_REGEX = '`%s:[^\r\n]+`';
+    public const PHPCS_CONFIG_KEY   = 'installed_paths';
 
-    const PLUGIN_NAME = 'dealerdirect/phpcodesniffer-composer-installer';
+    public const PLUGIN_NAME = 'dealerdirect/phpcodesniffer-composer-installer';
 
     /**
      * @var Composer
