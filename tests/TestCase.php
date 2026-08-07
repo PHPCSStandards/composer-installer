@@ -252,6 +252,24 @@ abstract class TestCase extends PolyfillTestCase
             $config['config']['allow-plugins']['dealerdirect/phpcodesniffer-composer-installer'] = true;
         }
 
+        // Inject ignoring of security advisories for PHP_CodeSniffer to allow for testing against
+        // older versions of dependencies, which may contain security vulnerabilities
+        // (like PHP_CodeSniffer < 3.13.6 and < 4.0.2).
+        if (
+            version_compare(\COMPOSER_VERSION, '2.10.0', '>=') === true
+            && isset($config['config']['policy']['advisories']['ignore']) === false
+            && isset($config['config']['audit']['ignore']) === false
+        ) {
+            $config['config']['policy']['advisories']['ignore'] = ['squizlabs/php_codesniffer'];
+        }
+
+        if (
+            version_compare(\COMPOSER_VERSION, '2.9.0', '>=') === true
+            && isset($config['config']['audit']['ignore']) === false
+        ) {
+            $config['config']['audit']['ignore'] = ['squizlabs/php_codesniffer'];
+        }
+
         $encoded = json_encode($config, \JSON_UNESCAPED_SLASHES | \JSON_PRETTY_PRINT);
         if (json_last_error() !== \JSON_ERROR_NONE || $encoded === false) {
             throw new RuntimeException('Provided configuration can not be encoded to valid JSON');
