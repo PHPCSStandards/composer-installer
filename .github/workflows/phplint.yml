@@ -16,8 +16,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Permissions should be configured at the job level.
+permissions: {}
+
 jobs:
   phplint:
+    permissions:
+      contents: read # To clone the repo.
+
     runs-on: ubuntu-latest
 
     strategy:
