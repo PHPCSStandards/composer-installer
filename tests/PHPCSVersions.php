@@ -90,8 +90,11 @@ final class PHPCSVersions
         '3.13.3' => '3.13.3',
         '3.13.4' => '3.13.4',
         '3.13.5' => '3.13.5',
+        '3.13.6' => '3.13.6',
         '4.0.0'  => '4.0.0',
         '4.0.1'  => '4.0.1',
+        // Version 4.0.2 and 4.0.3 are the same as 4.0.4, so do not need to be tested separately.
+        '4.0.4'  => '4.0.4',
     );
 
     /**
