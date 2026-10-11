@@ -1,14 +1,26 @@
 {
   "name": "dealerdirect/phpcodesniffer-composer-installer",
   "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+  "license": "MIT",
   "type": "composer-plugin",
   "keywords": [
-    "composer", "installer", "plugin",
-    "phpcs", "phpcbf", "codesniffer", "phpcodesniffer", "php_codesniffer",
-    "standard", "standards", "style guide", "stylecheck",
-    "qa", "quality", "code quality", "tests"
+    "composer",
+    "installer",
+    "plugin",
+    "phpcs",
+    "phpcbf",
+    "codesniffer",
+    "phpcodesniffer",
+    "php_codesniffer",
+    "standard",
+    "standards",
+    "style guide",
+    "stylecheck",
+    "qa",
+    "quality",
+    "code quality",
+    "tests"
   ],
-  "license": "MIT",
   "authors": [
     {
       "name": "Franck Nijhof",
@@ -17,8 +29,8 @@
       "role": "Open source developer"
     },
     {
-      "name" : "Contributors",
-      "homepage" : "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
+      "name": "Contributors",
+      "homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
     }
   ],
   "support": {
@@ -35,8 +47,8 @@
     "ext-json": "*",
     "ext-zip": "*",
     "composer/composer": "^2.2",
-    "phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
     "php-parallel-lint/php-parallel-lint": "^1.4.0",
+    "phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
     "yoast/phpunit-polyfills": "^1.0"
   },
   "minimum-stability": "dev",
@@ -58,6 +70,9 @@
     "class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
   },
   "scripts": {
+    "coverage": [
+      "@php ./vendor/phpunit/phpunit/phpunit"
+    ],
     "install-codestandards": [
       "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
     ],
@@ -66,9 +81,6 @@
     ],
     "test": [
       "@php ./vendor/phpunit/phpunit/phpunit --no-coverage"
-    ],
-    "coverage": [
-      "@php ./vendor/phpunit/phpunit/phpunit"
     ]
   }
 }
