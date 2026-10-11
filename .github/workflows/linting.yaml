@@ -48,13 +48,10 @@ jobs:
     permissions:
       contents: read # To clone the repo.
 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Check yaml for issues
-        uses: pipeline-components/yamllint@master
+    name: 'Lint Yaml'
+    uses: PHPCSStandards/.github/.github/workflows/reusable-yamllint.yml@559f40470dbce9f7faeab31f82c0be7dfb93228e # v1.3.0
+    with:
+      strict: true
 
   php-codesniffer:
     permissions:
