@@ -105,11 +105,12 @@ The non-PHP specific tools used by this build are:
 - [jsonlint][] to verify that all JSON files use a consistent code style.
 - [remark-lint][] to verify that all markdown files use a consistent code style.
 - [yamllint][] to verify that all Yaml files use a consistent code style.
+- [actionlint][] to verify that all GitHub Action workflow files use valid syntax.
 - [xmllint][] to verify that XML files are well-formed and validated against the applicable XSD file.
 
 These tools are also run as [GitHub actions][].
 All the checks can be run locally using [`act`][].
-Alternatively they can be run using `docker run`, as all checks use Docker
+Alternatively they can be run using `docker run`, as most checks use Docker
 images provided by [Pipeline-Component][].
 
 Finally, they could be run locally using NodeJS, Ruby, PHP, or whatever the tool
@@ -118,6 +119,7 @@ is written in. For details please consult the relevant tool's documentation.
 [jsonlint]: https://www.npmjs.com/package/jsonlint
 [remark-lint]: https://www.npmjs.com/package/remark-lint
 [yamllint]: https://yamllint.readthedocs.io/en/stable/
+[actionlint]: https://github.com/rhysd/actionlint/blob/HEAD/docs/checks.md
 [xmllint]: https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html
 [`act`]: https://github.com/nektos/act
 
