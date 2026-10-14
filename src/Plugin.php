@@ -89,6 +89,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @param Event $event
      *
+     * @return void
+     *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws LogicException
@@ -141,6 +143,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Prepares the plugin so it's main functionality can be run.
      *
+     * @return void
+     *
      * @throws \RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
@@ -172,6 +176,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Entry point for post install and post update events.
+     *
+     * @return int Exit code. 0 for success, 1 or higher for failure.
      *
      * @throws \InvalidArgumentException
      * @throws LogicException
@@ -225,6 +231,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Load all paths from PHP_CodeSniffer into an array.
+     *
+     * @return void
      *
      * @throws LogicException
      * @throws ProcessFailedException
@@ -350,6 +358,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Get the command to call PHPCS.
+     *
+     * @return string
      */
     protected function getPhpcsCommand()
     {
@@ -366,6 +376,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Get the path to the current PHP version being used.
      *
      * Duplicate of the same in the EventDispatcher class in Composer itself.
+     *
+     * @return string
      */
     protected function getPhpExecCommand()
     {
