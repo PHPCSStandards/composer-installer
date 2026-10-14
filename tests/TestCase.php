@@ -543,8 +543,8 @@ PHP;
      *
      * Includes making any potentially needed tweaks to `composer.json` files.
      *
-     * @param string $src  Full path to the source directory.
-     * @param string $dest Full path to the destination directory.
+     * @param string $srcDir  Full path to the source directory.
+     * @param string $destDir Full path to the destination directory.
      *
      * @return void
      *

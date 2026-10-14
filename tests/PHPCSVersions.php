@@ -233,7 +233,7 @@ final class PHPCSVersions
     /**
      * Find the lowest version in an array of PHPCS versions.
      *
-     * @param array<string> List of PHPCS version identifiers.
+     * @param array<string> $versions List of PHPCS version identifiers.
      *
      * @return string The version identifier of the lowest PHPCS version in the list.
      */
@@ -255,7 +255,7 @@ final class PHPCSVersions
     /**
      * Find the highest version in an array of PHPCS versions.
      *
-     * @param array<string> List of PHPCS version identifiers.
+     * @param array<string> $versions List of PHPCS version identifiers.
      *
      * @return string The version identifier of the highest PHPCS version in the list.
      */

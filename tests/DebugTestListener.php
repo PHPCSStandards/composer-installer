@@ -27,7 +27,7 @@ final class DebugTestListener implements TestListener
     /**
      * Clear the log when a new test starts.
      *
-     * @param Test $test Test object.
+     * @param \PHPUnit\Framework\Test $test Test object.
      *
      * @return void
      */
@@ -39,9 +39,9 @@ final class DebugTestListener implements TestListener
     /**
      * Display the debug log when a test fails.
      *
-     * @param Test                 $test Test object.
-     * @param AssertionFailedError $e    Instance of the assertion failure exception encountered.
-     * @param float                $time Execution time of this test.
+     * @param \PHPUnit\Framework\Test                 $test Test object.
+     * @param \PHPUnit\Framework\AssertionFailedError $e    Instance of the assertion failure exception encountered.
+     * @param float                                   $time Execution time of this test.
      *
      * @return void
      */
@@ -55,7 +55,7 @@ final class DebugTestListener implements TestListener
     /**
      * Add information to the debug log.
      *
-     * @param string The information to add to the log.
+     * @param string $str The information to add to the log.
      *
      * @return void
      */
