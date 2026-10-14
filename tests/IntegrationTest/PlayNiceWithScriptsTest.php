@@ -24,6 +24,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class PlayNiceWithScriptsTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it includes `post-install-cmd`,
+     * and `post-update-cmd` scripts, as well as a user-defined script.
+     *
+     * @var array<string, string|array<string, string|array<string>|null>>
+     */
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/dont-block-scripts-test',
         'require-dev' => array(

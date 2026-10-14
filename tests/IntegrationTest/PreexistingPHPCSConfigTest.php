@@ -32,6 +32,11 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class PreexistingPHPCSConfigTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/preexisting-config-test',
         'require-dev' => array(

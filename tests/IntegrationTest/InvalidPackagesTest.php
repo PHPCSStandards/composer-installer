@@ -25,6 +25,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class InvalidPackagesTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that the referenced external PHPCS
+     * standard package does not contain a ruleset file, making it invalid.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfigNoRuleset = array(
         'name'        => 'phpcs-composer-installer/invalid-package-no-ruleset-test',
         'require-dev' => array(
@@ -33,6 +41,15 @@ final class InvalidPackagesTest extends TestCase
         ),
     );
 
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that the referenced external PHPCS
+     * standard package does contain a ruleset file, but does not have the correct
+     * `type` set in the `composer.json` configuration of the external standard.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfigIncorrectType = array(
         'name'        => 'phpcs-composer-installer/invalid-package-incorrect-type-test',
         'require-dev' => array(

@@ -17,15 +17,39 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase as PolyfillTestCase;
 
 abstract class TestCase extends PolyfillTestCase
 {
+    /**
+     * The temporary system directory for use with the current test.
+     *
+     * @var string
+     */
     protected static $tempDir;
 
+    /**
+     * The path used for testing `composer global` commands in the temporary system directory.
+     *
+     * @var string
+     */
     protected static $tempGlobalPath;
 
+    /**
+     * The path used for testing project local `composer` commands in the temporary system directory.
+     *
+     * @var string
+     */
     protected static $tempLocalPath;
 
 
     /* ***** SETUP AND TEARDOWN HELPERS ***** */
 
+    /**
+     * Create the test environment in a temporary system directory.
+     *
+     * The test environment is created in a temporary system directory, so as not to affect
+     * the normal environment of the dev-user running the tests.
+     * This includes changing the COMPOSER_HOME environment variable for testing `composer global` commands.
+     *
+     * @return void
+     */
     public static function createTestEnvironment()
     {
         // Make temp directory
@@ -49,6 +73,13 @@ abstract class TestCase extends PolyfillTestCase
         putenv('COMPOSER_HOME=' . static::$tempGlobalPath);
     }
 
+    /**
+     * Remove the temporary system directory created for the test.
+     *
+     * This includes changing the COMPOSER_HOME environment variable back to its original value.
+     *
+     * @return void
+     */
     public static function removeTestEnvironment()
     {
         if (file_exists(static::$tempDir) === true) {
