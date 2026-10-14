@@ -18,6 +18,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class RegisterExternalStandardsTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it includes an external PHPCS package
+     * containing only one ruleset definition.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $configOneStandard = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-one-stnd',
         'require-dev' => array(
@@ -27,6 +35,14 @@ final class RegisterExternalStandardsTest extends TestCase
         ),
     );
 
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it includes an external PHPCS package
+     * containing only multiple ruleset definitions.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $configOneStandardMultiRuleset = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-multistnd',
         'require-dev' => array(
@@ -35,6 +51,15 @@ final class RegisterExternalStandardsTest extends TestCase
         ),
     );
 
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it includes an external PHPCS package
+     * containing only one ruleset definition, but that ruleset is in a sub-directory of the
+     * package.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $configOneStandardInSrcSubdir = array(
         'name'        => 'phpcs-composer-installer/register-external-stnds-in-src-subdir',
         'require-dev' => array(
@@ -196,7 +221,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRegisterOneStandard()
     {
@@ -266,7 +291,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRegisterOneStandardMultipleRulesets()
     {
@@ -332,7 +357,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRandomPHPCSVersion()
     {

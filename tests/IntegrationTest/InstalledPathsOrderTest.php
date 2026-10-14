@@ -23,6 +23,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class InstalledPathsOrderTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it references the same external PHPCS
+     * standard packages as the "B" config, but listed in a different order.
+     *
+     * @var array<string, bool|string|array<string, string|null>>
+     */
     private $composerConfigA = array(
         'name'              => 'phpcs-composer-installer/sort-order-test',
         'require-dev'       => array(
@@ -34,6 +42,14 @@ final class InstalledPathsOrderTest extends TestCase
         'prefer-stable'     => true,
     );
 
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it references the same external PHPCS
+     * standard packages as the "A" config, but listed in a different order.
+     *
+     * @var array<string, bool|string|array<string, string|null>>
+     */
     private $composerConfigB = array(
         'name'              => 'phpcs-composer-installer/sort-order-test',
         'require-dev'       => array(

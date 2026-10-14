@@ -22,6 +22,11 @@ use RuntimeException;
  */
 final class NonInstallUpdateEventsTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private static $composerConfig = array(
         'name'        => 'phpcs-composer-installer/non-plugin-events-test',
         'require-dev' => array(
@@ -93,7 +98,7 @@ final class NonInstallUpdateEventsTest extends TestCase
      * @link https://getcomposer.org/doc/03-cli.md
      * @link https://getcomposer.org/doc/articles/scripts.md#event-names
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function dataComposerActions()
     {

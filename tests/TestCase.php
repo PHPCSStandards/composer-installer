@@ -17,15 +17,39 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase as PolyfillTestCase;
 
 abstract class TestCase extends PolyfillTestCase
 {
+    /**
+     * The temporary system directory for use with the current test.
+     *
+     * @var string
+     */
     protected static $tempDir;
 
+    /**
+     * The path used for testing `composer global` commands in the temporary system directory.
+     *
+     * @var string
+     */
     protected static $tempGlobalPath;
 
+    /**
+     * The path used for testing project local `composer` commands in the temporary system directory.
+     *
+     * @var string
+     */
     protected static $tempLocalPath;
 
 
     /* ***** SETUP AND TEARDOWN HELPERS ***** */
 
+    /**
+     * Create the test environment in a temporary system directory.
+     *
+     * The test environment is created in a temporary system directory, so as not to affect
+     * the normal environment of the dev-user running the tests.
+     * This includes changing the COMPOSER_HOME environment variable for testing `composer global` commands.
+     *
+     * @return void
+     */
     public static function createTestEnvironment()
     {
         // Make temp directory
@@ -49,6 +73,13 @@ abstract class TestCase extends PolyfillTestCase
         putenv('COMPOSER_HOME=' . static::$tempGlobalPath);
     }
 
+    /**
+     * Remove the temporary system directory created for the test.
+     *
+     * This includes changing the COMPOSER_HOME environment variable back to its original value.
+     *
+     * @return void
+     */
     public static function removeTestEnvironment()
     {
         if (file_exists(static::$tempDir) === true) {
@@ -213,8 +244,12 @@ abstract class TestCase extends PolyfillTestCase
     /**
      * Create a composer.json file based on a given configuration.
      *
-     * @param array  $config    Composer configuration as an array.
-     * @param string $directory Location to write the resulting `composer.json` file to (without trailing slash).
+     * @param array<string, string|array<string, bool|string|array<string>|null>> $config    Composer configuration
+     *                                                                                       as an array.
+     * @param string                                                              $directory Location to write the
+     *                                                                                       resulting composer.json
+     *                                                                                       file to (without
+     *                                                                                       trailing slash).
      *
      * @return void
      *
@@ -393,10 +428,10 @@ abstract class TestCase extends PolyfillTestCase
      *                                Composer exception. This parameter should only be set by the method itself
      *                                when recursing on itself.
      *
-     * @return array Format:
-     *               'exitcode' int    The exit code from the command.
-     *               'stdout'   string The output send to stdout.
-     *               'stderr'   string The output send to stderr.
+     * @return array<string, int|string> Format:
+     *                                   'exitcode' int    The exit code from the command.
+     *                                   'stdout'   string The output send to stdout.
+     *                                   'stderr'   string The output send to stderr.
      *
      * @throws RuntimeException When the passed arguments do not comply.
      * @throws RuntimeException When no resource could be obtained to execute the command.
@@ -543,8 +578,8 @@ PHP;
      *
      * Includes making any potentially needed tweaks to `composer.json` files.
      *
-     * @param string $src  Full path to the source directory.
-     * @param string $dest Full path to the destination directory.
+     * @param string $srcDir  Full path to the source directory.
+     * @param string $destDir Full path to the destination directory.
      *
      * @return void
      *
@@ -600,7 +635,7 @@ PHP;
      *
      * @param string $phrase The output of `phpcs -i`.
      *
-     * @return array Numerically indexed array of standards, natural sort applied.
+     * @return array<string> Numerically indexed array of standards, natural sort applied.
      *
      * @throws RuntimeException When the passed argument is not a string.
      * @throws RuntimeException When the output could not be parsed.
@@ -647,8 +682,8 @@ PHP;
      *
      * @param string $configShow The `stdout` output of `phpcs --config-show`.
      *
-     * @return array Numerically indexed array of paths, stripped of absolute/relative path differences,
-     *               natural sort applied.
+     * @return array<string> Numerically indexed array of paths, stripped of absolute/relative path differences,
+     *                       natural sort applied.
      *
      * @throws RuntimeException When the passed argument is not a string.
      */
