@@ -93,7 +93,7 @@ final class NonInstallUpdateEventsTest extends TestCase
      * @link https://getcomposer.org/doc/03-cli.md
      * @link https://getcomposer.org/doc/articles/scripts.md#event-names
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function dataComposerActions()
     {

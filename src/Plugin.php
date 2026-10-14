@@ -68,7 +68,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $filesystem;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $installedPaths;
 
@@ -510,7 +510,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
      *
-     * @return array Composer packages containing coding standard(s)
+     * @return array<PackageInterface> Composer packages containing coding standard(s)
      */
     private function getPHPCodingStandardPackages()
     {

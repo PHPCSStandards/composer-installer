@@ -213,8 +213,12 @@ abstract class TestCase extends PolyfillTestCase
     /**
      * Create a composer.json file based on a given configuration.
      *
-     * @param array  $config    Composer configuration as an array.
-     * @param string $directory Location to write the resulting `composer.json` file to (without trailing slash).
+     * @param array<string, string|array<string, bool|string|array<string>|null>> $config    Composer configuration
+     *                                                                                       as an array.
+     * @param string                                                              $directory Location to write the
+     *                                                                                       resulting composer.json
+     *                                                                                       file to (without
+     *                                                                                       trailing slash).
      *
      * @return void
      *
@@ -393,10 +397,10 @@ abstract class TestCase extends PolyfillTestCase
      *                                Composer exception. This parameter should only be set by the method itself
      *                                when recursing on itself.
      *
-     * @return array Format:
-     *               'exitcode' int    The exit code from the command.
-     *               'stdout'   string The output send to stdout.
-     *               'stderr'   string The output send to stderr.
+     * @return array<string, int|string> Format:
+     *                                   'exitcode' int    The exit code from the command.
+     *                                   'stdout'   string The output send to stdout.
+     *                                   'stderr'   string The output send to stderr.
      *
      * @throws RuntimeException When the passed arguments do not comply.
      * @throws RuntimeException When no resource could be obtained to execute the command.
@@ -600,7 +604,7 @@ PHP;
      *
      * @param string $phrase The output of `phpcs -i`.
      *
-     * @return array Numerically indexed array of standards, natural sort applied.
+     * @return array<string> Numerically indexed array of standards, natural sort applied.
      *
      * @throws RuntimeException When the passed argument is not a string.
      * @throws RuntimeException When the output could not be parsed.
@@ -647,8 +651,8 @@ PHP;
      *
      * @param string $configShow The `stdout` output of `phpcs --config-show`.
      *
-     * @return array Numerically indexed array of paths, stripped of absolute/relative path differences,
-     *               natural sort applied.
+     * @return array<string> Numerically indexed array of paths, stripped of absolute/relative path differences,
+     *                       natural sort applied.
      *
      * @throws RuntimeException When the passed argument is not a string.
      */

@@ -525,7 +525,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataPHPCSVersions()
     {

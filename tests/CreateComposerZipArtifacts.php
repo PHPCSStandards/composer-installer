@@ -50,7 +50,7 @@ class CreateComposerZipArtifacts
      *
      * @link https://www.php.net/manual/en/recursivedirectoryiterator.getsubpathname.php
      *
-     * @var array
+     * @var array<string, string>
      */
     private $excludedFiles = array(
         'composer.lock'    => 'composer.lock',
@@ -62,7 +62,7 @@ class CreateComposerZipArtifacts
     /**
      * List of file extensions for files which should be excluded from the zip archives.
      *
-     * @var array
+     * @var array<string, string>
      */
     private $excludedExtensions = array(
         'md'   => 'md',
@@ -75,7 +75,7 @@ class CreateComposerZipArtifacts
      *
      * Note: no need to list directories starting with a `.` as those will always be filtered out.
      *
-     * @var array
+     * @var array<string, string>
      */
     private $excludedDirs = array(
         'bin'    => 'bin',

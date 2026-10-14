@@ -62,8 +62,9 @@ final class InvalidPackagesTest extends TestCase
      *
      * @dataProvider dataInvalidPackages
      *
-     * @param array  $config       The Composer configuration to use.
-     * @param string $standardName The name of the PHPCS standard which is expected to NOT be registered.
+     * @param array<string, string|array<string, string>> $config       The Composer configuration to use.
+     * @param string                                      $standardName The name of the PHPCS standard which
+     *                                                                  is expected to NOT be registered.
      *
      * @return void
      */
@@ -98,7 +99,7 @@ final class InvalidPackagesTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string|array<string, string|array<string, string|null>>>>
      */
     public function dataInvalidPackages()
     {

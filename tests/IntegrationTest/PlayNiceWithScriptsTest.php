@@ -66,8 +66,9 @@ final class PlayNiceWithScriptsTest extends TestCase
      *
      * @dataProvider dataScriptsAreNotBlockedFromRunning
      *
-     * @param string $command         The command to run after the initial install has been done.
-     * @param array  $expectedOutputs Phrases which are expected to be included in the stdout for the second command.
+     * @param string        $command         The command to run after the initial install has been done.
+     * @param array<string> $expectedOutputs Phrases which are expected to be included in the stdout
+     *                                       for the second command.
      *
      * @return void
      */
@@ -118,7 +119,7 @@ final class PlayNiceWithScriptsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string|array<string>>>
      */
     public function dataScriptsAreNotBlockedFromRunning()
     {

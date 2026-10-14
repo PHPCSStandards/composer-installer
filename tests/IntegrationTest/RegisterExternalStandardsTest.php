@@ -196,7 +196,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRegisterOneStandard()
     {
@@ -266,7 +266,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRegisterOneStandardMultipleRulesets()
     {
@@ -332,7 +332,7 @@ final class RegisterExternalStandardsTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataRandomPHPCSVersion()
     {
