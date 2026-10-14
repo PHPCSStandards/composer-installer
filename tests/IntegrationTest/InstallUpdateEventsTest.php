@@ -110,13 +110,6 @@ final class InstallUpdateEventsTest extends TestCase
             'require'   => array('require --dev phpcs-composer-installer/dummy-src'),
             'remove'    => array('remove --dev ehime/hello-world'),
         );
-
-        $data = array();
-        foreach ($actions as $action) {
-            $data[$action] = array($action);
-        }
-
-        return $data;
     }
 
     /**
