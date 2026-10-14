@@ -62,7 +62,8 @@ abstract class TestCase extends PolyfillTestCase
 
             if ($exitCode !== 0) {
                 throw new RuntimeException(
-                    'Failed to remove the temp directory created for the test: ' . \PHP_EOL . 'Error: ' . $output
+                    'Failed to remove the temp directory created for the test: ' . \PHP_EOL
+                    . 'Error: ' . implode(\PHP_EOL, $output)
                 );
             }
 
