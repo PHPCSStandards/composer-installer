@@ -86,7 +86,7 @@ final class RootPackageHandlingTest extends TestCase
             }
         }
 
-        $this->assertTrue($hasExpectedPath, $matches[1], 'PHPCS configuration does not contain the root standard');
+        $this->assertTrue($hasExpectedPath, 'PHPCS configuration does not contain the root standard');
     }
 
     /**
