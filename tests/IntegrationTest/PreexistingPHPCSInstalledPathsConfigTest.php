@@ -27,10 +27,26 @@ use RuntimeException;
  */
 final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
 {
+    /**
+     * Partial path for setting up an extra standard in the temporary system directory.
+     *
+     * @var string
+     */
     private $tempExtraStndsSubdir = '/extrastnds/dummy-subdir';
 
+    /**
+     * Path to subdirectory in the temporary system directory, which will hold
+     * an extra external PHPCS standard outside of the Composer `vendor` directory.
+     *
+     * @var string
+     */
     private $tempExtraStndsPath;
 
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/preexisting-config-test',
         'require-dev' => array(
@@ -525,7 +541,7 @@ final class PreexistingPHPCSInstalledPathsConfigTest extends TestCase
     /**
      * Data provider.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataPHPCSVersions()
     {

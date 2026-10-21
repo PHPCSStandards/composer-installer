@@ -27,6 +27,11 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class BaseLineTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/baseline-test',
         'require-dev' => array(
@@ -56,10 +61,10 @@ final class BaseLineTest extends TestCase
      *
      * @dataProvider dataBaseLine
      *
-     * @param string $phpcsVersion  PHPCS version to use in this test.
-     *                              This version is randomly selected from the PHPCS versions compatible
-     *                              with the PHP version used in the test.
-     * @param array  $expectedStnds List of the standards which are expected to be registered.
+     * @param string        $phpcsVersion  PHPCS version to use in this test.
+     *                                     This version is randomly selected from the PHPCS versions compatible
+     *                                     with the PHP version used in the test.
+     * @param array<string> $expectedStnds List of the standards which are expected to be registered.
      *
      * @return void
      */
@@ -99,10 +104,10 @@ final class BaseLineTest extends TestCase
      *
      * @dataProvider dataBaseLine
      *
-     * @param string $phpcsVersion  PHPCS version to use in this test.
-     *                              This version is randomly selected from the PHPCS versions compatible
-     *                              with the PHP version used in the test.
-     * @param array  $expectedStnds List of the standards which are expected to be registered.
+     * @param string        $phpcsVersion  PHPCS version to use in this test.
+     *                                     This version is randomly selected from the PHPCS versions compatible
+     *                                     with the PHP version used in the test.
+     * @param array<string> $expectedStnds List of the standards which are expected to be registered.
      *
      * @return void
      */
@@ -146,7 +151,7 @@ final class BaseLineTest extends TestCase
      * is done using a regex instead of an exact match.
      * Also see: https://github.com/squizlabs/PHP_CodeSniffer/pull/3539 which was merged in PHPCS 3.7.0.
      *
-     * @return array
+     * @return array<string, array<string, string|array<string>>>
      */
     public function dataBaseLine()
     {

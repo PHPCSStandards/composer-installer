@@ -33,6 +33,14 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class InstallUpdateEventsTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the tests in this test class.
+     *
+     * The important thing about this config is that it includes a `post-install-cmd`,
+     * and a user-defined script.
+     *
+     * @var array<string, string|array<string, string|array<string>|null>>
+     */
     private $composerConfig = array(
         'name'        => 'phpcs-composer-installer/plugin-events-test',
         'require-dev' => array(
@@ -100,7 +108,7 @@ final class InstallUpdateEventsTest extends TestCase
      * @link https://getcomposer.org/doc/03-cli.md
      * @link https://getcomposer.org/doc/articles/scripts.md#event-names
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function dataComposerActions()
     {
