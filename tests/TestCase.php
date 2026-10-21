@@ -589,7 +589,7 @@ PHP;
 
             if ($fileInfo->isFile()) {
                 if (copy($fileInfo->getPathname(), $target) === false || is_file($target) === false) {
-                    throw new RuntimeException("Failed to copy $src to $target ");
+                    throw new RuntimeException("Failed to copy $srcDir to $target ");
                 }
             }
         }
