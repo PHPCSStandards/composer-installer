@@ -26,6 +26,11 @@ use PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests\TestCase;
  */
 final class RemovePluginTest extends TestCase
 {
+    /**
+     * Composer configuration for use by the `composer require --dev` tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfigRequireDev = array(
         'name'        => 'phpcs-composer-installer/remove-phpcs-test',
         'require-dev' => array(
@@ -33,6 +38,11 @@ final class RemovePluginTest extends TestCase
         ),
     );
 
+    /**
+     * Composer configuration for use by the `composer require` tests in this test class.
+     *
+     * @var array<string, string|array<string, string|null>>
+     */
     private $composerConfigRequire = array(
         'name'    => 'phpcs-composer-installer/remove-phpcs-test',
         'require' => array(

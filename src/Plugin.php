@@ -68,7 +68,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private $filesystem;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $installedPaths;
 
@@ -88,6 +88,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Makes it possible to run the plugin as a custom command.
      *
      * @param Event $event
+     *
+     * @return void
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
@@ -141,6 +143,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Prepares the plugin so it's main functionality can be run.
      *
+     * @return void
+     *
      * @throws \RuntimeException
      * @throws LogicException
      * @throws ProcessFailedException
@@ -172,6 +176,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Entry point for post install and post update events.
+     *
+     * @return int Exit code. 0 for success, 1 or higher for failure.
      *
      * @throws \InvalidArgumentException
      * @throws LogicException
@@ -225,6 +231,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Load all paths from PHP_CodeSniffer into an array.
+     *
+     * @return void
      *
      * @throws LogicException
      * @throws ProcessFailedException
@@ -350,6 +358,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Get the command to call PHPCS.
+     *
+     * @return string
      */
     protected function getPhpcsCommand()
     {
@@ -366,6 +376,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Get the path to the current PHP version being used.
      *
      * Duplicate of the same in the EventDispatcher class in Composer itself.
+     *
+     * @return string
      */
     protected function getPhpExecCommand()
     {
@@ -498,7 +510,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Iterates through Composers' local repository looking for valid Coding
      * Standard packages.
      *
-     * @return array Composer packages containing coding standard(s)
+     * @return array<PackageInterface> Composer packages containing coding standard(s)
      */
     private function getPHPCodingStandardPackages()
     {
