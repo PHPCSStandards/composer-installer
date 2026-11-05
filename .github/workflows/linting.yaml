@@ -49,7 +49,7 @@ jobs:
       contents: read # To clone the repo.
 
     name: 'Lint Yaml'
-    uses: PHPCSStandards/.github/.github/workflows/reusable-yamllint.yml@559f40470dbce9f7faeab31f82c0be7dfb93228e # v1.3.0
+    uses: PHPCSStandards/.github/.github/workflows/reusable-yamllint.yml@5a8a6fcf1ac33b3ec6d7b826c0f319eaa83581ff # v1.3.1
     with:
       strict: true
 
@@ -92,20 +92,20 @@ jobs:
 
       # Validate dev tool related XML files.
       - name: Validate Project PHPCS ruleset against schema
-        uses: phpcsstandards/xmllint-validate@5189514594c8d5f4cf21b7e5af50f54d697973d7 # v2.0.0
+        uses: phpcsstandards/xmllint-validate@d0ee207a94a9539f5d14e78e3b13a81385252c88 # v2.0.1
         with:
           pattern: phpcs.xml.dist
           xsd-url: https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/refs/heads/4.x/phpcs.xsd
 
       - name: Validate PHPUnit config against schema
-        uses: phpcsstandards/xmllint-validate@5189514594c8d5f4cf21b7e5af50f54d697973d7 # v2.0.0
+        uses: phpcsstandards/xmllint-validate@d0ee207a94a9539f5d14e78e3b13a81385252c88 # v2.0.1
         with:
           pattern: phpunit.xml.dist
           xsd-url: https://raw.githubusercontent.com/sebastianbergmann/phpunit/refs/heads/main/schema/9.2.xsd
 
       # Validate the XML ruleset files used in the tests.
       - name: Validate rulesets against schema
-        uses: phpcsstandards/xmllint-validate@5189514594c8d5f4cf21b7e5af50f54d697973d7 # v2.0.0
+        uses: phpcsstandards/xmllint-validate@d0ee207a94a9539f5d14e78e3b13a81385252c88 # v2.0.1
         with:
           pattern: tests/fixtures/*/*/ruleset.xml
           xsd-url: https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/refs/heads/4.x/phpcs.xsd
