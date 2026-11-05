@@ -44,6 +44,13 @@ jobs:
         with:
           args: "find . -not -path './.git/*' -name '*.json' -type f -exec jsonlint --quiet {} ;"
 
+  pinact:
+    permissions:
+      contents: read # To clone the repo.
+
+    name: 'Run Pinact'
+    uses: PHPCSStandards/.github/.github/workflows/reusable-pinact.yml@5a8a6fcf1ac33b3ec6d7b826c0f319eaa83581ff # v1.3.1
+
   yamllint:
     permissions:
       contents: read # To clone the repo.
@@ -63,7 +70,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Check php for code style and php cross-version compatibility issues
-        uses: pipeline-components/php-codesniffer@master
+        uses: pipeline-components/php-codesniffer@b2d187f5752c363ec19ff28fb7ebebe1dff9b091 # v0.40.56
 
   lint-remark:
     permissions:
@@ -75,7 +82,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Check markdown
-        uses: pipeline-components/remark-lint@master
+        uses: pipeline-components/remark-lint@c8e92e279f86cb15e7d5c2b7e2db6c2086539472 # v0.33.27
 
   lint-xml:
     permissions:
