@@ -23,6 +23,14 @@ if (file_exists($tempDir) === true) {
     }
 }
 
+/*
+ * Share one Composer cache between all tests and test runs.
+ * Each test sets its own COMPOSER_HOME, which would otherwise give each test an empty cache.
+ */
+if (getenv('COMPOSER_CACHE_DIR') === false) {
+    putenv('COMPOSER_CACHE_DIR=' . dirname(__DIR__) . '/.cache/composer');
+}
+
 if (is_dir(dirname(__DIR__) . '/vendor') && file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     $vendorDir = dirname(__DIR__) . '/vendor';
 } else {

@@ -109,8 +109,22 @@ jobs:
           composer-options: '--ignore-platform-reqs --optimize-autoloader'
           custom-cache-suffix: $(date -u "+%Y-%m")
 
+      # Restore the Composer cache used by the tests (see `tests/bootstrap.php`).
+      - name: Restore Composer cache for the tests
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/composer
+          key: ${{ runner.os }}-integrationtest-composer-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: ${{ runner.os }}-integrationtest-composer-
+
       - name: Run integration tests
         run: vendor/bin/phpunit --no-coverage
-        env:
-          # The tests set a fresh COMPOSER_HOME per test, which would otherwise also give each test an empty cache.
-          COMPOSER_CACHE_DIR: ${{ runner.temp }}/composer-test-cache
+
+      # Only save from one job per OS, as all jobs would otherwise try to save the same key.
+      # PHP 7.2 supports the widest range of PHPCS versions, so its tests download the widest range of packages.
+      - name: Save Composer cache for the tests
+        if: ${{ always() && matrix.php == '7.2' && matrix.composer == 'v2' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/composer
+          key: ${{ runner.os }}-integrationtest-composer-${{ github.run_id }}-${{ github.run_attempt }}
