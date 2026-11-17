@@ -54,7 +54,7 @@ abstract class TestCase extends PolyfillTestCase
     {
         // Make temp directory
         $class           = substr(strrchr(static::class, '\\'), 1);
-        static::$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest/' . uniqid("{$class}_", true);
+        static::$tempDir = \TEMP_TEST_DIR . '/' . uniqid("{$class}_", true);
 
         $subDirs = array(
             'tempLocalPath'  => 'local',
