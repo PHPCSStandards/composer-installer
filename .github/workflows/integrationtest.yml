@@ -95,6 +95,12 @@ jobs:
         env:
           fail-fast: true
 
+      # ParaTest is not a permanent dev dependency as no ParaTest version is installable on PHP 7.2
+      # alongside Composer 2.
+      - name: Add ParaTest
+        if: ${{ matrix.php != '7.2' }}
+        run: composer require --dev --no-update --no-interaction "brianium/paratest:^6.11"
+
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
       - name: Install Composer dependencies
@@ -113,4 +119,11 @@ jobs:
           custom-cache-suffix: $(date -u "+%Y-%m")
 
       - name: Run integration tests
+        if: ${{ matrix.php == '7.2' }}
         run: vendor/bin/phpunit --no-coverage
+
+      # Test files run in parallel, but tests within a file must not be split up (no `--functional`),
+      # as the data providers pick random PHPCS versions, which differ between processes.
+      - name: Run integration tests in parallel
+        if: ${{ matrix.php != '7.2' }}
+        run: vendor/bin/paratest --processes 4 --no-coverage
