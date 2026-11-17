@@ -29,6 +29,9 @@ jobs:
 
     runs-on: "${{ matrix.os }}"
 
+    # A hanging test would otherwise only be stopped by the default timeout of 6 hours.
+    timeout-minutes: 30
+
     strategy:
       matrix:
         php:
