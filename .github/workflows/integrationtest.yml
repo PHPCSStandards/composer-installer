@@ -111,3 +111,6 @@ jobs:
 
       - name: Run integration tests
         run: vendor/bin/phpunit --no-coverage
+        env:
+          # The tests set a fresh COMPOSER_HOME per test, which would otherwise also give each test an empty cache.
+          COMPOSER_CACHE_DIR: ${{ runner.temp }}/composer-test-cache
