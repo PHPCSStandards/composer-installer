@@ -13,7 +13,13 @@
     <exclude-pattern>*/build/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
 
-    <rule ref="PHPCompatibility"/>
+    <rule ref="PHPCompatibility">
+        <!-- Temporary exclusion until the trim()/ltrim()/rtrim() calls have been reviewed for the PHP 8.6
+             change to the default value of the $characters parameter.
+             Ref: https://github.com/PHPCSStandards/composer-installer/issues/310
+        -->
+        <exclude name="PHPCompatibility.ParameterValues.NewTrimCharactersDefault"/>
+    </rule>
     <config name="testVersion" value="7.2-"/>
 
     <rule ref="PSR12"/>
