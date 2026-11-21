@@ -5,4 +5,5 @@ phpcs.xml
 .phpunit.result.cache
 phpunit.xml
 /build/
+/.cache/
 /tests/artifact/*.zip
