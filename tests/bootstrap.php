@@ -11,9 +11,19 @@
 namespace PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Tests;
 
 /*
+ * When running via ParaTest, each worker gets its own temp and artifact directories,
+ * so workers don't delete each other's files while setting up.
+ * ParaTest guarantees that processes sharing a TEST_TOKEN never run at the same time.
+ */
+$paratestToken = getenv('TEST_TOKEN');
+$tempDirSuffix = ($paratestToken !== false && $paratestToken !== '') ? '-' . $paratestToken : '';
+
+define('TEMP_TEST_DIR', sys_get_temp_dir() . '/PHPCSPluginTest' . $tempDirSuffix);
+
+/*
  * Make sure the tests always start with a clean slate.
  */
-$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest';
+$tempDir = \TEMP_TEST_DIR;
 if (file_exists($tempDir) === true) {
     if (stripos(\PHP_OS, 'WIN') === 0) {
         // Windows.
@@ -68,7 +78,15 @@ if (\defined('__PHPUNIT_PHAR__')) {
 /*
  * Create Zip artifacts of the plugin itself as well as the test fixtures.
  */
-define('ZIP_ARTIFACT_DIR', __DIR__ . '/artifact/');
+if ($tempDirSuffix === '') {
+    define('ZIP_ARTIFACT_DIR', __DIR__ . '/artifact/');
+} else {
+    define('ZIP_ARTIFACT_DIR', \TEMP_TEST_DIR . '/artifact/');
+    if (is_dir(\ZIP_ARTIFACT_DIR) === false && mkdir(\ZIP_ARTIFACT_DIR, 0766, true) === false) {
+        echo 'Failed to create the artifact directory ' . \ZIP_ARTIFACT_DIR;
+        die(1);
+    }
+}
 
 if (extension_loaded('zip') === true) {
     define('PLUGIN_ARTIFACT_VERSION', '1.99.99');

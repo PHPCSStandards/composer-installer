@@ -54,7 +54,7 @@ abstract class TestCase extends PolyfillTestCase
     {
         // Make temp directory
         $class           = substr(strrchr(static::class, '\\'), 1);
-        static::$tempDir = sys_get_temp_dir() . '/PHPCSPluginTest/' . uniqid("{$class}_", true);
+        static::$tempDir = \TEMP_TEST_DIR . '/' . uniqid("{$class}_", true);
 
         $subDirs = array(
             'tempLocalPath'  => 'local',
@@ -447,29 +447,44 @@ abstract class TestCase extends PolyfillTestCase
             throw new RuntimeException('Working directory must be a non-empty string or null.');
         }
 
-        $command        = static::stabilizeCommand($command, $workingDir);
+        $command = static::stabilizeCommand($command, $workingDir);
+
+        /*
+         * Write stdout and stderr to files rather than pipes. Reading two pipes one after the other
+         * deadlocks when the command fills the buffer of the pipe which isn't being read yet,
+         * and PHP can't wait on both pipes at once on Windows.
+         */
+        $stdoutFile = tempnam(sys_get_temp_dir(), 'PHPCSPluginStdOut');
+        $stderrFile = tempnam(sys_get_temp_dir(), 'PHPCSPluginStdErr');
+        if ($stdoutFile === false || $stderrFile === false) {
+            throw new RuntimeException('Could not create the temporary files to capture the command output.');
+        }
+
         $descriptorspec = array(
-           0 => array("pipe", "r"),  // stdin
-           1 => array("pipe", "w"),  // stdout
-           2 => array("pipe", "w"),  // stderr
+           0 => array("pipe", "r"),              // stdin
+           1 => array("file", $stdoutFile, "w"), // stdout
+           2 => array("file", $stderrFile, "w"), // stderr
         );
 
         $process = proc_open($command, $descriptorspec, $pipes, $workingDir);
 
         if (is_resource($process) === false) {
+            @unlink($stdoutFile);
+            @unlink($stderrFile);
             throw new RuntimeException('Could not obtain a resource with proc_open() to execute the command.');
         }
 
-        $result = array();
         fclose($pipes[0]);
+        $exitcode = proc_close($process);
 
-        $result['stdout'] = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
+        $result = array(
+            'stdout'   => (string) file_get_contents($stdoutFile),
+            'stderr'   => (string) file_get_contents($stderrFile),
+            'exitcode' => $exitcode,
+        );
 
-        $result['stderr'] = stream_get_contents($pipes[2]);
-        fclose($pipes[2]);
-
-        $result['exitcode'] = proc_close($process);
+        @unlink($stdoutFile);
+        @unlink($stderrFile);
 
         // Add debug information to the test listener which will be displayed in case the test fails.
         DebugTestListener::debugLog(
